@@ -4,7 +4,7 @@
 
 using namespace System;
 
-//#using <System.Drawing.dll>
+#using <System.Drawing.dll>
 
 namespace CoreWrapper {
 
@@ -12,6 +12,6 @@ namespace CoreWrapper {
 	{
 	public:
 		int foo() { return 0; }
-		//System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
+		System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
 	};
 }

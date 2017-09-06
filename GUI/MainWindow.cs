@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TestLib;
+using CoreWrapper;
 
 //using CoreWrapper;
 
@@ -34,7 +34,10 @@ namespace GUI
             //ip.foo();
             //CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
             //CoreWrapper.ImageProc ip = new ImageProc();
-            TestLib.Class1 c = new Class1();
+            CoreWrapper.ImageProc ip = new ImageProc();
+            var a = ip.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\GUI\i.jpg");
+            pictureBox1.Image = a;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
     }
 }
