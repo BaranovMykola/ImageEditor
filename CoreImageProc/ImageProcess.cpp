@@ -5,12 +5,12 @@
 using namespace cv;
 
 
-cv::Mat readOriginal(std::string fileName)
-{
-	Mat original = imread(fileName);
-	if (original.empty())
-	{
-		throw std::exception("Image load failed");
-	}
-	return original;
-}
+//cv::Mat readOriginal(std::string fileName)
+//{
+//	Mat original = imread(fileName);
+//	if (original.empty())
+//	{
+//		throw std::exception("Image load failed");
+//	}
+//	return original;
+//}

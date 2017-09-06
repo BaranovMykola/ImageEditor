@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using CoreWrapper;
 
 namespace GUI
 {
@@ -15,6 +16,22 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //ImageProc ip = new ImageProc();
+            //int a = ip.foo();
+
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            //CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
+            //ip.foo();
+            CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
+
         }
     }
 }
