@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestLib;
+
 //using CoreWrapper;
 
 namespace GUI
@@ -30,8 +32,9 @@ namespace GUI
         {
             //CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
             //ip.foo();
-            CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
-
+            //CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
+            //CoreWrapper.ImageProc ip = new ImageProc();
+            TestLib.Class1 c = new Class1();
         }
     }
 }
