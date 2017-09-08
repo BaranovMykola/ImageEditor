@@ -16,5 +16,3 @@ cv::Mat resizeImg(const cv::Mat& img, float percent);
 
 cv::Mat contrastAndBrightness(const cv::Mat& img, float contrast, int brightness);
 
-//cv::Mat legacyContrastAndBrightness(const cv::Mat& img, float contrastPercent, float brightnessPercent);
-
