@@ -73,19 +73,45 @@ System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::Stri
 				
 		}
 	}*/
+	this->convertToPreview(srcImg, 300, Side::HEIGHT);
+	return this->convertMatToImage(srcImg);
+	//return Drawing::Image::FromFile(fileName);
+}
 
-	Drawing::Bitmap^ newImage = gcnew Drawing::Bitmap(srcImg.cols, srcImg.rows);
-	
-	//Drawing::Image^ img = Drawing::Image::
-	for (size_t i = 0; i < srcImg.rows-1; i++)
+
+
+void CoreWrapper::ImageProc::convertToPreview(cv::Mat & sourceImg, int sideLenght, Side side)
+{
+	cv::Size originalSize = sourceImg.size();
+	float ratio;
+	switch (side)
 	{
-		uchar* row = srcImg.ptr(i);
-		for (size_t j = 0; j < srcImg.cols-1; j++)
+		case CoreWrapper::Side::WIDTH:
+			ratio = originalSize.width / (float)sideLenght;
+			break;
+		case CoreWrapper::Side::HEIGHT:
+			ratio = originalSize.height/ (float)sideLenght;
+			break;
+		default:
+			ratio = 1;
+			break;
+	}
+
+	cv::Size newSize (originalSize.width*ratio, originalSize.height*ratio);
+	cv::resize(sourceImg, sourceImg, newSize);
+}
+
+Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
+{
+	Drawing::Bitmap^ newImage = gcnew Drawing::Bitmap(opencvImage.cols, opencvImage.rows);
+	for (size_t i = 0; i < opencvImage.rows - 1; i++)
+	{
+		const uchar* row = opencvImage.ptr(i);
+		for (size_t j = 0; j < opencvImage.cols - 1; j++)
 		{
-			Drawing::Color c = Drawing::Color::FromArgb(255, row[j*3+2], row[j*3+1], row[j*3]);
+			Drawing::Color c = Drawing::Color::FromArgb(255, row[j * 3 + 2], row[j * 3 + 1], row[j * 3]);
 			newImage->SetPixel(j, i, c);
 		}
 	}
 	return (Drawing::Image^)newImage;
-	//return Drawing::Image::FromFile(fileName);
 }
