@@ -8,9 +8,13 @@
 using namespace std;
 using namespace cv;
 
-static cv::Mat readOriginal(std::string fileName)
-{
-		Mat original = imread(fileName);
-		return original;
-}
+cv::Mat readOriginal(std::string fileName);
+
+cv::Mat RotateAt(const cv::Mat& img, float grad);
+
+cv::Mat resizeImg(const cv::Mat& img, float percent);
+
+cv::Mat contrastAndBrightness(const cv::Mat& img, float contrast, int brightness);
+
+//cv::Mat legacyContrastAndBrightness(const cv::Mat& img, float contrastPercent, float brightnessPercent);
 
