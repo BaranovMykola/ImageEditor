@@ -20,7 +20,7 @@ namespace CoreWrapper {
 		System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
 
 	private:
-		void convertToPreview(cv::Mat& sourceImg, int sideLenght, Side side);
+		//void convertToPreview(cv::Mat& sourceImg, int sideLenght, Side side);
 
 		Image^ convertMatToImage(const cv::Mat& opencvImage);
 		

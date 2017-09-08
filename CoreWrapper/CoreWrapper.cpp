@@ -73,33 +73,35 @@ System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::Stri
 				
 		}
 	}*/
-	this->convertToPreview(srcImg, 300, Side::HEIGHT);
-	return this->convertMatToImage(srcImg);
+	auto preview = convertToPreview(srcImg, 1000, 1);
+	return this->convertMatToImage(preview);
 	//return Drawing::Image::FromFile(fileName);
 }
 
 
 
-void CoreWrapper::ImageProc::convertToPreview(cv::Mat & sourceImg, int sideLenght, Side side)
-{
-	cv::Size originalSize = sourceImg.size();
-	float ratio;
-	switch (side)
-	{
-		case CoreWrapper::Side::WIDTH:
-			ratio = originalSize.width / (float)sideLenght;
-			break;
-		case CoreWrapper::Side::HEIGHT:
-			ratio = originalSize.height/ (float)sideLenght;
-			break;
-		default:
-			ratio = 1;
-			break;
-	}
-
-	cv::Size newSize (originalSize.width*ratio, originalSize.height*ratio);
-	cv::resize(sourceImg, sourceImg, newSize);
-}
+//void CoreWrapper::ImageProc::convertToPreview(cv::Mat & sourceImg, int sideLenght, Side side)
+//{
+//	cv::Size originalSize = sourceImg.size();
+//	float ratio;
+//	switch (side)
+//	{
+//		case CoreWrapper::Side::WIDTH:
+//			ratio = originalSize.width / (float)sideLenght;
+//			break;
+//		case CoreWrapper::Side::HEIGHT:
+//			ratio = originalSize.height/ (float)sideLenght;
+//			break;
+//		default:
+//			ratio = 1;
+//			break;
+//	}
+//
+//	cv::Size newSize (originalSize.width*ratio, originalSize.height*ratio);
+//	cv::Mat preview;
+//	cv::resize(sourceImg, preview, newSize);
+//	sourceImg = preview;
+//}
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 {
