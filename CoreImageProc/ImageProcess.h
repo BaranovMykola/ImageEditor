@@ -25,19 +25,19 @@ public:
 			//Computing affine matrix
 			auto center = Point2f(img.cols / 2, img.rows / 2);
 			cv::Mat rotateMat = getRotationMatrix2D(center, rotateAngle, 1);
-			auto rotRect = RotatedRect(center, source.size(), rotateAngle).boundingRect();
+			auto rotRect = RotatedRect(center, img.size(), rotateAngle).boundingRect();
 			rotateMat.at<double>(0, 2) += rotRect.width / 2.0 - center.x;
 			rotateMat.at<double>(1, 2) += rotRect.height / 2.0 - center.y;
 		
 			cv::Mat rotatedImg;
-			warpAffine(img, rotatedImg, rotateMat, rotRect.size());
+			warpAffine(img, rotatedImg, rotateMat, rotRect.size(), 1, BORDER_TRANSPARENT);
 			return rotatedImg;
 	}
 
 	cv::Mat resizeImg(const cv::Mat& img)
 	{
 			Size newSize(img.size().width*percentRatio, img.size().height*percentRatio);
-			Mat resized;
+			Mat resized = Mat::zeros(newSize, CV_8UC3);
 			cv::resize(img, resized, newSize);
 			return resized;
 	}
@@ -65,6 +65,15 @@ public:
 	void rotate(float _rotateAngle)
 	{
 		rotateAngle = _rotateAngle;
+		editSource();
+	}
+
+	void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
+	{
+		percentRatio = _sizeRatio;
+		rotateAngle = _rotateAngle;
+		contrast = _contrast;
+		brightness = _brightness;
 		editSource();
 	}
 

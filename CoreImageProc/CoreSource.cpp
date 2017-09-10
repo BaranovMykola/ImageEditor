@@ -8,7 +8,7 @@ int main()
 {
 	cv::Mat img = imread("img.jpg");
 	int grad = 0;
-	int b = 0;
+	int b = 255;
 	int c = 100;
 	int size = 100;
 	namedWindow("Panel");
@@ -19,9 +19,7 @@ int main()
 	CoreImgEditor cie("img.jpg");
 	while (waitKey(30) != 27)
 	{
-		cie.changeContrastAndBrightness(c / 100.0, b - 255);
-		cie.resize(size / 100.0);
-		cie.rotate(grad);
+		cie.editImage(size / 100.0, grad, c / 100.0, b - 255);
 		cv::imshow("img", cie.getPreview());
 	}
 	cv::waitKey();
