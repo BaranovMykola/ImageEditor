@@ -43,7 +43,7 @@ System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::Stri
 {
 	//editor->rotate(45);
 	auto start = clock();
-	editor->updatePreview(300, 300);
+	editor->updatePreview(400, 400);
 	auto end = clock() - start;
 	auto srcImg = editor->getPreview();
 	bool em = srcImg.empty();
@@ -67,7 +67,7 @@ CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
 {
 	std::string str;
 	MarshalString(fileName, str);
-	editor = new CoreImgEditor(str);
+	editor = new CoreImgEditor(str, 400, 400);
 }
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)

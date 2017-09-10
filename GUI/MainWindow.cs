@@ -42,10 +42,17 @@ namespace GUI
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            ip.editImage(1,0,1,trackBar1.Value-255);
+            //ip.editImage(1,0,1,trackBar1.Value-255);
+            //var a = ip.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\GUI\i.jpg");
+            //pictureBox1.Image = a;
+
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            ip.editImage(1, 0, 1, trackBar1.Value - 255);
             var a = ip.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\GUI\i.jpg");
             pictureBox1.Image = a;
-
         }
     }
 }

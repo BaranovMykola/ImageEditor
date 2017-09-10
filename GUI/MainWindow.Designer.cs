@@ -61,6 +61,7 @@
             this.trackBar1.Size = new System.Drawing.Size(321, 56);
             this.trackBar1.TabIndex = 2;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // MainWindow
             // 

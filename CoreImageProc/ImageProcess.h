@@ -87,6 +87,10 @@ public:
 
 	void updatePreview(int width, int height)
 	{
+		if (changed.empty())
+		{
+			changed = reducedSource;
+		}
 		preview = reduceImg(changed, width*percentRatio, height*percentRatio);
 	}
 
