@@ -6,16 +6,21 @@
 
 int main()
 {
-	cv::Mat img = readOriginal("img.jpg");
-	int grad = 100;
-	int b = 0;
+	cv::Mat img = imread("img.jpg");
+	int grad = 0;
+	int b = 255;
+	int c = 100;
+	int size = 100;
 	namedWindow("Panel");
 	createTrackbar("RotateAngle", "Panel", &grad, 360);
-	createTrackbar("b", "Panel", &b, 510);
+	createTrackbar("B", "Panel", &b, 510);
+	createTrackbar("C", "Panel", &c, 300);
+	createTrackbar("Size", "Panel", &size, 300);
+	CoreImgEditor cie("img.jpg");
 	while (waitKey(30) != 27)
 	{
-		auto resized = contrastAndBrightness(img, grad/100.0, b-255);
-		cv::imshow("img", resized);
+		cie.editImage(size / 100.0, grad, c / 100.0, b - 255);
+		cv::imshow("img", cie.getPreview());
 	}
 	cv::waitKey();
 	return 0;

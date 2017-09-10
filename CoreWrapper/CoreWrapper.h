@@ -13,16 +13,9 @@ namespace CoreWrapper {
 
 	public ref class ImageProc
 	{
+
 	public:
-
-		int foo() { return 0; }
-
+		Image ^ convertMatToImage(const cv::Mat & opencvImage);
 		System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
-
-	private:
-		//void convertToPreview(cv::Mat& sourceImg, int sideLenght, Side side);
-
-		Image^ convertMatToImage(const cv::Mat& opencvImage);
-		
 	};
 }

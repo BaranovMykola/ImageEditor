@@ -42,11 +42,7 @@ System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::Stri
 {
 	string str;
 
-	MarshalString(fileName, str);
-
-	//std::string str = msclr::interop::marshal_as<std::string>(fileName);
-//
-	auto srcImg = readOriginal(str);
+	auto srcImg = Mat();
 	bool em = srcImg.empty();
 
 	/*cv::Mat matImage;
@@ -73,8 +69,8 @@ System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::Stri
 				
 		}
 	}*/
-	auto preview = convertToPreview(srcImg, 1000, 1);
-	return this->convertMatToImage(preview);
+	//auto preview = convertToPreview(srcImg, 1000, 1);
+	return this->convertMatToImage(srcImg);
 	//return Drawing::Image::FromFile(fileName);
 }
 

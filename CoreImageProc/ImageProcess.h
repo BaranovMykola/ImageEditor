@@ -8,54 +8,95 @@
 using namespace std;
 using namespace cv;
 
-cv::Mat readOriginal(std::string fileName)
+class CoreImgEditor
 {
-		Mat original = imread(fileName);
-		if (original.empty())
-		{
-			throw std::exception("Image load failed");
-		}
-		return original;
-}
-
-cv::Mat RotateAt(const cv::Mat& img, float grad);
-
-cv::Mat resizeImg(const cv::Mat& img, float percent);
-
-cv::Mat contrastAndBrightness(const cv::Mat& img, float contrast, int brightness);
-
-enum Side { WIDTH, HEIGHT };
-
-cv::Mat convertToPreview(cv::Mat & sourceImg, int sideLenght, int side)
-{
-	cv::Size originalSize = sourceImg.size();
-	float ratio;
-	switch (side)
+public:
+	CoreImgEditor(string fileName):
+		percentRatio(1),
+		contrast(1),
+		brightness(0),
+		rotateAngle(0)
 	{
-		case Side::WIDTH:
-			ratio = originalSize.width / (float)sideLenght;
-			break;
-		case Side::HEIGHT:
-			ratio = originalSize.height/ (float)sideLenght;
-			break;
-		default:
-			ratio = 1;
-			break;
+		source = cv::imread(fileName);
 	}
 
-	cv::Size newSize (originalSize.width*ratio, originalSize.height*ratio);
+	cv::Mat RotateAt(const cv::Mat img)
+	{
+			//Computing affine matrix
+			auto center = Point2f(img.cols / 2, img.rows / 2);
+			cv::Mat rotateMat = getRotationMatrix2D(center, rotateAngle, 1);
+			auto rotRect = RotatedRect(center, img.size(), rotateAngle).boundingRect();
+			rotateMat.at<double>(0, 2) += rotRect.width / 2.0 - center.x;
+			rotateMat.at<double>(1, 2) += rotRect.height / 2.0 - center.y;
+		
+			cv::Mat rotatedImg;
+			warpAffine(img, rotatedImg, rotateMat, rotRect.size(), 1, BORDER_TRANSPARENT);
+			return rotatedImg;
+	}
+
+	cv::Mat resizeImg(const cv::Mat& img)
+	{
+			cv::Size newSize(img.size().width*percentRatio, img.size().height*percentRatio);
+			cv::Mat resized = Mat::zeros(newSize, CV_8UC3);
+			cv::resize(img, resized, newSize);
+			return resized;
+	}
+
+	cv::Mat contrastAndBrightness(const cv::Mat& img)
+	{
+			Mat edited;
+			img.convertTo(edited, edited.type(), contrast, brightness);
+			return edited;
+	}
+
+	void changeContrastAndBrightness(float _contrast, int _brightness)
+	{
+		contrast = _contrast;
+		brightness = _brightness;
+		editSource();
+	}
+
+	void resize(float _percentRatio)
+	{
+		percentRatio = _percentRatio;
+		editSource();
+	}
+
+	void rotate(float _rotateAngle)
+	{
+		rotateAngle = _rotateAngle;
+		editSource();
+	}
+
+	void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
+	{
+		percentRatio = _sizeRatio;
+		rotateAngle = _rotateAngle;
+		contrast = _contrast;
+		brightness = _brightness;
+		editSource();
+	}
+
+	cv::Mat getPreview()
+	{
+		return changed;
+	}
+
+private:
+
+	void editSource()
+	{
+		changed = resizeImg(source);
+		changed = RotateAt(changed);
+		changed = contrastAndBrightness(changed);
+	}
+
+	cv::Mat source;
+	cv::Mat changed;
 	cv::Mat preview;
-	int naturalRatio = ratio;
-	if (naturalRatio % 2 != 0 && naturalRatio> 1)
-	{
-		--naturalRatio;
-	}
 
-	for (int i = 0; i < naturalRatio; ++++i)
-	{
-		pyrDown(sourceImg, preview);
-		sourceImg = preview;
-	}
-	return preview;
-}
-
+	float rotateAngle;
+	float contrast;
+	int brightness;
+	float percentRatio;
+};
