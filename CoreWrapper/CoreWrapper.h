@@ -17,9 +17,11 @@ namespace CoreWrapper {
 	{
 	public:
 		ImageProc(System::String^ fileName);
-		Image ^ convertMatToImage(const cv::Mat & opencvImage);
 		System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
+		void loadNewImage(System::String^ fileName);
+		void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness);
 	private:
+		Image ^ convertMatToImage(const cv::Mat & opencvImage);
 		CoreImgEditor* editor;
 	};
 }

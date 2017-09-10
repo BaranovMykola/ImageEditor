@@ -16,7 +16,7 @@ int main()
 	createTrackbar("B", "Panel", &b, 510);
 	createTrackbar("C", "Panel", &c, 300);
 	createTrackbar("Size", "Panel", &size, 300);
-	CoreImgEditor cie("img.jpg");
+	CoreImgEditor cie("i.jpg");
 	while (waitKey(30) != 27)
 	{
 		cie.editImage(size / 100.0, grad, c / 100.0, b - 255);

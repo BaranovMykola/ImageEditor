@@ -86,9 +86,22 @@ public:
 
 	void updatePreview(int width, int height)
 	{
+		if (changed.empty())
+		{
+			changed = source.clone();
+		}
 		float resizeRatio = std::max((float)width / changed.cols, (float)height/ changed.rows);
 		cv::Size previewSize(changed.size().width*resizeRatio, changed.size().height*resizeRatio);
-		cv::resize(changed, preview, previewSize);
+		float scale = 1 / resizeRatio;
+		preview = changed;
+		while (preview.size().width > previewSize.width || preview.size().height > previewSize.height)
+		{
+			Mat r;
+			pyrDown(changed, r);
+			changed = r;
+			//scale -= 2;
+			preview = changed;
+		}
 	}
 
 	cv::Mat getPreview()

@@ -10,6 +10,7 @@
 #using <System.Drawing.dll>
 
 #include <string>
+#include <ctime>
 
 using namespace std;
 //
@@ -40,12 +41,26 @@ void MarshalString(System::String ^ s, wstring& os)
 
 System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
 {
-	editor->rotate(45);
+	//editor->rotate(45);
+	auto start = clock();
 	editor->updatePreview(300, 300);
+	auto end = clock() - start;
 	auto srcImg = editor->getPreview();
 	bool em = srcImg.empty();
 	auto image = this->convertMatToImage(srcImg);
 	return image;
+}
+
+void CoreWrapper::ImageProc::loadNewImage(System::String ^ fileName)
+{
+	string str;
+	MarshalString(fileName, str);
+	editor->loadImg(str);
+}
+
+void CoreWrapper::ImageProc::editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
+{
+	editor->editImage(_sizeRatio, _rotateAngle, _contrast, _brightness);
 }
 
 CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
@@ -57,6 +72,7 @@ CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 {
+	auto start = clock();
 	Drawing::Bitmap^ newImage = gcnew Drawing::Bitmap(opencvImage.cols, opencvImage.rows);
 	for (size_t i = 0; i < opencvImage.rows - 1; i++)
 	{
@@ -67,5 +83,6 @@ Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 			newImage->SetPixel(j, i, c);
 		}
 	}
+	auto end = clock() - start;
 	return (Drawing::Image^)newImage;
 }
