@@ -40,44 +40,19 @@ void MarshalString(System::String ^ s, wstring& os)
 
 System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
 {
-	std::string str;
-	MarshalString(fileName, str);
-	editor->loadImg(str);
 	editor->rotate(45);
+	editor->updatePreview(300, 300);
 	auto srcImg = editor->getPreview();
 	bool em = srcImg.empty();
 	auto image = this->convertMatToImage(srcImg);
 	return image;
 }
 
-
-
-//void CoreWrapper::ImageProc::convertToPreview(cv::Mat & sourceImg, int sideLenght, Side side)
-//{
-//	cv::Size originalSize = sourceImg.size();
-//	float ratio;
-//	switch (side)
-//	{
-//		case CoreWrapper::Side::WIDTH:
-//			ratio = originalSize.width / (float)sideLenght;
-//			break;
-//		case CoreWrapper::Side::HEIGHT:
-//			ratio = originalSize.height/ (float)sideLenght;
-//			break;
-//		default:
-//			ratio = 1;
-//			break;
-//	}
-//
-//	cv::Size newSize (originalSize.width*ratio, originalSize.height*ratio);
-//	cv::Mat preview;
-//	cv::resize(sourceImg, preview, newSize);
-//	sourceImg = preview;
-//}
-
 CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
 {
-	editor = new CoreImgEditor();
+	std::string str;
+	MarshalString(fileName, str);
+	editor = new CoreImgEditor(str);
 }
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
