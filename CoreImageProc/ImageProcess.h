@@ -14,7 +14,7 @@ public:
 	CoreImgEditor(string fileName)
 	{
 		initilizeParamsByDefault();
-		//loadImg(fileName);
+		loadImg(fileName);
 	}
 	CoreImgEditor()
 	{
@@ -84,9 +84,16 @@ public:
 		editSource();
 	}
 
+	void updatePreview(int width, int height)
+	{
+		float resizeRatio = std::max((float)width / changed.cols, (float)height/ changed.rows);
+		cv::Size previewSize(changed.size().width*resizeRatio, changed.size().height*resizeRatio);
+		cv::resize(changed, preview, previewSize);
+	}
+
 	cv::Mat getPreview()
 	{
-		return changed;
+		return preview;
 	}
 
 private:

@@ -20,6 +20,7 @@ int main()
 	while (waitKey(30) != 27)
 	{
 		cie.editImage(size / 100.0, grad, c / 100.0, b - 255);
+		cie.updatePreview(300, 300);
 		cv::imshow("img", cie.getPreview());
 	}
 	cv::waitKey();
