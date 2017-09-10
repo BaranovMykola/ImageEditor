@@ -78,6 +78,14 @@ void CoreWrapper::ImageProc::resizeImage(float _ratio)
 	editor->resize(_ratio);
 }
 
+System::Drawing::Image ^ CoreWrapper::ImageProc::getPreview(int width, int height)
+{
+	editor->updatePreview(width, height);
+	auto mat = editor->getPreview();
+	auto image = this->convertMatToImage(mat);
+	return image;
+}
+
 CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
 {
 	std::string str;

@@ -50,8 +50,22 @@ namespace GUI
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            ip.editImage(1, 0, 1, trackBar1.Value - 255);
-            var a = ip.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\GUI\i.jpg");
+            ip.editContrastAndBrightness((float) (trackBar2.Value/100.0), trackBar1.Value-255);
+            var a = ip.getPreview(600,600);
+            pictureBox1.Image = a;
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            ip.editContrastAndBrightness((float)(trackBar2.Value / 100.0), trackBar1.Value - 255);
+            var a = ip.getPreview(600, 600);
+            pictureBox1.Image = a;
+        }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            ip.rotateImage(trackBar3.Value);
+            var a = ip.getPreview(600, 600);
             pictureBox1.Image = a;
         }
     }
