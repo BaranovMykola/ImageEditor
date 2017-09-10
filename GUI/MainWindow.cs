@@ -34,7 +34,7 @@ namespace GUI
             //ip.foo();
             //CoreWrapper.ImageProc ip = new CoreWrapper.ImageProc();
             //CoreWrapper.ImageProc ip = new ImageProc();
-            CoreWrapper.ImageProc ip = new ImageProc();
+            CoreWrapper.ImageProc ip = new ImageProc(@"D:\Studying\Programming\ImageEditor\GUI\i.jpg");
             var a = ip.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\GUI\i.jpg");
             pictureBox1.Image = a;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;

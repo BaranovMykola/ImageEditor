@@ -11,13 +11,20 @@ using namespace cv;
 class CoreImgEditor
 {
 public:
-	CoreImgEditor(string fileName):
-		percentRatio(1),
-		contrast(1),
-		brightness(0),
-		rotateAngle(0)
+	CoreImgEditor(string fileName)
 	{
-		source = cv::imread(fileName);
+		initilizeParamsByDefault();
+		//loadImg(fileName);
+	}
+	CoreImgEditor()
+	{
+		initilizeParamsByDefault();
+	}
+
+	void loadImg(std::string fileName)
+	{
+		source = imread(fileName);
+		//source = Mat();
 	}
 
 	cv::Mat RotateAt(const cv::Mat img)
@@ -89,6 +96,13 @@ private:
 		changed = resizeImg(source);
 		changed = RotateAt(changed);
 		changed = contrastAndBrightness(changed);
+	}
+	void initilizeParamsByDefault()
+	{
+		percentRatio = 1;
+		contrast = 1;
+		brightness = 0;
+		rotateAngle = 0;
 	}
 
 	cv::Mat source;

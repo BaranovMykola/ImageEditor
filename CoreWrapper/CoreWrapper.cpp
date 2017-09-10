@@ -40,38 +40,14 @@ void MarshalString(System::String ^ s, wstring& os)
 
 System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
 {
-	string str;
-
-	auto srcImg = Mat();
+	std::string str;
+	MarshalString(fileName, str);
+	editor->loadImg(str);
+	editor->rotate(45);
+	auto srcImg = editor->getPreview();
 	bool em = srcImg.empty();
-
-	/*cv::Mat matImage;
-	cvtColor(srcImg, matImage, CV_BGRA2RGBA);*/
-
-	//GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-	//auto a =Drawing::Bitmap(matImage.cols, matImage.rows, 1, 32, matImage.data);
-	
-	//auto srcImg = cv::Mat();
-
-	//int bytes = srcImg.cols* srcImg.rows;
-	//byte^ rgbValues = gcnew byte[bytes];
-	//byte r[] = new byte[bytes / 3];
-	//byte g[] = new byte[bytes / 3];
-	//byte b[] = new byte[bytes / 3];
-/*
-	Drawing::Bitmap^ bmpData = gcnew System::Drawing::Bitmap(srcImg.cols, srcImg.rows);
-
-	for (int column = 0; column < bmpData->Height; column++)
-	{
-		for (int row = 0; row < bmpData->Width; row++)
-		{
-			auto p = bmpData->GetPixel(column, row);
-				
-		}
-	}*/
-	//auto preview = convertToPreview(srcImg, 1000, 1);
-	return this->convertMatToImage(srcImg);
-	//return Drawing::Image::FromFile(fileName);
+	auto image = this->convertMatToImage(srcImg);
+	return image;
 }
 
 
@@ -98,6 +74,11 @@ System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::Stri
 //	cv::resize(sourceImg, preview, newSize);
 //	sourceImg = preview;
 //}
+
+CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
+{
+	editor = new CoreImgEditor();
+}
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 {
