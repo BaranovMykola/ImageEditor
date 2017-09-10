@@ -63,6 +63,21 @@ void CoreWrapper::ImageProc::editImage(float _sizeRatio, float _rotateAngle, flo
 	editor->editImage(_sizeRatio, _rotateAngle, _contrast, _brightness);
 }
 
+void CoreWrapper::ImageProc::editContrastAndBrightness(float _contrast, int _brightness)
+{
+	editor->changeContrastAndBrightness(_contrast, _brightness);
+}
+
+void CoreWrapper::ImageProc::rotateImage(float _grad)
+{
+	editor->rotate(_grad);
+}
+
+void CoreWrapper::ImageProc::resizeImage(float _ratio)
+{
+	editor->resize(_ratio);
+}
+
 CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
 {
 	std::string str;

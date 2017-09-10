@@ -16,6 +16,8 @@ public:
 		initilizeParamsByDefault();
 		loadImg(fileName);
 		reducedSource = reduceImg(source, upperWidth, upperHeight);
+
+		rotated = resized = contrasted = reducedSource;
 	}
 	CoreImgEditor()
 	{
@@ -26,6 +28,12 @@ public:
 	{
 		source = imread(fileName);
 		//source = Mat();
+	}
+
+	void save(string fileName)
+	{
+		editSource(source);
+		imwrite(fileName, changed);
 	}
 
 	cv::Mat RotateAt(const cv::Mat img)
@@ -61,19 +69,24 @@ public:
 	{
 		contrast = _contrast;
 		brightness = _brightness;
-		editSource(reducedSource);
+		changed = contrastAndBrightness(reducedSource);
 	}
 
 	void resize(float _percentRatio)
 	{
 		percentRatio = _percentRatio;
-		editSource(reducedSource);
+		changed = resizeImg(reducedSource);
 	}
 
 	void rotate(float _rotateAngle)
 	{
 		rotateAngle = _rotateAngle;
-		editSource(reducedSource);
+		changed = RotateAt(reducedSource);
+	}
+
+	void apply()
+	{
+		reducedSource = changed;
 	}
 
 	void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
@@ -94,12 +107,6 @@ public:
 		preview = reduceImg(changed, width*percentRatio, height*percentRatio);
 	}
 
-	void save(string fileName)
-	{
-		editSource(source);
-		imwrite(fileName, changed);
-	}
-
 	cv::Mat getPreview()
 	{
 		return preview;
@@ -109,9 +116,9 @@ private:
 
 	void editSource(const cv::Mat& img)
 	{
-		changed = contrastAndBrightness(img);
-		changed = RotateAt(changed);
+		changed = RotateAt(img);
 		changed = resizeImg(changed);
+		changed = contrastAndBrightness(changed);
 	}
 	void initilizeParamsByDefault()
 	{
@@ -135,6 +142,10 @@ private:
 	cv::Mat reducedSource;
 	cv::Mat changed;
 	cv::Mat preview;
+
+	cv::Mat rotated;
+	cv::Mat resized;
+	cv::Mat contrasted;
 
 	float rotateAngle;
 	float contrast;
