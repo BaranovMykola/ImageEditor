@@ -11,7 +11,7 @@ namespace CoreWrapper {
 	public ref class ImageProc
 	{
 	public:
-		int foo() { return 0; }
-		System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
+		int foo();
+		//System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
 	};
 }
