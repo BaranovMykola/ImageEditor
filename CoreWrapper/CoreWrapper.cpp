@@ -55,7 +55,7 @@ void CoreWrapper::ImageProc::loadNewImage(System::String ^ fileName)
 {
 	string str;
 	MarshalString(fileName, str);
-	editor->loadImg(str);
+	editor->loadImg(str, 1920, 1080);
 }
 
 void CoreWrapper::ImageProc::editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
