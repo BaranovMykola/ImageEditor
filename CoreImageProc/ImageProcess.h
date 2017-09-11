@@ -11,10 +11,13 @@ using namespace cv;
 class CoreImgEditor
 {
 public:
-	CoreImgEditor(string fileName)
+	CoreImgEditor(string fileName, int upperWidth, int upperHeight)
 	{
 		initilizeParamsByDefault();
 		loadImg(fileName);
+		reducedSource = reduceImg(source, upperWidth, upperHeight);
+
+		rotated = resized = contrasted = reducedSource;
 	}
 	CoreImgEditor()
 	{
@@ -25,6 +28,12 @@ public:
 	{
 		source = imread(fileName);
 		//source = Mat();
+	}
+
+	void save(string fileName)
+	{
+		editSource(source);
+		imwrite(fileName, changed);
 	}
 
 	cv::Mat RotateAt(const cv::Mat img)
@@ -60,19 +69,24 @@ public:
 	{
 		contrast = _contrast;
 		brightness = _brightness;
-		editSource();
+		changed = contrastAndBrightness(reducedSource);
 	}
 
 	void resize(float _percentRatio)
 	{
 		percentRatio = _percentRatio;
-		editSource();
+		changed = resizeImg(reducedSource);
 	}
 
 	void rotate(float _rotateAngle)
 	{
 		rotateAngle = _rotateAngle;
-		editSource();
+		changed = RotateAt(reducedSource);
+	}
+
+	void apply()
+	{
+		reducedSource = changed;
 	}
 
 	void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
@@ -81,14 +95,16 @@ public:
 		rotateAngle = _rotateAngle;
 		contrast = _contrast;
 		brightness = _brightness;
-		editSource();
+		editSource(reducedSource);
 	}
 
 	void updatePreview(int width, int height)
 	{
-		float resizeRatio = std::max((float)width / changed.cols, (float)height/ changed.rows);
-		cv::Size previewSize(changed.size().width*resizeRatio, changed.size().height*resizeRatio);
-		cv::resize(changed, preview, previewSize);
+		if (changed.empty())
+		{
+			changed = reducedSource;
+		}
+		preview = reduceImg(changed, width*percentRatio, height*percentRatio);
 	}
 
 	cv::Mat getPreview()
@@ -98,10 +114,10 @@ public:
 
 private:
 
-	void editSource()
+	void editSource(const cv::Mat& img)
 	{
-		changed = resizeImg(source);
-		changed = RotateAt(changed);
+		changed = RotateAt(img);
+		changed = resizeImg(changed);
 		changed = contrastAndBrightness(changed);
 	}
 	void initilizeParamsByDefault()
@@ -111,10 +127,25 @@ private:
 		brightness = 0;
 		rotateAngle = 0;
 	}
+	cv::Mat reduceImg(const cv::Mat& img, int upperWidth, int upperHeight)
+	{
+		Mat reduced = img.clone();
+		while (reduced.size().width >= upperWidth || reduced.size().height >= upperHeight)
+		{
+			Mat scaledDown;
+			pyrDown(reduced, reduced);
+		}
+		return reduced;
+	}
 
 	cv::Mat source;
+	cv::Mat reducedSource;
 	cv::Mat changed;
 	cv::Mat preview;
+
+	cv::Mat rotated;
+	cv::Mat resized;
+	cv::Mat contrasted;
 
 	float rotateAngle;
 	float contrast;

@@ -16,11 +16,11 @@ int main()
 	createTrackbar("B", "Panel", &b, 510);
 	createTrackbar("C", "Panel", &c, 300);
 	createTrackbar("Size", "Panel", &size, 300);
-	CoreImgEditor cie("img.jpg");
+	CoreImgEditor cie("i.jpg", 1600, 900);
 	while (waitKey(30) != 27)
 	{
 		cie.editImage(size / 100.0, grad, c / 100.0, b - 255);
-		cie.updatePreview(300, 300);
+		cie.updatePreview(880, 880);
 		cv::imshow("img", cie.getPreview());
 	}
 	cv::waitKey();

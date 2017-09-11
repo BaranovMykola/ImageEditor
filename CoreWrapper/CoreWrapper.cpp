@@ -10,6 +10,7 @@
 #using <System.Drawing.dll>
 
 #include <string>
+#include <ctime>
 
 using namespace std;
 //
@@ -40,48 +41,63 @@ void MarshalString(System::String ^ s, wstring& os)
 
 System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
 {
-	std::string str;
-	MarshalString(fileName, str);
-	editor->loadImg(str);
-	editor->rotate(45);
+	//editor->rotate(45);
+	auto start = clock();
+	editor->updatePreview(400, 400);
+	auto end = clock() - start;
 	auto srcImg = editor->getPreview();
 	bool em = srcImg.empty();
 	auto image = this->convertMatToImage(srcImg);
 	return image;
 }
 
-
-
-//void CoreWrapper::ImageProc::convertToPreview(cv::Mat & sourceImg, int sideLenght, Side side)
-//{
-//	cv::Size originalSize = sourceImg.size();
-//	float ratio;
-//	switch (side)
-//	{
-//		case CoreWrapper::Side::WIDTH:
-//			ratio = originalSize.width / (float)sideLenght;
-//			break;
-//		case CoreWrapper::Side::HEIGHT:
-//			ratio = originalSize.height/ (float)sideLenght;
-//			break;
-//		default:
-//			ratio = 1;
-//			break;
-//	}
-//
-//	cv::Size newSize (originalSize.width*ratio, originalSize.height*ratio);
-//	cv::Mat preview;
-//	cv::resize(sourceImg, preview, newSize);
-//	sourceImg = preview;
-//}
-
-CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
+void CoreWrapper::ImageProc::loadNewImage(System::String ^ fileName)
 {
-	editor = new CoreImgEditor();
+	string str;
+	MarshalString(fileName, str);
+	editor->loadImg(str);
+}
+
+void CoreWrapper::ImageProc::editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
+{
+	editor->editImage(_sizeRatio, _rotateAngle, _contrast, _brightness);
+}
+
+void CoreWrapper::ImageProc::editContrastAndBrightness(float _contrast, int _brightness)
+{
+	editor->changeContrastAndBrightness(_contrast, _brightness);
+}
+
+void CoreWrapper::ImageProc::rotateImage(float _grad)
+{
+	editor->rotate(_grad);
+}
+
+void CoreWrapper::ImageProc::resizeImage(float _ratio)
+{
+	editor->resize(_ratio);
+}
+
+System::Drawing::Image ^ CoreWrapper::ImageProc::getPreview(int width, int height)
+{
+	auto start = clock();
+	editor->updatePreview(width, height);
+	auto mat = editor->getPreview();
+	auto image = this->convertMatToImage(mat);
+	auto end = clock() - start;
+	return image;
+}
+
+CoreWrapper::ImageProc::ImageProc(System::String^ fileName, int processingWidth, int processingHeight)
+{
+	std::string str;
+	MarshalString(fileName, str);
+	editor = new CoreImgEditor(str, processingWidth, processingHeight);
 }
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 {
+	auto start = clock();
 	Drawing::Bitmap^ newImage = gcnew Drawing::Bitmap(opencvImage.cols, opencvImage.rows);
 	for (size_t i = 0; i < opencvImage.rows - 1; i++)
 	{
@@ -92,5 +108,6 @@ Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 			newImage->SetPixel(j, i, c);
 		}
 	}
+	auto end = clock() - start;
 	return (Drawing::Image^)newImage;
 }
