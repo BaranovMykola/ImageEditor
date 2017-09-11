@@ -164,6 +164,8 @@
             this.icons.TransparentColor = System.Drawing.Color.Transparent;
             this.icons.Images.SetKeyName(0, "left.ico");
             this.icons.Images.SetKeyName(1, "right.ico");
+            this.icons.Images.SetKeyName(2, "left_gray.ico");
+            this.icons.Images.SetKeyName(3, "right_gray.ico");
             // 
             // MainWindow
             // 

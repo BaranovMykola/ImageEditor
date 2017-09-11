@@ -109,10 +109,43 @@ namespace GUI
 
         private void changeImage(ImageOrder order)
         {
-            if (currentImageIndex + (int) order < imageListPath.Length && currentImageIndex + (int) order >= 0)
+            var lst = tools.Items;
+            var first = lst[0];
+            var last = lst[lst.Count - 1];
+            setEnabledRowIcon(first, true, 0);
+            setEnabledRowIcon(last, true, 1);
+
+            if (currentImageIndex + (int) order < 0)
             {
+                setEnabledRowIcon(first, false, 0);
+                return;
+            }
+
+            if (currentImageIndex + (int) order >= imageListPath.Length)
+            {
+                setEnabledRowIcon(last, false, 1);
+                return;
+            }
+
                 currentImageIndex += (int) order;
                 pictureBox1.Image = Image.FromFile(imageListPath[currentImageIndex]);
+        }
+
+        private void setEnabledRowIcon(ListViewItem item, bool enabled, int imgIndex)
+        {
+            int newIndex = item.ImageIndex;
+            if (enabled)
+            {
+                newIndex -= 2;
+            }
+            else
+            {
+                newIndex += 2;
+            }
+
+            if (newIndex >= 0 && newIndex < 4)
+            {
+                item.ImageIndex = newIndex;
             }
         }
     }
