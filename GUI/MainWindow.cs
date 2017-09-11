@@ -40,6 +40,8 @@ namespace GUI
             newImage.CheckPathExists = true;
             newImage.DefaultExt = "*.jpeg;*.jpg";
             newImage.Multiselect = true;
+
+            //tools.ItemSelectionChanged += yourListView_ItemSelectionChanged;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -94,6 +96,7 @@ namespace GUI
 
         private void tools_KeyDown(object sender, KeyEventArgs e)
         {
+            tools.FocusedItem.Focused = false;
             Console.WriteLine("Key pressed");
             Console.WriteLine((char)e.KeyValue);
             switch (e.KeyValue)
@@ -115,20 +118,21 @@ namespace GUI
             setEnabledRowIcon(first, true, 0);
             setEnabledRowIcon(last, true, 1);
 
+            if (currentImageIndex + (int) order >= 0 && currentImageIndex + (int)order < imageListPath.Length)
+            {
+                currentImageIndex += (int)order;
+                pictureBox1.Image = Image.FromFile(imageListPath[currentImageIndex]);
+            }
+
             if (currentImageIndex + (int) order < 0)
             {
                 setEnabledRowIcon(first, false, 0);
-                return;
             }
 
             if (currentImageIndex + (int) order >= imageListPath.Length)
             {
                 setEnabledRowIcon(last, false, 1);
-                return;
             }
-
-                currentImageIndex += (int) order;
-                pictureBox1.Image = Image.FromFile(imageListPath[currentImageIndex]);
         }
 
         private void setEnabledRowIcon(ListViewItem item, bool enabled, int imgIndex)
@@ -147,6 +151,17 @@ namespace GUI
             {
                 item.ImageIndex = newIndex;
             }
+        }
+
+        private void tools_SelectedIndexChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            Console.WriteLine("selected index changed");
+            var a = e as ListViewItemSelectionChangedEventArgs;
+        }
+
+        private void tools_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            e.Item.Selected = false;
         }
     }
 }

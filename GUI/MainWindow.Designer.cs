@@ -156,6 +156,7 @@
             this.tools.Size = new System.Drawing.Size(1062, 69);
             this.tools.TabIndex = 3;
             this.tools.UseCompatibleStateImageBehavior = false;
+            this.tools.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.tools_ItemSelectionChanged);
             this.tools.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tools_KeyDown);
             // 
             // icons
