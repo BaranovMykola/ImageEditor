@@ -80,9 +80,11 @@ void CoreWrapper::ImageProc::resizeImage(float _ratio)
 
 System::Drawing::Image ^ CoreWrapper::ImageProc::getPreview(int width, int height)
 {
+	auto start = clock();
 	editor->updatePreview(width, height);
 	auto mat = editor->getPreview();
 	auto image = this->convertMatToImage(mat);
+	auto end = clock() - start;
 	return image;
 }
 
