@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("", 0);
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("", 1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +43,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.tools = new System.Windows.Forms.ListView();
             this.icons = new System.Windows.Forms.ImageList(this.components);
+            this.default_images = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -114,11 +115,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.ImageLocation = "";
+            this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(3, 78);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(1062, 572);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -156,8 +157,11 @@
             this.tools.Size = new System.Drawing.Size(1062, 69);
             this.tools.TabIndex = 3;
             this.tools.UseCompatibleStateImageBehavior = false;
+            this.tools.ItemActivate += new System.EventHandler(this.tools_ItemActivate);
+            this.tools.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.tools_ItemMouseHover);
             this.tools.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.tools_ItemSelectionChanged);
             this.tools.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tools_KeyDown);
+            this.tools.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tools_MouseClick);
             // 
             // icons
             // 
@@ -167,6 +171,12 @@
             this.icons.Images.SetKeyName(1, "right.ico");
             this.icons.Images.SetKeyName(2, "left_gray.ico");
             this.icons.Images.SetKeyName(3, "right_gray.ico");
+            // 
+            // default_images
+            // 
+            this.default_images.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("default_images.ImageStream")));
+            this.default_images.TransparentColor = System.Drawing.Color.Transparent;
+            this.default_images.Images.SetKeyName(0, "default.png");
             // 
             // MainWindow
             // 
@@ -200,6 +210,7 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ListView tools;
         private System.Windows.Forms.ImageList icons;
+        private System.Windows.Forms.ImageList default_images;
     }
 }
 

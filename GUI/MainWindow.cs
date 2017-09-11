@@ -28,7 +28,7 @@ namespace GUI
         CoreWrapper.ImageProc ip = new ImageProc(@"D:\Studying\Programming\ImageEditor\GUI\fox.jpg", 1980, 1080);
         OpenFileDialog newImage = new OpenFileDialog();
         private Image currentImage = null;
-        private string[] imageListPath = null;
+        private string[] imageListPath = new string[0];
         private int currentImageIndex = -1;
 
         public MainWindow()
@@ -41,7 +41,10 @@ namespace GUI
             newImage.DefaultExt = "*.jpeg;*.jpg";
             newImage.Multiselect = true;
 
-            //tools.ItemSelectionChanged += yourListView_ItemSelectionChanged;
+            pictureBox1.Image = Image.FromFile(@"D:\Studying\Programming\ImageEditor\GUI\icons\default.png");
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+
+            changeImage(ImageOrder.NEXT);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -96,7 +99,6 @@ namespace GUI
 
         private void tools_KeyDown(object sender, KeyEventArgs e)
         {
-            tools.FocusedItem.Focused = false;
             Console.WriteLine("Key pressed");
             Console.WriteLine((char)e.KeyValue);
             switch (e.KeyValue)
@@ -108,10 +110,23 @@ namespace GUI
                     changeImage(ImageOrder.PREV);
                     break;
             }
+
+            var selected = tools.Items;
+            foreach (ListViewItem item in selected)
+            {
+                item.Focused = false;
+                item.Selected = false;
+            }
+
+            tools.Enabled = false;
+            tools.Enabled = true;
+            //tools.Items[0].Focused = true;
+
         }
 
         private void changeImage(ImageOrder order)
         {
+           
             var lst = tools.Items;
             var first = lst[0];
             var last = lst[lst.Count - 1];
@@ -121,15 +136,16 @@ namespace GUI
             if (currentImageIndex + (int) order >= 0 && currentImageIndex + (int)order < imageListPath.Length)
             {
                 currentImageIndex += (int)order;
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 pictureBox1.Image = Image.FromFile(imageListPath[currentImageIndex]);
             }
 
-            if (currentImageIndex + (int) order < 0)
+            if (currentImageIndex == 0 || imageListPath.Length == 0)
             {
                 setEnabledRowIcon(first, false, 0);
             }
 
-            if (currentImageIndex + (int) order >= imageListPath.Length)
+            if (currentImageIndex+1 == imageListPath.Length || imageListPath.Length == 0)
             {
                 setEnabledRowIcon(last, false, 1);
             }
@@ -161,7 +177,45 @@ namespace GUI
 
         private void tools_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            e.Item.Selected = false;
+            //e.Item.Selected = false;
+        }
+
+        private void tools_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+        {
+            //if (e.Item == tools.Items[0])
+            //{
+            //    changeImage(ImageOrder.NEXT);
+            //}
+            //else if (e.Item == tools.Items[1])
+            //{
+            //    changeImage((ImageOrder.PREV));
+            //}
+        }
+
+        private void tools_ItemActivate(object sender, EventArgs e)
+        {
+            Console.WriteLine("item activated");
+        }
+
+        private void tools_MouseClick(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("mouse click");
+            if (tools.SelectedItems.Count > 0)
+            {
+                var selected = tools.SelectedItems?[0];
+                if (selected != null)
+                {
+                    if (selected == tools.Items[0])
+                    {
+                        changeImage(ImageOrder.PREV);
+                    }
+                    else if (selected == tools.Items[1])
+                    {
+                        changeImage((ImageOrder.NEXT));
+                    }
+                    selected.Selected = false;
+                }
+            }
         }
     }
 }
