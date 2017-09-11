@@ -16,7 +16,7 @@ namespace CoreWrapper {
 	public ref class ImageProc
 	{
 	public:
-		ImageProc(System::String^ fileName);
+		ImageProc(System::String^ fileName, int processingWidth, int processingHeight);
 		System::Drawing::Image^ readOriginalWrapper(System::String^ fileName);
 		void loadNewImage(System::String^ fileName);
 		void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness);

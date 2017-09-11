@@ -88,11 +88,11 @@ System::Drawing::Image ^ CoreWrapper::ImageProc::getPreview(int width, int heigh
 	return image;
 }
 
-CoreWrapper::ImageProc::ImageProc(System::String^ fileName)
+CoreWrapper::ImageProc::ImageProc(System::String^ fileName, int processingWidth, int processingHeight)
 {
 	std::string str;
 	MarshalString(fileName, str);
-	editor = new CoreImgEditor(str, 400, 400);
+	editor = new CoreImgEditor(str, processingWidth, processingHeight);
 }
 
 Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)

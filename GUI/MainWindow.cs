@@ -17,7 +17,7 @@ namespace GUI
 {
     public partial class MainWindow : Form
     {
-        CoreWrapper.ImageProc ip = new ImageProc(@"D:\Studying\Programming\ImageEditor\GUI\fox.jpg");
+        CoreWrapper.ImageProc ip = new ImageProc(@"D:\Studying\Programming\ImageEditor\GUI\fox.jpg", 1980, 1080);
         private int b = 0;
         public MainWindow()
         {
@@ -81,8 +81,14 @@ namespace GUI
         private void changeImg(ImageProc _ip, PictureBox _pictureBox1)
         {
             _ip.editContrastAndBrightness((float)(trackBar2.Value / 100.0), trackBar1.Value - 255);
-            var a = ip.getPreview(9000, 9000);
+            var a = ip.getPreview(128, 72);
             _pictureBox1.Image = a;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var a = ip.getPreview(9999, 9999);
+            pictureBox1.Image = a;
         }
     }
 }
