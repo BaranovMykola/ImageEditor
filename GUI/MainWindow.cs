@@ -97,33 +97,6 @@ namespace GUI
             }
         }
 
-        private void tools_KeyDown(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine("Key pressed");
-            Console.WriteLine((char)e.KeyValue);
-            switch (e.KeyValue)
-            {
-                case 39:
-                    changeImage(ImageOrder.NEXT);
-                    break;
-                case 37:
-                    changeImage(ImageOrder.PREV);
-                    break;
-            }
-
-            var selected = tools.Items;
-            foreach (ListViewItem item in selected)
-            {
-                item.Focused = false;
-                item.Selected = false;
-            }
-
-            tools.Enabled = false;
-            tools.Enabled = true;
-            //tools.Items[0].Focused = true;
-
-        }
-
         private void changeImage(ImageOrder order)
         {
            
@@ -169,53 +142,24 @@ namespace GUI
             }
         }
 
-        private void tools_SelectedIndexChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            Console.WriteLine("selected index changed");
-            var a = e as ListViewItemSelectionChangedEventArgs;
-        }
-
         private void tools_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            //e.Item.Selected = false;
-        }
-
-        private void tools_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
-        {
-            //if (e.Item == tools.Items[0])
-            //{
-            //    changeImage(ImageOrder.NEXT);
-            //}
-            //else if (e.Item == tools.Items[1])
-            //{
-            //    changeImage((ImageOrder.PREV));
-            //}
-        }
-
-        private void tools_ItemActivate(object sender, EventArgs e)
-        {
-            Console.WriteLine("item activated");
-        }
-
-        private void tools_MouseClick(object sender, MouseEventArgs e)
-        {
-            Console.WriteLine("mouse click");
-            if (tools.SelectedItems.Count > 0)
+            if (e.Item == tools.Items[0])
             {
-                var selected = tools.SelectedItems?[0];
-                if (selected != null)
-                {
-                    if (selected == tools.Items[0])
-                    {
-                        changeImage(ImageOrder.PREV);
-                    }
-                    else if (selected == tools.Items[1])
-                    {
-                        changeImage((ImageOrder.NEXT));
-                    }
-                    selected.Selected = false;
-                }
+                changeImage(ImageOrder.PREV);
             }
+            else if (e.Item == tools.Items[1])
+            {
+                changeImage((ImageOrder.NEXT));
+            }
+            tools.ItemSelectionChanged -= tools_ItemSelectionChanged;
+            e.Item.Selected = false;
+            tools.ItemSelectionChanged += tools_ItemSelectionChanged;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            changeImage(ImageOrder.NEXT);
         }
     }
 }

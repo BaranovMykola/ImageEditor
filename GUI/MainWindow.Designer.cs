@@ -122,6 +122,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(1062, 572);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // listView1
             // 
@@ -157,11 +158,7 @@
             this.tools.Size = new System.Drawing.Size(1062, 69);
             this.tools.TabIndex = 3;
             this.tools.UseCompatibleStateImageBehavior = false;
-            this.tools.ItemActivate += new System.EventHandler(this.tools_ItemActivate);
-            this.tools.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.tools_ItemMouseHover);
             this.tools.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.tools_ItemSelectionChanged);
-            this.tools.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tools_KeyDown);
-            this.tools.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tools_MouseClick);
             // 
             // icons
             // 
