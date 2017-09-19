@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{B
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreImageProc", "CoreImageProc\CoreImageProc.vcxproj", "{2EC73010-21BF-49F6-B790-413312137124}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_GUI", "WPF_GUI\WPF_GUI.csproj", "{D5B624A2-646F-466C-AAC0-2911E157C16F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,18 @@ Global
 		{2EC73010-21BF-49F6-B790-413312137124}.Release|x64.Build.0 = Release|x64
 		{2EC73010-21BF-49F6-B790-413312137124}.Release|x86.ActiveCfg = Release|Win32
 		{2EC73010-21BF-49F6-B790-413312137124}.Release|x86.Build.0 = Release|Win32
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Debug|x64.Build.0 = Debug|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Debug|x86.Build.0 = Debug|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Release|x64.ActiveCfg = Release|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Release|x64.Build.0 = Release|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D5B624A2-646F-466C-AAC0-2911E157C16F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
