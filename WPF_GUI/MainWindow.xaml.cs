@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI
+﻿using WPF_GUI.Const;
+
+namespace WPF_GUI
 {
     using System;
     using System.Drawing;
@@ -83,13 +85,22 @@
         {
             foreach (var path in pathes)
             {
-                var b = new BitmapImage();
-                b.BeginInit();
-                b.UriSource = new Uri(path);
-                b.EndInit();
+                var original = new BitmapImage();
+                original.BeginInit();
+                original.UriSource = new Uri(path);
+                original.EndInit();
+
+                double ratio = Constants.PreviewWidth/ original.Width;
+                var reducedPreview = new BitmapImage();
+                reducedPreview.BeginInit();
+                reducedPreview.UriSource = new Uri(path);
+                reducedPreview.DecodePixelWidth = Constants.PreviewWidth;
+                reducedPreview.DecodePixelHeight = (int) (original.Height*ratio);
+                reducedPreview.EndInit();
+
                 var im = new Image
                 {
-                    Source = b,
+                    Source = reducedPreview,
                     Height = 100,
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
