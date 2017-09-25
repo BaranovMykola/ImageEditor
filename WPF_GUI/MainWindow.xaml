@@ -11,7 +11,7 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" Click ="openFile"/>
+                    <MenuItem Header="_Open" Click ="OpenFile"/>
                     <MenuItem Header="_Save" />
                     <Separator />
                     <MenuItem Header="_Exit" />
@@ -32,7 +32,7 @@
                 </Button>
                 <Button Name ="removeButton" Click="Remove_OnClick" IsEnabled="False">
                     <StackPanel>
-                        <Image Source="D:\Studying\Programming\ImageEditor\WPF_GUI\icons\remove_gray.ico" Height ="43" Width="43" Opacity="1" Name ="removeIco"/>
+                        <Image Source="/WPF_GUI;component/icons/left.ico" Height="43" Width="43" Opacity="1" Name ="removeIco"/>
                     </StackPanel>
                 </Button>
             </ToolBar>

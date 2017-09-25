@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using WPF_GUI.ImageContainer;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media.Imaging;
+    using Microsoft.Win32;
+    using WPF_GUI.ImageContainer;
+    using Image = System.Windows.Controls.Image;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -26,14 +19,19 @@ namespace WPF_GUI
 
         public MainWindow()
         {
-            InitializeComponent();
-            openedImage.LockLeft = lockLeftButton;
-            openedImage.LockRight = lockrightButton;
-            openedImage.LockRemove = lockRemove;
-            openedImage.UnlockAll = unlockLeftRightButton;
+            this.InitializeComponent();
+            openedImage.LockLeft = () => LockImageControl(leftButton, leftIco, Icons.left_gray);
+            openedImage.LockRight = () => LockImageControl(rightButton, rightIco, Icons.right_gray);
+            openedImage.LockRemove = () => LockImageControl(removeButton, removeIco, Icons.remove_gray);
+            openedImage.UnlockAll = () =>
+            {
+                LockImageControl(leftButton, leftIco, Icons.left, true);
+                LockImageControl(rightButton, rightIco, Icons.right, true);
+                LockImageControl(removeButton, removeIco, Icons.remove, true);
+            };
         }
 
-        private void openFile(object sender, RoutedEventArgs e)
+        private void OpenFile(object sender, RoutedEventArgs e)
         {
             var openDialog = new OpenFileDialog();
             openDialog.Multiselect = true;
@@ -42,7 +40,6 @@ namespace WPF_GUI
 
             openedImage.LoadImages(pathes);
             image.Source = openedImage.Current;
-
         }
 
         private void LeftButton_OnClick(object sender, RoutedEventArgs e)
@@ -52,66 +49,15 @@ namespace WPF_GUI
 
         private void RightButton_OnClick(object sender, RoutedEventArgs e)
         {
- 
-                image.Source = openedImage.Next;
-      
+            image.Source = openedImage.Next;
         }
 
-        private void lockLeftButton()
+        private void LockImageControl(Button button, Image icon, Icon newPicture, bool enabled = false)
         {
-            leftButton.IsEnabled = false;
-            BitmapImage leftGrayIcon = new BitmapImage();
-            leftGrayIcon.BeginInit();
-            leftGrayIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left_gray.ico", UriKind.Absolute);
-            leftGrayIcon.EndInit();
-            leftIco.Source = leftGrayIcon;
+            button.IsEnabled = enabled;
+            icon.Source = newPicture.ToImageSource();
         }
-
-        private void lockrightButton()
-        {
-            rightButton.IsEnabled = false;
-            BitmapImage rightGrayIcon = new BitmapImage();
-            rightGrayIcon.BeginInit();
-            rightGrayIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\right_gray.ico", UriKind.Absolute);
-            rightGrayIcon.EndInit();
-            rightIco.Source = rightGrayIcon;
-        }
-
-        private void unlockLeftRightButton()
-        {
-            rightButton.IsEnabled = true;
-            BitmapImage rightIcon = new BitmapImage();
-            rightIcon.BeginInit();
-            rightIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\right.ico", UriKind.Absolute);
-            rightIcon.EndInit();
-            rightIco.Source = rightIcon;
-
-            leftButton.IsEnabled = true;
-            BitmapImage leftIcon = new BitmapImage();
-            leftIcon.BeginInit();
-            leftIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left.ico", UriKind.Absolute);
-            leftIcon.EndInit();
-            leftIco.Source = leftIcon;
-
-            removeButton.IsEnabled = true;
-            BitmapImage removeIcon = new BitmapImage();
-            removeIcon.BeginInit();
-            removeIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\remove.ico", UriKind.Absolute);
-            removeIcon.EndInit();
-            removeIco.Source = removeIcon;
-
-        }
-
-        private void lockRemove()
-        {
-            removeButton.IsEnabled = false;
-            BitmapImage removeGrayIcon = new BitmapImage();
-            removeGrayIcon.BeginInit();
-            removeGrayIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\remove_gray.ico", UriKind.Absolute);
-            removeGrayIcon.EndInit();
-            removeIco.Source = removeGrayIcon;
-        }
-
+        
         private void Remove_OnClick(object sender, RoutedEventArgs e)
         {
             openedImage.Remove();
