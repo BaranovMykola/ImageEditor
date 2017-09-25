@@ -18,6 +18,7 @@ namespace WPF_GUI.ImageContainer
         public Action LockRight;
         public Action LockRemove;
         public Action UnlockAll;
+        public event Action<int> ImageChanged;
         //public Action<string[]> LoadPreview;
 
         public ImageStorage()
@@ -75,6 +76,7 @@ namespace WPF_GUI.ImageContainer
             get
             {
                 ++CurrentIndex;
+                ImageChanged?.Invoke(CurrentIndex);
                 return Current;
             }
         }
@@ -84,6 +86,7 @@ namespace WPF_GUI.ImageContainer
             get
             {
                 --CurrentIndex;
+                ImageChanged?.Invoke(CurrentIndex);
                 return Current;
             }
         }
@@ -110,5 +113,7 @@ namespace WPF_GUI.ImageContainer
                 }
             }
         }
+
+        //public int Count => imageSourses.Count;
     }
 }
