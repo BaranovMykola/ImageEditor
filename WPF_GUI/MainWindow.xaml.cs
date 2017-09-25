@@ -1,6 +1,4 @@
-﻿using WPF_GUI.Const;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
     using System;
     using System.Drawing;
@@ -10,7 +8,8 @@ namespace WPF_GUI
     using System.Windows.Media.Imaging;
     using System.Windows.Input;
     using Microsoft.Win32;
-    using WPF_GUI.ImageContainer;
+    using ImageContainer;
+    using Const;
     using Image = System.Windows.Controls.Image;
 
     /// <summary>
@@ -18,7 +17,7 @@ namespace WPF_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ImageStorage openedImage = new ImageStorage();
+        private readonly ImageStorage openedImage = new ImageStorage();
 
         public MainWindow()
         {
@@ -72,7 +71,7 @@ namespace WPF_GUI
             button.IsEnabled = enabled;
             icon.Source = newPicture.ToImageSource();
         }
-        
+
         private void Remove_OnClick(object sender, RoutedEventArgs e)
         {
             int index = openedImage.CurrentIndex;
@@ -90,18 +89,18 @@ namespace WPF_GUI
                 original.UriSource = new Uri(path);
                 original.EndInit();
 
-                double ratio = Constants.PreviewWidth/ original.Width;
+                double ratio = Constants.PreviewWidth / original.Width;
                 var reducedPreview = new BitmapImage();
                 reducedPreview.BeginInit();
                 reducedPreview.UriSource = new Uri(path);
                 reducedPreview.DecodePixelWidth = Constants.PreviewWidth;
-                reducedPreview.DecodePixelHeight = (int) (original.Height*ratio);
+                reducedPreview.DecodePixelHeight = (int)(original.Height * ratio);
                 reducedPreview.EndInit();
 
                 var im = new Image
                 {
                     Source = reducedPreview,
-                    Height = 100,
+                    Height = Constants.PreviewHeight,
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
                 preview.Items.Add(im);
