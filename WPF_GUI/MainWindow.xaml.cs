@@ -29,6 +29,7 @@ namespace WPF_GUI
             InitializeComponent();
             openedImage.LockLeft = lockLeftButton;
             openedImage.LockRight = lockrightButton;
+            openedImage.LockRemove = lockRemove;
             openedImage.UnlockAll = unlockLeftRightButton;
         }
 
@@ -46,9 +47,7 @@ namespace WPF_GUI
 
         private void LeftButton_OnClick(object sender, RoutedEventArgs e)
         {
-     
-                image.Source = openedImage.Prev;
-  
+            image.Source = openedImage.Prev;
         }
 
         private void RightButton_OnClick(object sender, RoutedEventArgs e)
@@ -81,18 +80,42 @@ namespace WPF_GUI
         private void unlockLeftRightButton()
         {
             rightButton.IsEnabled = true;
-            BitmapImage rightGrayIcon = new BitmapImage();
-            rightGrayIcon.BeginInit();
-            rightGrayIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\right.ico", UriKind.Absolute);
-            rightGrayIcon.EndInit();
-            rightIco.Source = rightGrayIcon;
+            BitmapImage rightIcon = new BitmapImage();
+            rightIcon.BeginInit();
+            rightIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\right.ico", UriKind.Absolute);
+            rightIcon.EndInit();
+            rightIco.Source = rightIcon;
 
             leftButton.IsEnabled = true;
-            BitmapImage leftGrayIcon = new BitmapImage();
-            leftGrayIcon.BeginInit();
-            leftGrayIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left.ico", UriKind.Absolute);
-            leftGrayIcon.EndInit();
-            leftIco.Source = leftGrayIcon;
+            BitmapImage leftIcon = new BitmapImage();
+            leftIcon.BeginInit();
+            leftIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left.ico", UriKind.Absolute);
+            leftIcon.EndInit();
+            leftIco.Source = leftIcon;
+
+            removeButton.IsEnabled = true;
+            BitmapImage removeIcon = new BitmapImage();
+            removeIcon.BeginInit();
+            removeIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\remove.ico", UriKind.Absolute);
+            removeIcon.EndInit();
+            removeIco.Source = removeIcon;
+
+        }
+
+        private void lockRemove()
+        {
+            removeButton.IsEnabled = false;
+            BitmapImage removeGrayIcon = new BitmapImage();
+            removeGrayIcon.BeginInit();
+            removeGrayIcon.UriSource = new Uri(@"D:\Studying\Programming\ImageEditor\WPF_GUI\icons\remove_gray.ico", UriKind.Absolute);
+            removeGrayIcon.EndInit();
+            removeIco.Source = removeGrayIcon;
+        }
+
+        private void Remove_OnClick(object sender, RoutedEventArgs e)
+        {
+            openedImage.Remove();
+            image.Source = openedImage.Current;
         }
     }
 }

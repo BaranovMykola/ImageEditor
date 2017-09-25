@@ -15,6 +15,7 @@ namespace WPF_GUI.ImageContainer
 
         public Action LockLeft;
         public Action LockRight;
+        public Action LockRemove;
         public Action UnlockAll;
 
         public ImageStorage()
@@ -48,11 +49,21 @@ namespace WPF_GUI.ImageContainer
                 {
                     LockRight();
                 }
-                var b = new BitmapImage();
-                b.BeginInit();
-                b.UriSource = imageSourses[currentSourceIndex];
-                b.EndInit();
-                return b;
+                if (imageSourses.Count != 0)
+                {
+                    var b = new BitmapImage();
+                    b.BeginInit();
+                    b.UriSource = imageSourses[currentSourceIndex];
+                    b.EndInit();
+                    return b;
+                }
+                else
+                {
+                    LockLeft();
+                    LockRight();
+                    LockRemove();
+                    return new BitmapImage();
+                }
             }
         }
 
@@ -71,6 +82,29 @@ namespace WPF_GUI.ImageContainer
             {
                 --currentSourceIndex;
                 return Current;
+            }
+        }
+
+        public void Remove()
+        {
+            if (imageSourses.Count > 0)
+            {
+                if (imageSourses.Count == 1)
+                {
+                    LockRemove();
+                }
+                imageSourses.RemoveAt(currentSourceIndex);
+                if (imageSourses.Count > 0)
+                {
+                    if (currentSourceIndex == imageSourses.Count)
+                    {
+                        --currentSourceIndex;
+                    }
+                    if (currentSourceIndex == -1)
+                    {
+                        ++currentSourceIndex;
+                    }
+                }
             }
         }
     }
