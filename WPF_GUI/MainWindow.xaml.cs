@@ -20,6 +20,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
+            InitializeButtonsIcons();
             openedImage.LockLeft = () => LockImageControl(leftButton, leftIco, Icons.left_gray);
             openedImage.LockRight = () => LockImageControl(rightButton, rightIco, Icons.right_gray);
             openedImage.LockRemove = () => LockImageControl(removeButton, removeIco, Icons.remove_gray);
@@ -29,6 +30,13 @@
                 LockImageControl(rightButton, rightIco, Icons.right, true);
                 LockImageControl(removeButton, removeIco, Icons.remove, true);
             };
+        }
+
+        private void InitializeButtonsIcons()
+        {
+            leftIco.Source = Icons.left_gray.ToImageSource();
+            rightIco.Source = Icons.right_gray.ToImageSource();
+            removeIco.Source = Icons.remove_gray.ToImageSource();
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)

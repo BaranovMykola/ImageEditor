@@ -22,17 +22,17 @@
             <ToolBar x:Name="toolBar" Height="55" Width="628" Opacity="1" Background="{x:Null}">
                 <Button Name ="leftButton" Click="LeftButton_OnClick" IsEnabled="False">
                     <StackPanel>
-                        <Image Source="D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left_gray.ico" Height ="43" Width="43" Opacity="1" Name ="leftIco"/>
+                        <Image Height ="43" Width="43" Opacity="1" Name ="leftIco"/>
                     </StackPanel>
                 </Button>
                 <Button Name ="rightButton" Click="RightButton_OnClick" IsEnabled="False">
                     <StackPanel>
-                        <Image Source="D:\Studying\Programming\ImageEditor\WPF_GUI\icons\right_gray.ico" Height ="43" Width="43" Opacity="1" Name ="rightIco"/>
+                        <Image Height ="43" Width="43" Opacity="1" Name ="rightIco"/>
                     </StackPanel>
                 </Button>
                 <Button Name ="removeButton" Click="Remove_OnClick" IsEnabled="False">
                     <StackPanel>
-                        <Image Source="/WPF_GUI;component/icons/left.ico" Height="43" Width="43" Opacity="1" Name ="removeIco"/>
+                        <Image Height="43" Width="43" Opacity="1" Name ="removeIco"/>
                     </StackPanel>
                 </Button>
             </ToolBar>

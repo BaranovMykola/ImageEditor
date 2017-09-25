@@ -61,70 +61,6 @@ namespace WPF_GUI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to icon/left.ico.
-        /// </summary>
-        public static string ico_left {
-            get {
-                return ResourceManager.GetString("ico_left", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to icon/left_gray.ico.
-        /// </summary>
-        public static string ico_left_gray {
-            get {
-                return ResourceManager.GetString("ico_left_gray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to icon/remove.ico.
-        /// </summary>
-        public static string ico_remove {
-            get {
-                return ResourceManager.GetString("ico_remove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to icon/remove_gray.ico.
-        /// </summary>
-        public static string ico_remove_gray {
-            get {
-                return ResourceManager.GetString("ico_remove_gray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to icon/right.ico.
-        /// </summary>
-        public static string ico_right {
-            get {
-                return ResourceManager.GetString("ico_right", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to icon/right_gray.ico.
-        /// </summary>
-        public static string ico_right_gray {
-            get {
-                return ResourceManager.GetString("ico_right_gray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap Image1 {
-            get {
-                object obj = ResourceManager.GetObject("Image1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon left {
@@ -141,15 +77,6 @@ namespace WPF_GUI {
             get {
                 object obj = ResourceManager.GetObject("left_gray", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 111l.
-        /// </summary>
-        public static string MainWindow_openFile__111l {
-            get {
-                return ResourceManager.GetString("MainWindow_openFile__111l", resourceCulture);
             }
         }
         
