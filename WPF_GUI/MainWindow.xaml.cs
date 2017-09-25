@@ -27,6 +27,9 @@ namespace WPF_GUI
         public MainWindow()
         {
             InitializeComponent();
+            openedImage.LockLeft = lockLeftButton;
+            openedImage.LockRight = lockrightButton;
+            openedImage.UnlockAll = unlockLeftRightButton;
         }
 
         private void openFile(object sender, RoutedEventArgs e)
@@ -37,42 +40,22 @@ namespace WPF_GUI
             var pathes = openDialog.FileNames;
 
             openedImage.LoadImages(pathes);
-            try
-            {
-                image.Source = openedImage.Current;
-            }
-            catch (IndexOutOfRangeException exception)
-            {
-                //Console.WriteLine(exception);
-            }
+            image.Source = openedImage.Current;
+
         }
 
         private void LeftButton_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                unlockLeftRightButton();
+     
                 image.Source = openedImage.Prev;
-            }
-            catch (IndexOutOfRangeException exception)
-            {
-                Console.WriteLine(exception);
-                lockLeftButton();
-            }
+  
         }
 
         private void RightButton_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                unlockLeftRightButton();
+ 
                 image.Source = openedImage.Next;
-            }
-            catch (IndexOutOfRangeException exception)
-            {
-                Console.WriteLine(exception);
-                lockrightButton();
-            }
+      
         }
 
         private void lockLeftButton()

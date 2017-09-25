@@ -13,6 +13,10 @@ namespace WPF_GUI.ImageContainer
         private List<Uri> imageSourses = new List<Uri>();
         private int currentSourceIndex = 0;
 
+        public Action LockLeft;
+        public Action LockRight;
+        public Action UnlockAll;
+
         public ImageStorage()
         {
             
@@ -35,6 +39,15 @@ namespace WPF_GUI.ImageContainer
         {
             get
             {
+                UnlockAll();
+                if (currentSourceIndex == 0)
+                {
+                    LockLeft();
+                }
+                if (currentSourceIndex + 1 == imageSourses.Count)
+                {
+                    LockRight();
+                }
                 var b = new BitmapImage();
                 b.BeginInit();
                 b.UriSource = imageSourses[currentSourceIndex];
