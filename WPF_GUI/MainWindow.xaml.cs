@@ -30,6 +30,7 @@
                 LockImageControl(rightButton, rightIco, Icons.right, true);
                 LockImageControl(removeButton, removeIco, Icons.remove, true);
             };
+            //openedImage.LoadPreview = LoadPreviews;
         }
 
         private void InitializeButtonsIcons()
@@ -47,6 +48,7 @@
             var pathes = openDialog.FileNames;
 
             openedImage.LoadImages(pathes);
+            LoadPreviews(pathes);
             image.Source = openedImage.Current;
         }
 
@@ -68,8 +70,28 @@
         
         private void Remove_OnClick(object sender, RoutedEventArgs e)
         {
+            int index = openedImage.CurrentIndex;
+            preview.Items.RemoveAt(index);
             openedImage.Remove();
             image.Source = openedImage.Current;
+        }
+
+        private void LoadPreviews(string[] pathes)
+        {
+            foreach (var path in pathes)
+            {
+                var b = new BitmapImage();
+                b.BeginInit();
+                b.UriSource = new Uri(path);
+                b.EndInit();
+                var im = new Image
+                {
+                    Source = b,
+                    Height = 100,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                preview.Items.Add(im);
+            }
         }
     }
 }

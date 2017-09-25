@@ -12,12 +12,13 @@ namespace WPF_GUI.ImageContainer
     class ImageStorage
     {
         private List<Uri> imageSourses = new List<Uri>();
-        private int currentSourceIndex = 0;
+        public int CurrentIndex { get; set; } = 0;
 
         public Action LockLeft;
         public Action LockRight;
         public Action LockRemove;
         public Action UnlockAll;
+        //public Action<string[]> LoadPreview;
 
         public ImageStorage()
         {
@@ -35,6 +36,7 @@ namespace WPF_GUI.ImageContainer
             {
                 imageSourses.Add(new Uri(path, UriKind.Absolute));
             }
+            //LoadPreview(pathes);
         }
 
         public BitmapImage Current
@@ -42,11 +44,11 @@ namespace WPF_GUI.ImageContainer
             get
             {
                 UnlockAll();
-                if (currentSourceIndex == 0)
+                if (CurrentIndex == 0)
                 {
                     LockLeft();
                 }
-                if (currentSourceIndex + 1 == imageSourses.Count)
+                if (CurrentIndex + 1 == imageSourses.Count)
                 {
                     LockRight();
                 }
@@ -54,7 +56,7 @@ namespace WPF_GUI.ImageContainer
                 {
                     var b = new BitmapImage();
                     b.BeginInit();
-                    b.UriSource = imageSourses[currentSourceIndex];
+                    b.UriSource = imageSourses[CurrentIndex];
                     b.EndInit();
                     return b;
                 }
@@ -72,7 +74,7 @@ namespace WPF_GUI.ImageContainer
         {
             get
             {
-                ++currentSourceIndex;
+                ++CurrentIndex;
                 return Current;
             }
         }
@@ -81,7 +83,7 @@ namespace WPF_GUI.ImageContainer
         {
             get
             {
-                --currentSourceIndex;
+                --CurrentIndex;
                 return Current;
             }
         }
@@ -94,16 +96,16 @@ namespace WPF_GUI.ImageContainer
                 {
                     LockRemove();
                 }
-                imageSourses.RemoveAt(currentSourceIndex);
+                imageSourses.RemoveAt(CurrentIndex);
                 if (imageSourses.Count > 0)
                 {
-                    if (currentSourceIndex == imageSourses.Count)
+                    if (CurrentIndex == imageSourses.Count)
                     {
-                        --currentSourceIndex;
+                        --CurrentIndex;
                     }
-                    if (currentSourceIndex == -1)
+                    if (CurrentIndex == -1)
                     {
-                        ++currentSourceIndex;
+                        ++CurrentIndex;
                     }
                 }
             }
