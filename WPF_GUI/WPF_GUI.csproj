@@ -70,7 +70,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ImageContainer\IconExtension.cs" />
-    <Compile Include="ImageContainer\ImageStorage.cs" />
+    <Compile Include="ImageContainer\ImageStorage.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

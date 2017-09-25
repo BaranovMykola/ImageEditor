@@ -1,29 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-
-namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.ImageContainer
 {
-    class ImageStorage
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Media.Imaging;
+
+    public class ImageStorage
     {
         private List<Uri> imageSourses = new List<Uri>();
-        public int CurrentIndex { get; set; } = 0;
-
-        public Action LockLeft;
-        public Action LockRight;
-        public Action LockRemove;
-        public Action UnlockAll;
-        public event Action<int> ImageChanged;
-        //public Action<string[]> LoadPreview;
 
         public ImageStorage()
         {
-            
         }
 
         public ImageStorage(string[] pathes)
@@ -31,28 +17,33 @@ namespace WPF_GUI.ImageContainer
             LoadImages(pathes);
         }
 
-        public void LoadImages(string[] pathes)
-        {
-            foreach (var path in pathes)
-            {
-                imageSourses.Add(new Uri(path, UriKind.Absolute));
-            }
-            //LoadPreview(pathes);
-        }
+        public event Action LockLeft;
+
+        public event Action LockRight;
+
+        public event Action LockRemove;
+
+        public event Action UnlockAll;
+
+        public event Action<int> ImageChanged;
+
+        public int CurrentIndex { get; set; } = 0;
 
         public BitmapImage Current
         {
             get
             {
-                UnlockAll();
+                UnlockAll?.Invoke();
                 if (CurrentIndex == 0)
                 {
-                    LockLeft();
+                    LockLeft?.Invoke();
                 }
+
                 if (CurrentIndex + 1 == imageSourses.Count)
                 {
-                    LockRight();
+                    LockRight?.Invoke();
                 }
+
                 if (imageSourses.Count != 0)
                 {
                     var b = new BitmapImage();
@@ -63,9 +54,9 @@ namespace WPF_GUI.ImageContainer
                 }
                 else
                 {
-                    LockLeft();
-                    LockRight();
-                    LockRemove();
+                    LockLeft?.Invoke();
+                    LockRight?.Invoke();
+                    LockRemove?.Invoke();
                     return new BitmapImage();
                 }
             }
@@ -97,8 +88,9 @@ namespace WPF_GUI.ImageContainer
             {
                 if (imageSourses.Count == 1)
                 {
-                    LockRemove();
+                    LockRemove?.Invoke();
                 }
+
                 imageSourses.RemoveAt(CurrentIndex);
                 if (imageSourses.Count > 0)
                 {
@@ -106,6 +98,7 @@ namespace WPF_GUI.ImageContainer
                     {
                         --CurrentIndex;
                     }
+
                     if (CurrentIndex == -1)
                     {
                         ++CurrentIndex;
@@ -114,6 +107,12 @@ namespace WPF_GUI.ImageContainer
             }
         }
 
-        //public int Count => imageSourses.Count;
+        public void LoadImages(string[] pathes)
+        {
+            foreach (var path in pathes)
+            {
+                imageSourses.Add(new Uri(path, UriKind.Absolute));
+            }
+        }
     }
 }

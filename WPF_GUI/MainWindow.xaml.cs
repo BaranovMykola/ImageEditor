@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
     using System;
     using System.Drawing;
@@ -8,6 +6,7 @@ namespace WPF_GUI
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media.Imaging;
+    using System.Windows.Input;
     using Microsoft.Win32;
     using WPF_GUI.ImageContainer;
     using Image = System.Windows.Controls.Image;
@@ -23,22 +22,16 @@ namespace WPF_GUI
         {
             this.InitializeComponent();
             InitializeButtonsIcons();
-            openedImage.LockLeft = () => LockImageControl(leftButton, leftIco, Icons.left_gray);
-            openedImage.LockRight = () => LockImageControl(rightButton, rightIco, Icons.right_gray);
-            openedImage.LockRemove = () => LockImageControl(removeButton, removeIco, Icons.remove_gray);
-            openedImage.UnlockAll = () =>
+            openedImage.LockLeft += () => LockImageControl(leftButton, leftIco, Icons.left_gray);
+            openedImage.LockRight += () => LockImageControl(rightButton, rightIco, Icons.right_gray);
+            openedImage.LockRemove += () => LockImageControl(removeButton, removeIco, Icons.remove_gray);
+            openedImage.UnlockAll += () =>
             {
                 LockImageControl(leftButton, leftIco, Icons.left, true);
                 LockImageControl(rightButton, rightIco, Icons.right, true);
                 LockImageControl(removeButton, removeIco, Icons.remove, true);
             };
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
-
-        }
-
-        public void foo()
-        {
-            MessageBox.Show("handled");
         }
 
         private void InitializeButtonsIcons()
@@ -126,7 +119,6 @@ namespace WPF_GUI
                     RightButton_OnClick(this, null);
                 }
             }
-
         }
     }
 }
