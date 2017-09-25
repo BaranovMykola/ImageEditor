@@ -40,5 +40,10 @@
         <WrapPanel Margin="10,87,157.6,10" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image x:Name="image" Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </WrapPanel>
+        <ListView Name="preview" HorizontalAlignment="Right" Margin="0,87,9.6,10" Width="146">
+            <Image Source="D:\Studying\Programming\ImageEditor\WPF_GUI\testImage\fox-5.jpg" Width="120"/>
+            <Button Content="111"></Button>
+            <Button Content="111"></Button>
+        </ListView>
     </Grid>
 </Window>
