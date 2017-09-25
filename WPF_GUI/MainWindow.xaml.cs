@@ -93,5 +93,11 @@
                 preview.Items.Add(im);
             }
         }
+
+        private void Preview_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            openedImage.CurrentIndex = preview.SelectedIndex;
+            image.Source = openedImage.Current;
+        }
     }
 }
