@@ -109,8 +109,11 @@
 
         private void Preview_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            openedImage.CurrentIndex = preview.SelectedIndex;
-            image.Source = openedImage.Current;
+            if (preview.SelectedIndex != -1)
+            {
+                openedImage.CurrentIndex = preview.SelectedIndex;
+                image.Source = openedImage.Current;
+            }
         }
 
         private void MainWindow_OnKeyUp(object sender, KeyEventArgs e)
