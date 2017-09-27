@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI
+﻿using System.Windows.Media;
+
+namespace WPF_GUI
 {
     using System;
     using System.Drawing;
@@ -132,6 +134,32 @@
                     RightButton_OnClick(this, null);
                 }
             }
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            CoreWrapper.ImageProc a = new CoreWrapper.ImageProc(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg", 600,600);
+            var b = a.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg");
+            var c = ConvertBitmapToImageSource(b);
+            image.Source = c;
+
+        }
+
+        private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
+        {
+            Bitmap bmp = new Bitmap(imToConvert);
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+
+            BitmapImage image1 = new BitmapImage();
+            image1.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image1.StreamSource = ms;
+            image1.EndInit();
+
+            ImageSource sc = (ImageSource)image1;
+
+            return sc;
         }
     }
 }

@@ -39,10 +39,11 @@ void MarshalString(System::String ^ s, wstring& os)
 	Marshal::FreeHGlobal(IntPtr((void*)chars));
 }
 
-System::Drawing::Image^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
+System::Drawing::Bitmap^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
 {
 	//editor->rotate(45);
 	auto start = clock();
+	editor->rotate(45);
 	editor->updatePreview(400, 400);
 	auto end = clock() - start;
 	auto srcImg = editor->getPreview();
@@ -95,7 +96,7 @@ CoreWrapper::ImageProc::ImageProc(System::String^ fileName, int processingWidth,
 	editor = new CoreImgEditor(str, processingWidth, processingHeight);
 }
 
-Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
+Bitmap^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 {
 	auto start = clock();
 	Drawing::Bitmap^ newImage = gcnew Drawing::Bitmap(opencvImage.cols, opencvImage.rows);
@@ -109,5 +110,11 @@ Image ^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 		}
 	}
 	auto end = clock() - start;
-	return (Drawing::Image^)newImage;
+	return newImage;
+}
+
+
+Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)
+{
+	return gcnew Bitmap(matToConvert.cols, matToConvert.rows, 4 * matToConvert.rows, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.data));
 }
