@@ -25,12 +25,17 @@
             InitializeButtonsIcons();
             openedImage.LockLeft += () => LockImageControl(leftButton, leftIco, Icons.left_gray);
             openedImage.LockRight += () => LockImageControl(rightButton, rightIco, Icons.right_gray);
-            openedImage.LockRemove += () => LockImageControl(removeButton, removeIco, Icons.remove_gray);
+            openedImage.LockRemove += () =>
+            {
+                LockImageControl(removeButton, removeIco, Icons.remove_gray);
+                LockImageControl(editButton, editIco, Icons.edit_gray);
+            };
             openedImage.UnlockAll += () =>
             {
                 LockImageControl(leftButton, leftIco, Icons.left, true);
                 LockImageControl(rightButton, rightIco, Icons.right, true);
                 LockImageControl(removeButton, removeIco, Icons.remove, true);
+                LockImageControl(editButton, editIco, Icons.edit, true);
             };
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
         }
@@ -40,6 +45,7 @@
             leftIco.Source = Icons.left_gray.ToImageSource();
             rightIco.Source = Icons.right_gray.ToImageSource();
             removeIco.Source = Icons.remove_gray.ToImageSource();
+            editIco.Source = Icons.edit_gray.ToImageSource();
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)

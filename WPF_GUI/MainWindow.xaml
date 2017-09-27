@@ -37,6 +37,11 @@
                         <Image Height="43" Width="43" Opacity="1" Name ="removeIco"/>
                     </StackPanel>
                 </Button>
+                <Button Name ="editButton" IsEnabled="False">
+                    <StackPanel>
+                        <Image Height="43" Width="43" Opacity="1" Name ="editIco"/>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </WrapPanel>
         <WrapPanel Margin="10,87,157.6,10" HorizontalAlignment="Center" VerticalAlignment="Center">
