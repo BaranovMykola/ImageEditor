@@ -14,20 +14,19 @@ public:
 	CoreImgEditor(string fileName, int upperWidth, int upperHeight)
 	{
 		initilizeParamsByDefault();
-		loadImg(fileName);
-		reducedSource = reduceImg(source, upperWidth, upperHeight);
-
-		rotated = resized = contrasted = reducedSource;
+		loadImg(fileName, upperWidth, upperHeight);
 	}
 	CoreImgEditor()
 	{
 		initilizeParamsByDefault();
 	}
 
-	void loadImg(std::string fileName)
+	void loadImg(std::string fileName, int upperWidth, int upperHeight)
 	{
 		source = imread(fileName);
-		//source = Mat();
+		reducedSource = reduceImg(source, upperWidth, upperHeight);
+
+		rotated = resized = contrasted = changed = preview = reducedSource;
 	}
 
 	void save(string fileName)
