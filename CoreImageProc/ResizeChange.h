@@ -10,11 +10,10 @@ public:
 	{
 		percentRatio = _percentRatio;
 	}
-	float percentRatio;
 	void apply(cv::Mat& source)
 	{
 		imp::resize(source, percentRatio);
 	}
 private:
-
+	float percentRatio;
 };

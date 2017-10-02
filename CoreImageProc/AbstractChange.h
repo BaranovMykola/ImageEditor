@@ -5,6 +5,4 @@ class AbstractChange
 {
 public:
 	virtual void apply(cv::Mat& source)=0;
-private:
-
 };

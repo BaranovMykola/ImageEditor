@@ -13,11 +13,10 @@ public:
 	{
 		rotateAngle = _angle;
 	}
-	int rotateAngle;
 	void apply(cv::Mat& source)
 	{
 		imp::rotate(source, rotateAngle);
 	}
 private:
-
+	int rotateAngle;
 };
