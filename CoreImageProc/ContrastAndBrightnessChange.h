@@ -10,7 +10,7 @@ public:
 	}
 	float contrast;
 	int brightness;
-	void apply(cv::Mat source)
+	void apply(cv::Mat& source)
 	{
 		source.convertTo(source, source.type(), contrast, brightness);
 	}

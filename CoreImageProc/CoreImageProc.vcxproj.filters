@@ -35,5 +35,8 @@
     <ClInclude Include="ContrastAndBrightnessChange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RotateChange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

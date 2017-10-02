@@ -8,6 +8,7 @@
 
 #include "AbstractChange.h"
 #include "ContrastAndBrightnessChange.h"
+#include "RotateChange.h"
 
 using namespace cv;
 
@@ -33,6 +34,20 @@ public:
 			changes[i]->apply(source);
 		}
 		changes.erase(changes.begin() + step + 1, changes.end());
+	}
+
+	void rotate(int angle)
+	{
+		auto center = Point2f(source.cols / 2, source.rows / 2);
+		cv::Mat rotateMat = getRotationMatrix2D(center, angle, 1);
+		auto rotRect = RotatedRect(center, source.size(), angle).boundingRect();
+		rotateMat.at<double>(0, 2) += rotRect.width / 2.0 - center.x;
+		rotateMat.at<double>(1, 2) += rotRect.height / 2.0 - center.y;
+
+		cv::Mat rotatedImg;
+		warpAffine(source, rotatedImg, rotateMat, rotRect.size(), 1, BORDER_TRANSPARENT);
+		source = rotatedImg;
+		changes.push_back(new RotateChange(angle));
 	}
 
 public:

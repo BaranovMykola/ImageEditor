@@ -26,6 +26,14 @@ int main()
 			cin >> c >> b;
 			edit.changeContrastAndBrightness(c, b);
 		}
+		else if (act == "rotate")
+		{
+			int a;
+			cout << "a >>";
+			cin >> a;
+			edit.rotate(a);
+
+		}
 		else if (act == "restore")
 		{
 			int s;
