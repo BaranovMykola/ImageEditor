@@ -39,63 +39,6 @@ void MarshalString(System::String ^ s, wstring& os)
 	Marshal::FreeHGlobal(IntPtr((void*)chars));
 }
 
-System::Drawing::Bitmap^ CoreWrapper::ImageProc::readOriginalWrapper(System::String^ fileName)
-{
-	//editor->rotate(45);
-	auto start = clock();
-	editor->updatePreview(1000, 1000);
-	//editor->rotate(45);
-	auto end = clock() - start;
-	auto srcImg = editor->getPreview();
-	bool em = srcImg.empty();
-	auto image = this->ConvertMatToBitmap(srcImg);
-	return image;
-}
-
-void CoreWrapper::ImageProc::loadNewImage(System::String ^ fileName)
-{
-	string str;
-	MarshalString(fileName, str);
-	editor->loadImg(str, 1920, 1080);
-}
-
-void CoreWrapper::ImageProc::editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness)
-{
-	editor->editImage(_sizeRatio, _rotateAngle, _contrast, _brightness);
-}
-
-void CoreWrapper::ImageProc::editContrastAndBrightness(float _contrast, int _brightness)
-{
-	editor->changeContrastAndBrightness(_contrast, _brightness);
-}
-
-void CoreWrapper::ImageProc::rotateImage(float _grad)
-{
-	editor->rotate(_grad);
-}
-
-void CoreWrapper::ImageProc::resizeImage(float _ratio)
-{
-	editor->resize(_ratio);
-}
-
-System::Drawing::Bitmap ^ CoreWrapper::ImageProc::getPreview(int width, int height)
-{
-	auto start = clock();
-	editor->updatePreview(width, height);
-	auto mat = editor->getPreview();
-	auto image = this->convertMatToImage(mat);
-	auto end = clock() - start;
-	return image;
-}
-
-CoreWrapper::ImageProc::ImageProc(System::String^ fileName, int processingWidth, int processingHeight)
-{
-	std::string str;
-	MarshalString(fileName, str);
-	editor = new CoreImgEditor(str, processingWidth, processingHeight);
-}
-
 Bitmap^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 {
 	auto start = clock();
@@ -113,6 +56,29 @@ Bitmap^ CoreWrapper::ImageProc::convertMatToImage(const cv::Mat & opencvImage)
 	return newImage;
 }
 
+
+CoreWrapper::ImageProc::ImageProc()
+{
+	editor = new ImageEditor();
+}
+
+Bitmap ^ CoreWrapper::ImageProc::getSource()
+{
+	auto img = editor->getSource();
+	return ConvertMatToBitmap(img);
+}
+
+void CoreWrapper::ImageProc::loadImage(System::String ^ file)
+{
+	std::string stdFileName;
+	MarshalString(file, stdFileName);
+	editor->loadImage(stdFileName);
+}
+
+void CoreWrapper::ImageProc::applyContrastAndBrightness(float contrast, int brightness)
+{
+	editor->changeContrastAndBrightness(contrast, brightness);
+}
 
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)
 {

@@ -37,9 +37,24 @@
                         <Image Height="43" Width="43" Opacity="1" Name ="removeIco"/>
                     </StackPanel>
                 </Button>
-                <Button Name ="editButton" IsEnabled="False">
+                <Button Name ="editButton" IsEnabled="False" Click="EditButton_OnClick">
                     <StackPanel>
                         <Image Height="43" Width="43" Opacity="1" Name ="editIco"/>
+                    </StackPanel>
+                </Button>
+                <Button Name ="contAndBrightButton" IsEnabled="False" Click="ContAndBrightButton_OnClick">
+                    <StackPanel>
+                        <Image Height="43" Width="43" Opacity="1" Name ="contAndBrightIco"/>
+                    </StackPanel>
+                </Button>
+                <Button Name ="rotateButton" IsEnabled="False">
+                    <StackPanel>
+                        <Image Height="43" Width="43" Opacity="1" Name ="rotateIco"/>
+                    </StackPanel>
+                </Button>
+                <Button Name ="resizeButton" IsEnabled="False">
+                    <StackPanel>
+                        <Image Height="43" Width="43" Opacity="1" Name ="resizeIco"/>
                     </StackPanel>
                 </Button>
             </ToolBar>

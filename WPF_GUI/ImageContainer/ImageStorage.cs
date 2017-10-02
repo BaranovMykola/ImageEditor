@@ -62,6 +62,11 @@
             }
         }
 
+        public string CurrentPath
+        {
+            get { return imageSourses[CurrentIndex].AbsolutePath; }
+        }
+
         public BitmapImage Next
         {
             get

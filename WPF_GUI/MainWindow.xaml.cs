@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using CoreWrapper;
 
 namespace WPF_GUI
 {
@@ -20,6 +21,8 @@ namespace WPF_GUI
     public partial class MainWindow : Window
     {
         private readonly ImageStorage openedImage = new ImageStorage();
+        private bool edit = false;
+        private ImageProc editor = new ImageProc();
 
         public MainWindow()
         {
@@ -40,7 +43,7 @@ namespace WPF_GUI
                 LockImageControl(editButton, editIco, Icons.edit, true);
             };
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
-            //var b = a.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg");
+
         }
 
         private void InitializeButtonsIcons()
@@ -49,6 +52,9 @@ namespace WPF_GUI
             rightIco.Source = Icons.right_gray.ToImageSource();
             removeIco.Source = Icons.remove_gray.ToImageSource();
             editIco.Source = Icons.edit_gray.ToImageSource();
+            contAndBrightIco.Source = Icons.contandbright.ToImageSource();
+            rotateIco.Source = Icons.rotate.ToImageSource();
+            resizeIco.Source = Icons.resize.ToImageSource();
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -145,7 +151,6 @@ namespace WPF_GUI
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            
         }
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
@@ -165,10 +170,31 @@ namespace WPF_GUI
             return sc;
         }
 
-        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void EditButton_OnClick(object sender, RoutedEventArgs e)
         {
+            edit = true;
+            contAndBrightButton.IsEnabled = true;
+            rotateButton.IsEnabled = true;
+            resizeButton.IsEnabled = true;
 
+            var file = this.openedImage.CurrentPath;
+            editor.loadImage(file);
 
+        }
+
+        private void ContAndBrightButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ContrastAndBrightness(image);
+
+            var apply = dialog.ShowDialog();
+            if (apply != null && apply.Value)
+            {
+                MessageBox.Show("Apply contrast and brightness");
+            }
+            else
+            {
+                MessageBox.Show("Clear changing");
+            }
         }
     }
 }

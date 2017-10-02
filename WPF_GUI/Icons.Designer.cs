@@ -63,6 +63,16 @@ namespace WPF_GUI {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        public static System.Drawing.Icon contandbright {
+            get {
+                object obj = ResourceManager.GetObject("contandbright", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         public static System.Drawing.Icon edit {
             get {
                 object obj = ResourceManager.GetObject("edit", resourceCulture);
@@ -123,6 +133,16 @@ namespace WPF_GUI {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        public static System.Drawing.Icon resize {
+            get {
+                object obj = ResourceManager.GetObject("resize", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         public static System.Drawing.Icon right {
             get {
                 object obj = ResourceManager.GetObject("right", resourceCulture);
@@ -136,6 +156,16 @@ namespace WPF_GUI {
         public static System.Drawing.Icon right_gray {
             get {
                 object obj = ResourceManager.GetObject("right_gray", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon rotate {
+            get {
+                object obj = ResourceManager.GetObject("rotate", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

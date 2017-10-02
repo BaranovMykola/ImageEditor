@@ -17,11 +17,27 @@ using namespace cv;
 class ImageEditor
 {
 public:
+	ImageEditor()
+	{
+
+	}
+	
 	ImageEditor(std::string file)
+	{
+		loadImage(file);
+	}
+
+	void loadImage(std::string file)
 	{
 		original = imread(file);
 		source = original.clone();
 	}
+
+	cv::Mat getSource()const
+	{
+		return source;
+	}
+
 	void changeContrastAndBrightness(float _contrast, int _brightness)
 	{
 		source.convertTo(source, source.type(), _contrast, _brightness);

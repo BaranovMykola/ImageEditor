@@ -5,6 +5,7 @@
 #using <System.Drawing.dll>
 
 #include "../CoreImageProc/ImageProcess.h"
+#include "../CoreImageProc/ImageEditor.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -16,18 +17,13 @@ namespace CoreWrapper {
 	public ref class ImageProc
 	{
 	public:
-		ImageProc(System::String^ fileName, int processingWidth, int processingHeight);
-		System::Drawing::Bitmap^ readOriginalWrapper(System::String^ fileName);
-		void loadNewImage(System::String^ fileName);
-		void editImage(float _sizeRatio, float _rotateAngle, float _contrast, int _brightness);
-		void editContrastAndBrightness(float _contrast, int _brightness);
-		void rotateImage(float _grad);
-		void resizeImage(float _ratio);
-		System::Drawing::Bitmap^ getPreview(int width, int height);
-		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
-
+		ImageProc();
+		Bitmap^ getSource();
+		void loadImage(System::String^ file);
+		void applyContrastAndBrightness(float contrast, int brightness);
 	private:
+		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);
-		CoreImgEditor* editor;
+		ImageEditor* editor;
 	};
 }
