@@ -1,5 +1,6 @@
 #pragma once
 #include "AbstractChange.h"
+#include "ImageProcessing.h"
 #include <opencv2\imgproc.hpp>
 
 class ResizeChange : public AbstractChange
@@ -12,9 +13,7 @@ public:
 	float percentRatio;
 	void apply(cv::Mat& source)
 	{
-		cv::Size newSize(source.size().width*percentRatio, source.size().height*percentRatio);
-		cv::Mat resized = cv::Mat::zeros(newSize, CV_8UC3);
-		cv::resize(source, source, newSize);
+		imp::resize(source, percentRatio);
 	}
 private:
 

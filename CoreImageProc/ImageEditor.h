@@ -10,6 +10,7 @@
 #include "ContrastAndBrightnessChange.h"
 #include "RotateChange.h"
 #include "ResizeChange.h"
+#include "ImageProcessing.h"
 
 using namespace cv;
 
@@ -39,23 +40,13 @@ public:
 
 	void resize(float percentRatio)
 	{
-		cv::Size newSize(source.size().width*percentRatio, source.size().height*percentRatio);
-		cv::Mat resized = Mat::zeros(newSize, CV_8UC3);
-		cv::resize(source, source, newSize);
+		imp::resize(source, percentRatio);
 		changes.push_back(new ResizeChange(percentRatio));
 	}
 
 	void rotate(int angle)
 	{
-		auto center = Point2f(source.cols / 2, source.rows / 2);
-		cv::Mat rotateMat = getRotationMatrix2D(center, angle, 1);
-		auto rotRect = RotatedRect(center, source.size(), angle).boundingRect();
-		rotateMat.at<double>(0, 2) += rotRect.width / 2.0 - center.x;
-		rotateMat.at<double>(1, 2) += rotRect.height / 2.0 - center.y;
-
-		cv::Mat rotatedImg;
-		warpAffine(source, rotatedImg, rotateMat, rotRect.size(), 1, BORDER_TRANSPARENT);
-		source = rotatedImg;
+		imp::rotate(source, angle);
 		changes.push_back(new RotateChange(angle));
 	}
 

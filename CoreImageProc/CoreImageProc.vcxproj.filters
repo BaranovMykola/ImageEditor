@@ -41,5 +41,8 @@
     <ClInclude Include="ResizeChange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImageProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
