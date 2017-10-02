@@ -162,6 +162,7 @@
     <ClInclude Include="ContrastAndBrightnessChange.h" />
     <ClInclude Include="ImageEditor.h" />
     <ClInclude Include="ImageProcess.h" />
+    <ClInclude Include="ResizeChange.h" />
     <ClInclude Include="RotateChange.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

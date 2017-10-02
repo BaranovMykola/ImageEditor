@@ -9,6 +9,7 @@
 #include "AbstractChange.h"
 #include "ContrastAndBrightnessChange.h"
 #include "RotateChange.h"
+#include "ResizeChange.h"
 
 using namespace cv;
 
@@ -34,6 +35,14 @@ public:
 			changes[i]->apply(source);
 		}
 		changes.erase(changes.begin() + step + 1, changes.end());
+	}
+
+	void resize(float percentRatio)
+	{
+		cv::Size newSize(source.size().width*percentRatio, source.size().height*percentRatio);
+		cv::Mat resized = Mat::zeros(newSize, CV_8UC3);
+		cv::resize(source, source, newSize);
+		changes.push_back(new ResizeChange(percentRatio));
 	}
 
 	void rotate(int angle)

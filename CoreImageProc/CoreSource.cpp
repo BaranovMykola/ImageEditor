@@ -22,22 +22,25 @@ int main()
 		{
 			float c;
 			int b;
-			cout << "c >> b >>" << endl;
 			cin >> c >> b;
 			edit.changeContrastAndBrightness(c, b);
 		}
 		else if (act == "rotate")
 		{
 			int a;
-			cout << "a >>";
 			cin >> a;
 			edit.rotate(a);
 
 		}
+		else if (act == "resize")
+		{
+			float p;
+			cin >> p;
+			edit.resize(p);
+		}
 		else if (act == "restore")
 		{
 			int s;
-			cout << "s >>" << endl;
 			cin >> s;
 			edit.restore(s);
 		}
