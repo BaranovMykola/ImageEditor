@@ -54,6 +54,5 @@
                   SelectionChanged="Preview_OnSelectionChanged"
                   SelectionMode="Single">
         </ListView>
-        <Slider x:Name="slider" Width="285" ValueChanged="slider_ValueChanged" Maximum="360"/>
     </Grid>
 </Window>

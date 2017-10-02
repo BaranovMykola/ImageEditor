@@ -20,7 +20,6 @@ namespace WPF_GUI
     public partial class MainWindow : Window
     {
         private readonly ImageStorage openedImage = new ImageStorage();
-        private CoreWrapper.ImageProc a;
 
         public MainWindow()
         {
@@ -41,7 +40,6 @@ namespace WPF_GUI
                 LockImageControl(editButton, editIco, Icons.edit, true);
             };
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
-            a = new CoreWrapper.ImageProc(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg", 1000, 1000);
             //var b = a.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg");
         }
 
@@ -147,8 +145,7 @@ namespace WPF_GUI
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var b = a.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg");
-            image.Source = ConvertBitmapToImageSource(b.Clone() as Bitmap);
+            
         }
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
@@ -171,9 +168,7 @@ namespace WPF_GUI
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
 
-            a.rotateImage((float)slider.Value);
-            var b = a.getPreview(1000, 1000);
-            image.Source = ConvertBitmapToImageSource(b);
+
         }
     }
 }
