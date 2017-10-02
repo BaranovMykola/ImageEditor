@@ -80,7 +80,7 @@ public:
 	void rotate(float _rotateAngle)
 	{
 		rotateAngle = _rotateAngle;
-		changed = RotateAt(reducedSource);
+		changed = RotateAt(reducedSource.clone());
 	}
 
 	void apply()

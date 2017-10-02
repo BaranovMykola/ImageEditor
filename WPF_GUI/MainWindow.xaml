@@ -11,7 +11,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_New" />
+                    <MenuItem Header="_New" Click="MenuItem_OnClick" />
                     <MenuItem Header="_Open" Click ="OpenFile"/>
                     <MenuItem Header="_Save" />
                     <Separator />
@@ -54,5 +54,6 @@
                   SelectionChanged="Preview_OnSelectionChanged"
                   SelectionMode="Single">
         </ListView>
+        <Slider x:Name="slider" Width="285" ValueChanged="slider_ValueChanged" Maximum="360"/>
     </Grid>
 </Window>
