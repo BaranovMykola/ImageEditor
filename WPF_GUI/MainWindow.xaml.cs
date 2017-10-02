@@ -20,6 +20,7 @@ namespace WPF_GUI
     public partial class MainWindow : Window
     {
         private readonly ImageStorage openedImage = new ImageStorage();
+        private CoreWrapper.ImageProc a;
 
         public MainWindow()
         {
@@ -35,6 +36,8 @@ namespace WPF_GUI
                 LockImageControl(removeButton, removeIco, Icons.remove, true);
             };
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
+            a = new CoreWrapper.ImageProc(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg", 1000, 1000);
+            //var b = a.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg");
         }
 
         private void InitializeButtonsIcons()
@@ -138,11 +141,8 @@ namespace WPF_GUI
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            CoreWrapper.ImageProc a = new CoreWrapper.ImageProc(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg", 600,600);
             var b = a.readOriginalWrapper(@"D:\Studying\Programming\ImageEditor\TestImages\ss.jpg");
-            var c = ConvertBitmapToImageSource(b);
-            image.Source = c;
-
+            image.Source = ConvertBitmapToImageSource(b.Clone() as Bitmap);
         }
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
@@ -160,6 +160,14 @@ namespace WPF_GUI
             ImageSource sc = (ImageSource)image1;
 
             return sc;
+        }
+
+        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+            a.rotateImage((float)slider.Value);
+            var b = a.getPreview(1000, 1000);
+            image.Source = ConvertBitmapToImageSource(b);
         }
     }
 }

@@ -3,26 +3,37 @@
 #include <opencv2\highgui.hpp>
 
 #include "ImageProcess.h"
+#include "ImageEditor.h"
 
 int main()
 {
-	cv::Mat img = imread("img.jpg");
-	int grad = 0;
-	int b = 255;
-	int c = 100;
-	int size = 100;
-	namedWindow("Panel");
-	createTrackbar("RotateAngle", "Panel", &grad, 360);
-	createTrackbar("B", "Panel", &b, 510);
-	createTrackbar("C", "Panel", &c, 300);
-	createTrackbar("Size", "Panel", &size, 300);
-	CoreImgEditor cie("i.jpg", 1600, 900);
-	while (waitKey(30) != 27)
+	std::string act;
+	ImageEditor edit("fox.jpg");
+	do
 	{
-		cie.editImage(size / 100.0, grad, c / 100.0, b - 255);
-		cie.updatePreview(880, 880);
-		cv::imshow("img", cie.getPreview());
+		cin >> act;
+		if (act == "show")
+		{
+			imshow("", edit.source);
+			waitKey();
+			destroyAllWindows();
+		}
+		else if (act == "change")
+		{
+			float c;
+			int b;
+			cout << "c >> b >>" << endl;
+			cin >> c >> b;
+			edit.changeContrastAndBrightness(c, b);
+		}
+		else if (act == "restore")
+		{
+			int s;
+			cout << "s >>" << endl;
+			cin >> s;
+			edit.restore(s);
+		}
 	}
-	cv::waitKey();
+	while (true);
 	return 0;
 }

@@ -23,7 +23,7 @@ namespace CoreWrapper {
 		void editContrastAndBrightness(float _contrast, int _brightness);
 		void rotateImage(float _grad);
 		void resizeImage(float _ratio);
-		System::Drawing::Image^ getPreview(int width, int height);
+		System::Drawing::Bitmap^ getPreview(int width, int height);
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 
 	private:

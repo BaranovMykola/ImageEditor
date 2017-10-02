@@ -158,6 +158,9 @@
     <ClCompile Include="ImageProcess.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractChange.h" />
+    <ClInclude Include="ContrastAndBrightnessChange.h" />
+    <ClInclude Include="ImageEditor.h" />
     <ClInclude Include="ImageProcess.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
