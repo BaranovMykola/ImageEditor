@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Media;
-using CoreWrapper;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
     using System;
     using System.Drawing;
@@ -11,6 +7,9 @@ namespace WPF_GUI
     using System.Windows.Controls;
     using System.Windows.Media.Imaging;
     using System.Windows.Input;
+    using System.Collections.Generic;
+    using System.Windows.Media;
+    using CoreWrapper;
     using Microsoft.Win32;
     using ImageContainer;
     using Const;
@@ -21,9 +20,9 @@ namespace WPF_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public readonly ImageStorage openedImage = new ImageStorage();
+        private readonly ImageStorage openedImage = new ImageStorage();
         private bool edit = false;
-        public ImageProc editor = new ImageProc();
+        private ImageProc editor = new ImageProc();
 
         public MainWindow()
         {
@@ -44,7 +43,6 @@ namespace WPF_GUI
                 LockImageControl(editButton, editIco, Icons.edit, true);
             };
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
-
         }
 
         private void InitializeButtonsIcons()
@@ -154,9 +152,9 @@ namespace WPF_GUI
         {
         }
 
-        public ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
+        private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
         {
-            Bitmap bmp = new Bitmap(imToConvert);
+            Bitmap bmp = new Bitmap(bitmapImage);
             MemoryStream ms = new MemoryStream();
             bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
 
@@ -183,19 +181,22 @@ namespace WPF_GUI
             preview.SelectionChanged -= Preview_OnSelectionChanged;
             preview.Items.Clear();
             AddPreviewIcon(image);
-
-            
         }
 
         private void AddPreviewIcon(Image icon)
         {
-            Image im = new Image() { Source = icon.Source.Clone(), Height = Constants.PreviewHeight, HorizontalAlignment = HorizontalAlignment.Center};
+            Image im = new Image()
+            {
+                Source = icon.Source.Clone(),
+                Height = Constants.PreviewHeight,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
             preview.Items.Add(im);
         }
 
         private void ContAndBrightButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new ContrastAndBrightness(image, this);
+            var dialog = new ContrastAndBrightness();
             dialog.PreviewChanged += ChangeContrastAndBrightness;
 
             var apply = dialog.ShowDialog();

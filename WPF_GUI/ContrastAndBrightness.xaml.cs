@@ -1,36 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
+    using System;
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for ContrastAndBrightness.xaml
     /// </summary>
     public partial class ContrastAndBrightness : Window
     {
-        private Image view;
-        private MainWindow parent;
-
-        public event Action<float,int> PreviewChanged;
-
-        public ContrastAndBrightness(Image _view, MainWindow _parent)
+        public ContrastAndBrightness()
         {
-            view = _view;
-            parent = _parent;
             InitializeComponent();
         }
+
+        public event Action<float, int> PreviewChanged;
 
         public void ResetDialog()
         {
@@ -53,9 +36,7 @@ namespace WPF_GUI
         private void ChangePreview()
         {
             float contrast = (float)(contrastSlider.Value / contrastSlider.Maximum * Const.Constants.MaxContrast);
-            int brightness = (int)brightnessSlider.Value-255;
-            //parent.editor.applyContrastAndBrightness(contrast, brightness);
-            //parent.image.Source = parent.ConvertBitmapToImageSource(parent.editor.getPreview());
+            int brightness = (int)brightnessSlider.Value - 255;
             PreviewChanged?.Invoke(contrast, brightness);
         }
 
