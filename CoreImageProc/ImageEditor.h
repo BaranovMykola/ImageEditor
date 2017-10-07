@@ -114,6 +114,11 @@ public:
 		return icons;
 	}
 
+	void save(std::string fileName)
+	{
+		imwrite(fileName, source);
+	}
+
 public:
 
 	void eraseChange()

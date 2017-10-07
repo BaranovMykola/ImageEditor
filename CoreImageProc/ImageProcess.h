@@ -110,7 +110,6 @@ public:
 	{
 		return preview;
 	}
-
 private:
 
 	void editSource(const cv::Mat& img)

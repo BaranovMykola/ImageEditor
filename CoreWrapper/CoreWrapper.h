@@ -26,6 +26,7 @@ namespace CoreWrapper {
 		int getMinimumOfImage();
 		void apply();
 		void restore(int changeIndex);
+		void save(System::String^ fileName);
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

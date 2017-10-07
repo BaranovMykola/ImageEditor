@@ -287,7 +287,13 @@
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            FileDialog save = new SaveFileDialog();
+            save.Filter = "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP(*.bmp)|*.bmp";
+            save.ShowDialog();
+            string path = save.FileName;
+            MessageBox.Show(path);
+            editor.save(path);
+
         }
     }
 }

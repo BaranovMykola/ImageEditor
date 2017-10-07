@@ -112,6 +112,13 @@ void CoreWrapper::ImageProc::restore(int changeIndex)
 	editor->restore(changeIndex);
 }
 
+void CoreWrapper::ImageProc::save(System::String ^ fileName)
+{
+	std::string stdFileName;
+	MarshalString(fileName, stdFileName);
+	editor->save(stdFileName);
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)
 {
 	return gcnew Bitmap(matToConvert.cols, matToConvert.rows, matToConvert.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.ptr()));
