@@ -19,8 +19,10 @@ namespace CoreWrapper {
 	public:
 		ImageProc();
 		Bitmap^ getSource();
+		Bitmap^ getPreview();
 		void loadImage(System::String^ file);
 		void applyContrastAndBrightness(float contrast, int brightness);
+		int getMinimumOfImage();
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

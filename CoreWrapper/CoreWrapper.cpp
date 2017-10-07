@@ -68,6 +68,12 @@ Bitmap ^ CoreWrapper::ImageProc::getSource()
 	return ConvertMatToBitmap(img);
 }
 
+Bitmap ^ CoreWrapper::ImageProc::getPreview()
+{
+	auto img = editor->getPreview();
+	return ConvertMatToBitmap(img);
+}
+
 void CoreWrapper::ImageProc::loadImage(System::String ^ file)
 {
 	std::string stdFileName;
@@ -78,6 +84,11 @@ void CoreWrapper::ImageProc::loadImage(System::String ^ file)
 void CoreWrapper::ImageProc::applyContrastAndBrightness(float contrast, int brightness)
 {
 	editor->changeContrastAndBrightness(contrast, brightness);
+}
+
+int CoreWrapper::ImageProc::getMinimumOfImage()
+{
+	return editor->getMinimum();
 }
 
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)

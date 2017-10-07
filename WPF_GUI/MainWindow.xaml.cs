@@ -20,9 +20,9 @@ namespace WPF_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ImageStorage openedImage = new ImageStorage();
+        public readonly ImageStorage openedImage = new ImageStorage();
         private bool edit = false;
-        private ImageProc editor = new ImageProc();
+        public ImageProc editor = new ImageProc();
 
         public MainWindow()
         {
@@ -153,7 +153,7 @@ namespace WPF_GUI
         {
         }
 
-        private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
+        public ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {
             Bitmap bmp = new Bitmap(imToConvert);
             MemoryStream ms = new MemoryStream();
@@ -184,7 +184,7 @@ namespace WPF_GUI
 
         private void ContAndBrightButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new ContrastAndBrightness(image);
+            var dialog = new ContrastAndBrightness(image, this);
 
             var apply = dialog.ShowDialog();
             if (apply != null && apply.Value)

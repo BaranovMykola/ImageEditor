@@ -80,6 +80,13 @@ public:
 		return preview;
 	}
 
+	int getMinimum()const
+	{
+		double min;
+		cv::minMaxLoc(source, &min, 0);
+		return min;
+	}
+
 public:
 	Mat preview;
 	Mat source;
