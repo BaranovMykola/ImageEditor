@@ -179,6 +179,7 @@
             var file = this.openedImage.CurrentPath;
             editor.loadImage(file);
             preview.SelectionChanged -= Preview_OnSelectionChanged;
+            preview.MouseDoubleClick += Preview_OnMouseDoubleClick;
             preview.Items.Clear();
             AddPreviewIcon(image);
         }
@@ -227,6 +228,25 @@
         {
             editor.applyContrastAndBrightness(contrast, brightness);
             image.Source = ConvertBitmapToImageSource(editor.getPreview());
+        }
+
+        private void Preview_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int selectedIndex = preview.SelectedIndex;
+            if (selectedIndex != -1 && selectedIndex+1<preview.Items.Count)
+            {
+                MessageBoxResult confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    editor.restore(preview.SelectedIndex);
+                    image.Source = ConvertBitmapToImageSource(editor.getSource());
+                    for (int i = preview.Items.Count-1; i > selectedIndex; i--)
+                    {
+                        preview.Items.RemoveAt(i);
+                    }
+                }
+            }
         }
     }
 }

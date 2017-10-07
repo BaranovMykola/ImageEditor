@@ -25,6 +25,7 @@ namespace CoreWrapper {
 		void applyContrastAndBrightness(float contrast, int brightness);
 		int getMinimumOfImage();
 		void apply();
+		void restore(int changeIndex);
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

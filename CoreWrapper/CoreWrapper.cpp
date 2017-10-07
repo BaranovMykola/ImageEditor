@@ -107,6 +107,11 @@ void CoreWrapper::ImageProc::apply()
 	editor->apply();
 }
 
+void CoreWrapper::ImageProc::restore(int changeIndex)
+{
+	editor->restore(changeIndex);
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)
 {
 	return gcnew Bitmap(matToConvert.cols, matToConvert.rows, matToConvert.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.ptr()));
