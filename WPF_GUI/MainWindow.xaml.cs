@@ -21,7 +21,6 @@
     public partial class MainWindow : Window
     {
         private readonly ImageStorage openedImage = new ImageStorage();
-        private bool edit = false;
         private ImageProc editor = new ImageProc();
 
         public MainWindow()
@@ -59,11 +58,6 @@
             LockImageControl(removeButton, removeIco, Icons.remove, true);
             LockImageControl(editButton, editIco, Icons.edit, true);
             LockImageControl(openButton, openIco, Icons.open, true);
-        }
-
-        private void OpenFile(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void LeftButton_OnClick(object sender, RoutedEventArgs e)
@@ -144,10 +138,6 @@
             }
         }
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
-        {
-        }
-
         private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
         {
             Bitmap bmp = new Bitmap(bitmapImage);
@@ -167,7 +157,6 @@
 
         private void EditButton_OnClick(object sender, RoutedEventArgs e)
         {
-            edit = true;
             contAndBrightButton.IsEnabled = true;
             rotateButton.IsEnabled = true;
             resizeButton.IsEnabled = true;
@@ -192,8 +181,7 @@
 
         private void ReturnToImageviewMode(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult confirm = MessageBox.Show("Are you sure to discard all changes?", "Discarding all changes...",
-    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBoxResult confirm = MessageBox.Show("Are you sure to discard all changes?", "Discarding all changes...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
             if (confirm == MessageBoxResult.Yes)
             {
                 preview.Items.Clear();
@@ -265,8 +253,7 @@
             int selectedIndex = preview.SelectedIndex;
             if (selectedIndex != -1 && selectedIndex + 1 < preview.Items.Count)
             {
-                MessageBoxResult confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+                MessageBoxResult confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
                 if (confirm == MessageBoxResult.Yes)
                 {
                     editor.restore(preview.SelectedIndex);

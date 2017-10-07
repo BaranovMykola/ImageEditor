@@ -127,6 +127,7 @@
             {
                 pathes[i] = imageSourses[i].AbsolutePath;
             }
+
             return pathes;
         }
     }

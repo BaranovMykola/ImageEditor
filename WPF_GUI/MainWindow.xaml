@@ -8,17 +8,6 @@
         Title="MainWindow" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450"
         KeyUp="MainWindow_OnKeyUp">
     <Grid Margin="0,0,0,0">
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_New" Click="MenuItem_OnClick" />
-                    <MenuItem Header="_Open" Click ="OpenFile"/>
-                    <MenuItem Header="_Save" />
-                    <Separator />
-                    <MenuItem Header="_Exit" />
-                </MenuItem>
-            </Menu>
-        </DockPanel>
         <WrapPanel Margin="10,27,157.6,338">
             <ToolBar x:Name="toolBar" Height="55" Width="628" Opacity="1" Background="{x:Null}">
                 <Button Name ="openButton" Click="OpenButton_OnClick" IsEnabled="True">
