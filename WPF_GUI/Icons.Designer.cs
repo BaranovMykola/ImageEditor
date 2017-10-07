@@ -169,5 +169,25 @@ namespace WPF_GUI {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon save {
+            get {
+                object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon save_gray {
+            get {
+                object obj = ResourceManager.GetObject("save_gray", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

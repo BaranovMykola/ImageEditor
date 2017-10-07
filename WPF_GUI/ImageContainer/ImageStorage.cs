@@ -119,5 +119,15 @@
                 imageSourses.Add(new Uri(path, UriKind.Absolute));
             }
         }
+
+        public string[] GetAllPathes()
+        {
+            string[] pathes = new string[imageSourses.Count];
+            for (int i = 0; i < imageSourses.Count; i++)
+            {
+                pathes[i] = imageSourses[i].AbsolutePath;
+            }
+            return pathes;
+        }
     }
 }

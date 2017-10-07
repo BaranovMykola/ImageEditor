@@ -42,6 +42,11 @@
                         <Image Height="43" Width="43" Opacity="1" Name ="editIco"/>
                     </StackPanel>
                 </Button>
+                <Button Name ="saveButton" IsEnabled="False" Click="SaveButton_OnClick">
+                    <StackPanel>
+                        <Image Height="43" Width="43" Opacity="1" Name ="saveIco"/>
+                    </StackPanel>
+                </Button>
                 <Button Name ="contAndBrightButton" IsEnabled="False" Click="ContAndBrightButton_OnClick">
                     <StackPanel>
                         <Image Height="43" Width="43" Opacity="1" Name ="contAndBrightIco"/>

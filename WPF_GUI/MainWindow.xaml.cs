@@ -35,13 +35,7 @@
                 LockImageControl(removeButton, removeIco, Icons.remove_gray);
                 LockImageControl(editButton, editIco, Icons.edit_gray);
             };
-            openedImage.UnlockAll += () =>
-            {
-                LockImageControl(leftButton, leftIco, Icons.left, true);
-                LockImageControl(rightButton, rightIco, Icons.right, true);
-                LockImageControl(removeButton, removeIco, Icons.remove, true);
-                LockImageControl(editButton, editIco, Icons.edit, true);
-            };
+            openedImage.UnlockAll += UnlockAllButton;
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
         }
 
@@ -54,6 +48,15 @@
             contAndBrightIco.Source = Icons.contandbright.ToImageSource();
             rotateIco.Source = Icons.rotate.ToImageSource();
             resizeIco.Source = Icons.resize.ToImageSource();
+            saveIco.Source = Icons.save_gray.ToImageSource();
+        }
+
+        private void UnlockAllButton()
+        {
+            LockImageControl(leftButton, leftIco, Icons.left, true);
+            LockImageControl(rightButton, rightIco, Icons.right, true);
+            LockImageControl(removeButton, removeIco, Icons.remove, true);
+            LockImageControl(editButton, editIco, Icons.edit, true);
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -176,12 +179,45 @@
             rotateButton.IsEnabled = true;
             resizeButton.IsEnabled = true;
 
+            LockImageControl(leftButton, leftIco, Icons.left_gray);
+            LockImageControl(rightButton, rightIco, Icons.right_gray);
+            LockImageControl(saveButton, saveIco, Icons.save, true);
+            LockImageControl(editButton, editIco, Icons.edit_gray);
+
             var file = this.openedImage.CurrentPath;
             editor.loadImage(file);
+
             preview.SelectionChanged -= Preview_OnSelectionChanged;
             preview.MouseDoubleClick += Preview_OnMouseDoubleClick;
+            removeButton.Click -= Remove_OnClick;
+            removeButton.Click += ReturnToImageviewMode;
+
             preview.Items.Clear();
             AddPreviewIcon(image);
+        }
+
+        private void ReturnToImageviewMode(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult confirm = MessageBox.Show("Are you sure to discard all changes?", "Discarding all changes...",
+    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+            if (confirm == MessageBoxResult.Yes)
+            {
+                preview.Items.Clear();
+                LoadPreviews(openedImage.GetAllPathes());
+                image.Source = openedImage.Current;
+
+                preview.SelectionChanged += Preview_OnSelectionChanged;
+                preview.MouseDoubleClick -= Preview_OnMouseDoubleClick;
+                removeButton.Click += Remove_OnClick;
+                removeButton.Click -= ReturnToImageviewMode;
+
+                UnlockAllButton();
+                LockImageControl(saveButton, saveIco, Icons.save_gray);
+
+                contAndBrightButton.IsEnabled = false;
+                rotateButton.IsEnabled = false;
+                resizeButton.IsEnabled = false;
+            }
         }
 
         private void AddPreviewIcon(Image icon)
@@ -233,7 +269,7 @@
         private void Preview_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int selectedIndex = preview.SelectedIndex;
-            if (selectedIndex != -1 && selectedIndex+1<preview.Items.Count)
+            if (selectedIndex != -1 && selectedIndex + 1 < preview.Items.Count)
             {
                 MessageBoxResult confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...",
                     MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
@@ -241,12 +277,17 @@
                 {
                     editor.restore(preview.SelectedIndex);
                     image.Source = ConvertBitmapToImageSource(editor.getSource());
-                    for (int i = preview.Items.Count-1; i > selectedIndex; i--)
+                    for (int i = preview.Items.Count - 1; i > selectedIndex; i--)
                     {
                         preview.Items.RemoveAt(i);
                     }
                 }
             }
+        }
+
+        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
