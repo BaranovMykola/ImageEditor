@@ -21,11 +21,15 @@
         </DockPanel>
         <WrapPanel Margin="10,27,157.6,338">
             <ToolBar x:Name="toolBar" Height="55" Width="628" Opacity="1" Background="{x:Null}">
+                <Button Name ="openButton" Click="OpenButton_OnClick" IsEnabled="True">
+                    <StackPanel>
+                        <Image Height ="43" Width="43" Opacity="1" Name ="openIco"/>
+                    </StackPanel>
+                </Button>
                 <Button Name ="leftButton" Click="LeftButton_OnClick" IsEnabled="False">
                     <StackPanel>
                         <Image Height ="43" Width="43" Opacity="1" Name ="leftIco"/>
                     </StackPanel>
-
                 </Button>
                 <Button Name ="rightButton" Click="RightButton_OnClick" IsEnabled="False">
                     <StackPanel>

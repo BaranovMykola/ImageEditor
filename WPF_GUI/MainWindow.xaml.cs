@@ -49,6 +49,7 @@
             rotateIco.Source = Icons.rotate.ToImageSource();
             resizeIco.Source = Icons.resize.ToImageSource();
             saveIco.Source = Icons.save_gray.ToImageSource();
+            openIco.Source = Icons.open.ToImageSource();
         }
 
         private void UnlockAllButton()
@@ -57,20 +58,12 @@
             LockImageControl(rightButton, rightIco, Icons.right, true);
             LockImageControl(removeButton, removeIco, Icons.remove, true);
             LockImageControl(editButton, editIco, Icons.edit, true);
+            LockImageControl(openButton, openIco, Icons.open, true);
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
-            var openDialog = new OpenFileDialog();
-            openDialog.Multiselect = true;
-            openDialog.ShowDialog();
-            var pathes = openDialog.FileNames;
 
-            openedImage.LoadImages(pathes);
-            LoadPreviews(pathes);
-            image.Source = openedImage.Current;
-            preview.SelectedIndex = openedImage.CurrentIndex;
-            preview.Focus();
         }
 
         private void LeftButton_OnClick(object sender, RoutedEventArgs e)
@@ -183,6 +176,7 @@
             LockImageControl(rightButton, rightIco, Icons.right_gray);
             LockImageControl(saveButton, saveIco, Icons.save, true);
             LockImageControl(editButton, editIco, Icons.edit_gray);
+            LockImageControl(openButton, openIco, Icons.open_gray);
 
             var file = this.openedImage.CurrentPath;
             editor.loadImage(file);
@@ -291,9 +285,21 @@
             save.Filter = "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP(*.bmp)|*.bmp";
             save.ShowDialog();
             string path = save.FileName;
-            MessageBox.Show(path);
             editor.save(path);
+        }
 
+        private void OpenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var openDialog = new OpenFileDialog();
+            openDialog.Multiselect = true;
+            openDialog.ShowDialog();
+            var pathes = openDialog.FileNames;
+
+            openedImage.LoadImages(pathes);
+            LoadPreviews(pathes);
+            image.Source = openedImage.Current;
+            preview.SelectedIndex = openedImage.CurrentIndex;
+            preview.Focus();
         }
     }
 }
