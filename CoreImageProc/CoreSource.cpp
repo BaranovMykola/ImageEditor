@@ -48,6 +48,10 @@ int main()
 		{
 			edit.apply();
 		}
+		else if (act == "history")
+		{
+			edit.getPreviewIcons(0.5);
+		}
 	}
 	while (true);
 	return 0;

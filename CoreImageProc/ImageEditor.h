@@ -19,11 +19,12 @@ class ImageEditor
 public:
 	ImageEditor()
 	{
-
+		currentChange = nullptr;
 	}
 	
 	ImageEditor(std::string file)
 	{
+		currentChange = nullptr;
 		loadImage(file);
 	}
 
@@ -42,7 +43,8 @@ public:
 	void changeContrastAndBrightness(float _contrast, int _brightness)
 	{
 		source.convertTo(preview, source.type(), _contrast, _brightness);
-		changes.push_back(new ContrastAndBrightnessChange(_contrast, _brightness));
+		eraseChange();
+		currentChange = new ContrastAndBrightnessChange(_contrast, _brightness);
 	}
 
 	void restore(int step)
@@ -60,19 +62,23 @@ public:
 	{
 		preview = source.clone();
 		imp::resize(preview, percentRatio);
-		changes.push_back(new ResizeChange(percentRatio));
+		eraseChange();
+		currentChange = new ResizeChange(percentRatio);
 	}
 
 	void rotate(int angle)
 	{
 		preview = source.clone();
 		imp::rotate(preview, angle);
-		changes.push_back(new RotateChange(angle));
+		eraseChange();
+		currentChange = new RotateChange(angle);
 	}
 
 	void apply()
 	{
 		source = preview.clone();
+		changes.push_back(currentChange);
+		currentChange = nullptr;
 	}
 
 	Mat getPreview()const
@@ -87,9 +93,39 @@ public:
 		return min;
 	}
 
+	std::vector<Mat> getPreviewIcons(float resizeRatio)
+	{
+		Mat originalCopy = original.clone();
+		imp::resize(originalCopy, resizeRatio);
+
+		std::vector<Mat> icons;
+		icons.push_back(originalCopy.clone());
+		for (int i = 0; i < changes.size(); i++)
+		{
+			changes[i]->apply(originalCopy);
+			icons.push_back(originalCopy.clone());
+		}
+
+		for (auto i : icons)
+		{
+			imshow("change", i);
+			waitKey();
+		}
+		return icons;
+	}
+
 public:
+
+	void eraseChange()
+	{
+		if (currentChange != nullptr)
+		{
+			delete currentChange;
+		}
+	}
 	Mat preview;
 	Mat source;
 	Mat original;
 	std::vector<AbstractChange*> changes;
+	AbstractChange* currentChange;
 };
