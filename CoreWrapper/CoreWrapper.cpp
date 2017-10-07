@@ -74,6 +74,17 @@ Bitmap ^ CoreWrapper::ImageProc::getPreview()
 	return ConvertMatToBitmap(img);
 }
 
+System::Collections::Generic::List<Bitmap^>^ CoreWrapper::ImageProc::getPreivewIcons(float resizeRatio)
+{
+	auto icons = editor->getPreviewIcons(resizeRatio);
+	System::Collections::Generic::List<Bitmap^>^ iconsList = gcnew System::Collections::Generic::List<Bitmap^>();
+	for (Mat i : icons)
+	{
+		iconsList->Add(ConvertMatToBitmap(i));
+	}
+	return iconsList;
+}
+
 void CoreWrapper::ImageProc::loadImage(System::String ^ file)
 {
 	std::string stdFileName;

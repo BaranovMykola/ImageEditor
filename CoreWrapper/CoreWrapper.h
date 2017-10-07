@@ -20,6 +20,7 @@ namespace CoreWrapper {
 		ImageProc();
 		Bitmap^ getSource();
 		Bitmap^ getPreview();
+		System::Collections::Generic::List<Bitmap^>^ getPreivewIcons(float resizeRatio);
 		void loadImage(System::String^ file);
 		void applyContrastAndBrightness(float contrast, int brightness);
 		int getMinimumOfImage();

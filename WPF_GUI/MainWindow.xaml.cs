@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Collections.Generic;
+using System.Windows.Media;
 using CoreWrapper;
 
 namespace WPF_GUI
@@ -179,7 +180,17 @@ namespace WPF_GUI
 
             var file = this.openedImage.CurrentPath;
             editor.loadImage(file);
+            preview.SelectionChanged -= Preview_OnSelectionChanged;
+            preview.Items.Clear();
+            AddPreviewIcon(image);
 
+            
+        }
+
+        private void AddPreviewIcon(Image icon)
+        {
+            Image im = new Image() { Source = icon.Source.Clone(), Height = Constants.PreviewHeight, HorizontalAlignment = HorizontalAlignment.Center};
+            preview.Items.Add(im);
         }
 
         private void ContAndBrightButton_OnClick(object sender, RoutedEventArgs e)
@@ -190,10 +201,23 @@ namespace WPF_GUI
             if (apply != null && apply.Value)
             {
                 editor.apply();
+                AddPreviewIcon(image);
             }
             else
             {
                 image.Source = ConvertBitmapToImageSource(editor.getSource());
+            }
+        }
+
+        private void LoadPreviewIcons(List<Bitmap> icons)
+        {
+            preview.Items.Clear();
+            foreach (var i in icons)
+            {
+                var im = new Image();
+                im.Source = ConvertBitmapToImageSource(i).Clone();
+                image.Source = im.Source.Clone();
+                preview.Items.Add(im);
             }
         }
     }
