@@ -189,11 +189,11 @@ namespace WPF_GUI
             var apply = dialog.ShowDialog();
             if (apply != null && apply.Value)
             {
-                MessageBox.Show("Apply contrast and brightness");
+                editor.apply();
             }
             else
             {
-                MessageBox.Show("Clear changing");
+                image.Source = ConvertBitmapToImageSource(editor.getSource());
             }
         }
     }

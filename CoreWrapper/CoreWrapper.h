@@ -23,6 +23,7 @@ namespace CoreWrapper {
 		void loadImage(System::String^ file);
 		void applyContrastAndBrightness(float contrast, int brightness);
 		int getMinimumOfImage();
+		void apply();
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

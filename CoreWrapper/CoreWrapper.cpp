@@ -91,6 +91,11 @@ int CoreWrapper::ImageProc::getMinimumOfImage()
 	return editor->getMinimum();
 }
 
+void CoreWrapper::ImageProc::apply()
+{
+	editor->apply();
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)
 {
 	return gcnew Bitmap(matToConvert.cols, matToConvert.rows, matToConvert.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.ptr()));
