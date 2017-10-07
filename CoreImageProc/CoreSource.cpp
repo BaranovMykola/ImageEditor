@@ -14,7 +14,7 @@ int main()
 		cin >> act;
 		if (act == "show")
 		{
-			imshow("", edit.source);
+			imshow("", edit.preview);
 			waitKey();
 			destroyAllWindows();
 		}
@@ -43,6 +43,10 @@ int main()
 			int s;
 			cin >> s;
 			edit.restore(s);
+		}
+		else if (act == "apply")
+		{
+			edit.apply();
 		}
 	}
 	while (true);

@@ -31,6 +31,7 @@ public:
 	{
 		original = imread(file);
 		source = original.clone();
+		preview = source.clone();
 	}
 
 	cv::Mat getSource()const
@@ -40,7 +41,7 @@ public:
 
 	void changeContrastAndBrightness(float _contrast, int _brightness)
 	{
-		source.convertTo(source, source.type(), _contrast, _brightness);
+		source.convertTo(preview, source.type(), _contrast, _brightness);
 		changes.push_back(new ContrastAndBrightnessChange(_contrast, _brightness));
 	}
 
@@ -52,21 +53,35 @@ public:
 			changes[i]->apply(source);
 		}
 		changes.erase(changes.begin() + step + 1, changes.end());
+		preview = source.clone();
 	}
 
 	void resize(float percentRatio)
 	{
-		imp::resize(source, percentRatio);
+		preview = source.clone();
+		imp::resize(preview, percentRatio);
 		changes.push_back(new ResizeChange(percentRatio));
 	}
 
 	void rotate(int angle)
 	{
-		imp::rotate(source, angle);
+		preview = source.clone();
+		imp::rotate(preview, angle);
 		changes.push_back(new RotateChange(angle));
 	}
 
+	void apply()
+	{
+		source = preview.clone();
+	}
+
+	Mat getPreview()const
+	{
+		return preview;
+	}
+
 public:
+	Mat preview;
 	Mat source;
 	Mat original;
 	std::vector<AbstractChange*> changes;
