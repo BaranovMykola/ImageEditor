@@ -23,6 +23,8 @@ namespace WPF_GUI
         private Image view;
         private MainWindow parent;
 
+        public event Action<float,int> PreviewChanged;
+
         public ContrastAndBrightness(Image _view, MainWindow _parent)
         {
             view = _view;
@@ -52,8 +54,9 @@ namespace WPF_GUI
         {
             float contrast = (float)(contrastSlider.Value / contrastSlider.Maximum * Const.Constants.MaxContrast);
             int brightness = (int)brightnessSlider.Value-255;
-            parent.editor.applyContrastAndBrightness(contrast, brightness);
-            parent.image.Source = parent.ConvertBitmapToImageSource(parent.editor.getPreview());
+            //parent.editor.applyContrastAndBrightness(contrast, brightness);
+            //parent.image.Source = parent.ConvertBitmapToImageSource(parent.editor.getPreview());
+            PreviewChanged?.Invoke(contrast, brightness);
         }
 
         private void ContrastSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

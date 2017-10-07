@@ -196,6 +196,7 @@ namespace WPF_GUI
         private void ContAndBrightButton_OnClick(object sender, RoutedEventArgs e)
         {
             var dialog = new ContrastAndBrightness(image, this);
+            dialog.PreviewChanged += ChangeContrastAndBrightness;
 
             var apply = dialog.ShowDialog();
             if (apply != null && apply.Value)
@@ -219,6 +220,12 @@ namespace WPF_GUI
                 image.Source = im.Source.Clone();
                 preview.Items.Add(im);
             }
+        }
+
+        private void ChangeContrastAndBrightness(float contrast, int brightness)
+        {
+            editor.applyContrastAndBrightness(contrast, brightness);
+            image.Source = ConvertBitmapToImageSource(editor.getPreview());
         }
     }
 }
