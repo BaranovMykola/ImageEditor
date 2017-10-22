@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_GUI"
+        xmlns:prop="clr-namespace:WPF_GUI.Properties"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450"
         KeyUp="MainWindow_OnKeyUp">
     <Window.Resources>
-        <local:Icons x:Key="Icons"></local:Icons>
     </Window.Resources>
     <Grid Margin="0,0,0,0">
         <WrapPanel Margin="10,27,157.6,338">
@@ -25,7 +25,7 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
-                                            <Setter Property="Source" Value="D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left.ico" />
+                                            <Setter Property="Source" Value="{x:Static local:Icons.left}" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
                                             <Setter Property="Source" Value="D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left_gray.ico" />
