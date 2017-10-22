@@ -85,6 +85,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Icons.resx</DependentUpon>
     </Compile>
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="ViewModel.cs" />
     <Page Include="ContrastAndBrightness.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
