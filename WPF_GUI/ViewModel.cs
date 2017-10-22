@@ -24,7 +24,8 @@ namespace WPF_GUI
         {
             OpenImageCommand = new RelayCommand(OpenImage);
             OpenedImage = new ImageStorageModel();
-            NextCommand = new RelayCommand(s => OpenedImage.Next(), o => OpenedImage.IsNext);
+            NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext);
+            PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -35,6 +36,7 @@ namespace WPF_GUI
         public RelayCommand OpenImageCommand { get; set; }
 
         public RelayCommand NextCommand { get; set; }
+
         public RelayCommand PrevCommand { get; set; }
 
         private void OpenImage(object parameter)
@@ -45,7 +47,6 @@ namespace WPF_GUI
             var pathes = openDialog.FileNames;
 
             OpenedImage.LoadImages(pathes);
-            NextCommand.RaiseCanExecuteChanged();   
         }
     }
 }

@@ -15,7 +15,7 @@
                         <Image Height ="43" Width="43" Opacity="1" Name ="openIco"/>
                     </StackPanel>
                 </Button>
-                <Button Name ="leftButton" Click="LeftButton_OnClick" IsEnabled="False">
+                <Button Name ="leftButton" IsEnabled="True" Command="{Binding PrevCommand}">
                     <StackPanel>
                         <Image Height ="43" Width="43" Opacity="1" Name ="leftIco"/>
                     </StackPanel>
