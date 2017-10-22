@@ -10,7 +10,7 @@
     <Grid Margin="0,0,0,0">
         <WrapPanel Margin="10,27,157.6,338">
             <ToolBar x:Name="toolBar" Height="55" Width="628" Opacity="1" Background="{x:Null}">
-                <Button Name ="openButton" Click="OpenButton_OnClick" IsEnabled="True">
+                <Button Name ="openButton" IsEnabled="True" Command="{Binding OpenImageCommand}">
                     <StackPanel>
                         <Image Height ="43" Width="43" Opacity="1" Name ="openIco"/>
                     </StackPanel>
@@ -58,7 +58,7 @@
             </ToolBar>
         </WrapPanel>
         <WrapPanel Margin="10,87,157.6,10" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="image" Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="image" Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding OpenedImage.Current}"/>
         </WrapPanel>
         <ListView Name="preview"
                   HorizontalAlignment="Right"

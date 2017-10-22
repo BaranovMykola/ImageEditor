@@ -1,10 +1,14 @@
-﻿namespace WPF_GUI.ImageContainer
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using WPF_GUI.Annotations;
+
+namespace WPF_GUI.ImageContainer
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Media.Imaging;
 
-    public class ImageStorage
+    public class ImageStorage : INotifyPropertyChanged
     {
         private List<Uri> imageSourses = new List<Uri>();
 
@@ -73,6 +77,7 @@
             {
                 ++CurrentIndex;
                 ImageChanged?.Invoke(CurrentIndex);
+                OnPropertyChanged(nameof(Current));
                 return Current;
             }
         }
@@ -83,6 +88,7 @@
             {
                 --CurrentIndex;
                 ImageChanged?.Invoke(CurrentIndex);
+                OnPropertyChanged(nameof(Current));
                 return Current;
             }
         }
@@ -118,6 +124,7 @@
             {
                 imageSourses.Add(new Uri(path, UriKind.Absolute));
             }
+            OnPropertyChanged(nameof(Current));
         }
 
         public string[] GetAllPathes()
@@ -129,6 +136,14 @@
             }
 
             return pathes;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

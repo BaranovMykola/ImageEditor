@@ -36,6 +36,7 @@
             };
             openedImage.UnlockAll += UnlockAllButton;
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
+            DataContext = new ViewModel();
         }
 
         private void InitializeButtonsIcons()
