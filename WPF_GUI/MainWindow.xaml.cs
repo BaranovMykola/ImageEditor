@@ -41,8 +41,8 @@
 
         private void InitializeButtonsIcons()
         {
-            leftIco.Source = Icons.left_gray.ToImageSource();
-            rightIco.Source = Icons.right_gray.ToImageSource();
+            leftIco.Source = Icons.left.ToImageSource();
+            rightIco.Source = Icons.right.ToImageSource();
             removeIco.Source = Icons.remove_gray.ToImageSource();
             editIco.Source = Icons.edit_gray.ToImageSource();
             contAndBrightIco.Source = Icons.contandbright.ToImageSource();

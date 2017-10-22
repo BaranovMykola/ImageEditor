@@ -16,14 +16,15 @@ namespace WPF_GUI
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ImageStorage OpenedImage { get; set; }
+        public ImageStorageModel OpenedImage { get; set; }
 
         private ImageProc editor = new ImageProc();
 
         public ViewModel()
         {
             OpenImageCommand = new RelayCommand(OpenImage);
-            OpenedImage = new ImageStorage();
+            OpenedImage = new ImageStorageModel();
+            NextCommand = new RelayCommand(s => OpenedImage.Next(), o => OpenedImage.IsNext);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -33,6 +34,9 @@ namespace WPF_GUI
 
         public RelayCommand OpenImageCommand { get; set; }
 
+        public RelayCommand NextCommand { get; set; }
+        public RelayCommand PrevCommand { get; set; }
+
         private void OpenImage(object parameter)
         {
             var openDialog = new OpenFileDialog();
@@ -41,6 +45,7 @@ namespace WPF_GUI
             var pathes = openDialog.FileNames;
 
             OpenedImage.LoadImages(pathes);
+            NextCommand.RaiseCanExecuteChanged();   
         }
     }
 }

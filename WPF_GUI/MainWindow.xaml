@@ -20,7 +20,7 @@
                         <Image Height ="43" Width="43" Opacity="1" Name ="leftIco"/>
                     </StackPanel>
                 </Button>
-                <Button Name ="rightButton" Click="RightButton_OnClick" IsEnabled="False">
+                <Button Name ="rightButton" IsEnabled="True" Command="{Binding NextCommand}">
                     <StackPanel>
                         <Image Height ="43" Width="43" Opacity="1" Name ="rightIco"/>
                     </StackPanel>

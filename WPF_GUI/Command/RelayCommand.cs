@@ -50,15 +50,10 @@ namespace WPF_GUI.Command
             this.canExecute = canExecute;
         }
 
-        public event EventHandler CanExecuteChanged;
-        //{
-        //    add { CommandManager.RequerySuggested += value; }
-        //    remove { CommandManager.RequerySuggested -= value; }
-        //}
-
-        public void RaiseCanExecuteChanged()
+        public event EventHandler CanExecuteChanged
         {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
         #endregion // Constructors
