@@ -38,23 +38,9 @@ namespace WPF_GUI
             }
         }
 
-        public int SelectedIndex
-        {
-            get { return _selectedIndex; }
-            set
-            {
-                _selectedIndex = value;
-                OnPropertyChanged(nameof(SelectedIndex));
-                Console.WriteLine("selected index = " + _selectedIndex);
-                OpenedImage.CurrentIndex = SelectedIndex;
-                OnPropertyChanged(nameof(OpenedImage));
-            }
-        }
-
         private ImageProc editor = new ImageProc();
 
         private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
-        private int _selectedIndex;
 
         public ViewModel()
         {
@@ -62,6 +48,7 @@ namespace WPF_GUI
             OpenedImage = new ImageStorageModel();
             NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext);
             PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
+            RemoveCommand = new RelayCommand(RemoveImage, s=> !OpenedImage.IsEmpty);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -75,6 +62,8 @@ namespace WPF_GUI
 
         public RelayCommand PrevCommand { get; set; }
 
+        public RelayCommand RemoveCommand { get; set; }
+
         private void OpenImage(object parameter)
         {
             var openDialog = new OpenFileDialog();
@@ -83,7 +72,7 @@ namespace WPF_GUI
             var pathes = openDialog.FileNames;
 
             OpenedImage.LoadImages(pathes);
-            LoadPreviews(OpenedImage.GetAllPathes());
+            LoadPreviews(pathes);
         }
 
         private void LoadPreviews(string[] pathes)
@@ -112,6 +101,16 @@ namespace WPF_GUI
                 //preview.Items.Add(im);
                 ImagesPreview.Add(im);
             }
+        }
+
+        private void RemoveImage(object parametr)
+        {
+            int pos = OpenedImage.CurrentIndex;
+            OpenedImage.Remove();
+            ImagesPreview.RemoveAt(OpenedImage.CurrentIndex);
+            OpenedImage.CurrentIndex = pos - 1;
+            OnPropertyChanged(nameof(OpenedImage));
+            Console.WriteLine(OpenedImage.CurrentIndex);
         }
     }
 }

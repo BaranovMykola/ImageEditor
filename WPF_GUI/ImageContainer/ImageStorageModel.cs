@@ -37,9 +37,9 @@ namespace WPF_GUI.ImageContainer
             get { return _currentIndex; }
             set
             {
-                _currentIndex = value;
-                OnPropertyChanged(nameof(CurrentIndex));
-                OnPropertyChanged(nameof(Current));
+                _currentIndex = value< 0 ? 0 : value;
+                    OnPropertyChanged(nameof(CurrentIndex));
+                    OnPropertyChanged(nameof(Current));
             }
         }
 
@@ -99,25 +99,9 @@ namespace WPF_GUI.ImageContainer
         {
             if (imageSourses.Count > 0)
             {
-                if (imageSourses.Count == 1)
-                {
-                    LockRemove?.Invoke();
-                }
-
                 imageSourses.RemoveAt(CurrentIndex);
-                if (imageSourses.Count > 0)
-                {
-                    if (CurrentIndex == imageSourses.Count)
-                    {
-                        --CurrentIndex;
-                    }
-
-                    if (CurrentIndex == -1)
-                    {
-                        ++CurrentIndex;
-                    }
-                }
             }
+            OnPropertyChanged(nameof(Current));
         }
 
         public void LoadImages(string[] pathes)
@@ -149,14 +133,9 @@ namespace WPF_GUI.ImageContainer
             }
         }
 
-        public bool IsPrev
-        {
-            get
-            {
-                return CurrentIndex > 0;
-                
-            }
-        }
+        public bool IsPrev => CurrentIndex > 0;
+
+        public bool IsEmpty => imageSourses.Count == 0;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -22,5 +22,9 @@ namespace WPF_GUI
         public ImageSource OpenIco { get; set; } = Icons.open.ToImageSource();
 
         public ImageSource OpenIcoGray { get; set; } = Icons.open_gray.ToImageSource();
+
+        public ImageSource RemoveIco { get; set; } = Icons.remove.ToImageSource();
+
+        public ImageSource RemoveIcoGray { get; set; } = Icons.remove_gray.ToImageSource();
     }
 }

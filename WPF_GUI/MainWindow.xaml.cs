@@ -28,11 +28,6 @@
             this.InitializeComponent();
             InitializeButtonsIcons();
             //openedImage.LockLeft += () => LockImageControl(leftButton, leftIco, Icons.left_gray);
-            openedImage.LockRemove += () =>
-            {
-                LockImageControl(removeButton, removeIco, Icons.remove_gray);
-                LockImageControl(editButton, editIco, Icons.edit_gray);
-            };
             openedImage.UnlockAll += UnlockAllButton;
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
             DataContext = new ViewModel();

@@ -70,9 +70,22 @@
                     </StackPanel>
                 </Button>
                 
-                <Button Name ="removeButton" Click="Remove_OnClick" IsEnabled="False">
+                <Button Name ="removeButton" Width="50" Height="50" Command="{Binding RemoveCommand}">
                     <StackPanel>
-                        <Image Height="43" Width="43" Opacity="1" Name ="removeIco"/>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding RemoveIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding RemoveIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
                 <Button Name ="editButton" IsEnabled="False" Click="EditButton_OnClick">
