@@ -89,6 +89,7 @@
     <Compile Include="ImageContainer\ImageStorageModel.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="ViewModel.cs" />
+    <Compile Include="ViewModelButtonsIcons.cs" />
     <Page Include="ContrastAndBrightness.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -13,7 +13,7 @@ using WPF_GUI.ImageContainer;
 
 namespace WPF_GUI
 {
-    internal class ViewModel : INotifyPropertyChanged
+    internal partial class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,10 +39,6 @@ namespace WPF_GUI
         public RelayCommand NextCommand { get; set; }
 
         public RelayCommand PrevCommand { get; set; }
-
-        public ImageSource LeftIcoGray { get; set; } = Icons.left_gray.ToImageSource();
-
-        public ImageSource LeftIco { get; set; } = Icons.left.ToImageSource();
 
         private void OpenImage(object parameter)
         {

@@ -18,7 +18,8 @@
                         <Image Height ="43" Width="43" Opacity="1" Name ="openIco"/>
                     </StackPanel>
                 </Button>
-                <Button Name ="leftButton" IsEnabled="True" Command="{Binding PrevCommand}" Height ="50" Width="50">
+                
+                <Button Name ="leftButton" Command="{Binding PrevCommand}" Height ="50" Width="50">
                     <StackPanel>
                         <Image>
                             <Image.Style>
@@ -36,10 +37,23 @@
                         </Image>
                     </StackPanel>
                 </Button>
-                                <!--<Image Source="D:\Studying\Programming\ImageEditor\WPF_GUI\icons\left.ico"></Image>-->
-                <Button Name ="rightButton" IsEnabled="True" Command="{Binding NextCommand}">
+                
+                <Button Name ="rightButton" Command="{Binding NextCommand}" Width="50" Height="50">
                     <StackPanel>
-                        <Image Height ="43" Width="43" Opacity="1" Name ="rightIco"/>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding RightIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding RightIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
                 <Button Name ="removeButton" Click="Remove_OnClick" IsEnabled="False">

@@ -28,7 +28,6 @@
             this.InitializeComponent();
             InitializeButtonsIcons();
             //openedImage.LockLeft += () => LockImageControl(leftButton, leftIco, Icons.left_gray);
-            openedImage.LockRight += () => LockImageControl(rightButton, rightIco, Icons.right_gray);
             openedImage.LockRemove += () =>
             {
                 LockImageControl(removeButton, removeIco, Icons.remove_gray);
@@ -42,7 +41,6 @@
         private void InitializeButtonsIcons()
         {
             //Icons.left.ToImageSource();
-            rightIco.Source = Icons.right.ToImageSource();
             removeIco.Source = Icons.remove_gray.ToImageSource();
             editIco.Source = Icons.edit_gray.ToImageSource();
             contAndBrightIco.Source = Icons.contandbright.ToImageSource();
@@ -55,7 +53,6 @@
         private void UnlockAllButton()
         {
             //LockImageControl(leftButton, leftIco, Icons.left, true);
-            LockImageControl(rightButton, rightIco, Icons.right, true);
             LockImageControl(removeButton, removeIco, Icons.remove, true);
             LockImageControl(editButton, editIco, Icons.edit, true);
             LockImageControl(openButton, openIco, Icons.open, true);
@@ -163,7 +160,6 @@
             resizeButton.IsEnabled = true;
 
             //LockImageControl(leftButton, leftIco, Icons.left_gray);
-            LockImageControl(rightButton, rightIco, Icons.right_gray);
             LockImageControl(saveButton, saveIco, Icons.save, true);
             LockImageControl(editButton, editIco, Icons.edit_gray);
             LockImageControl(openButton, openIco, Icons.open_gray);
