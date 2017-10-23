@@ -63,9 +63,9 @@ namespace WPF_GUI {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        public static System.Drawing.Icon contandbright {
+        public static System.Drawing.Icon contandbirght {
             get {
-                object obj = ResourceManager.GetObject("contandbright", resourceCulture);
+                object obj = ResourceManager.GetObject("contandbirght", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,19 +73,9 @@ namespace WPF_GUI {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        public static System.Drawing.Icon edit {
+        public static System.Drawing.Icon contandbirght_gray {
             get {
-                object obj = ResourceManager.GetObject("edit", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        public static System.Drawing.Icon edit_gray {
-            get {
-                object obj = ResourceManager.GetObject("edit_gray", resourceCulture);
+                object obj = ResourceManager.GetObject("contandbirght_gray", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -163,6 +153,16 @@ namespace WPF_GUI {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        public static System.Drawing.Icon resize_gray {
+            get {
+                object obj = ResourceManager.GetObject("resize_gray", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         public static System.Drawing.Icon right {
             get {
                 object obj = ResourceManager.GetObject("right", resourceCulture);
@@ -186,6 +186,16 @@ namespace WPF_GUI {
         public static System.Drawing.Icon rotate {
             get {
                 object obj = ResourceManager.GetObject("rotate", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon rotate_gray {
+            get {
+                object obj = ResourceManager.GetObject("rotate_gray", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
