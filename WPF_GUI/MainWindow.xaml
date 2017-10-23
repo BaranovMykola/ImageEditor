@@ -13,9 +13,22 @@
     <Grid Margin="0,0,0,0">
         <WrapPanel Margin="10,27,157.6,338">
             <ToolBar x:Name="toolBar" Height="55" Width="628" Opacity="1" Background="{x:Null}">
-                <Button Name ="openButton" IsEnabled="True" Command="{Binding OpenImageCommand}">
+                <Button Name ="openButton" Command="{Binding OpenImageCommand}" Width="50" Height="50">
                     <StackPanel>
-                        <Image Height ="43" Width="43" Opacity="1" Name ="openIco"/>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding OpenIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding OpenIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
                 

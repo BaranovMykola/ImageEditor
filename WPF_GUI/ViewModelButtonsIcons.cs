@@ -18,5 +18,9 @@ namespace WPF_GUI
         public ImageSource RightIco { get; set; } = Icons.right.ToImageSource();
 
         public ImageSource RightIcoGray { get; set; } = Icons.right_gray.ToImageSource();
+
+        public ImageSource OpenIco { get; set; } = Icons.open.ToImageSource();
+
+        public ImageSource OpenIcoGray { get; set; } = Icons.open_gray.ToImageSource();
     }
 }

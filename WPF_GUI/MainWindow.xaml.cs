@@ -40,22 +40,10 @@
 
         private void InitializeButtonsIcons()
         {
-            //Icons.left.ToImageSource();
-            removeIco.Source = Icons.remove_gray.ToImageSource();
-            editIco.Source = Icons.edit_gray.ToImageSource();
-            contAndBrightIco.Source = Icons.contandbright.ToImageSource();
-            rotateIco.Source = Icons.rotate.ToImageSource();
-            resizeIco.Source = Icons.resize.ToImageSource();
-            saveIco.Source = Icons.save_gray.ToImageSource();
-            openIco.Source = Icons.open.ToImageSource();
         }
 
         private void UnlockAllButton()
         {
-            //LockImageControl(leftButton, leftIco, Icons.left, true);
-            LockImageControl(removeButton, removeIco, Icons.remove, true);
-            LockImageControl(editButton, editIco, Icons.edit, true);
-            LockImageControl(openButton, openIco, Icons.open, true);
         }
 
         private void LeftButton_OnClick(object sender, RoutedEventArgs e)
@@ -158,11 +146,6 @@
             contAndBrightButton.IsEnabled = true;
             rotateButton.IsEnabled = true;
             resizeButton.IsEnabled = true;
-
-            //LockImageControl(leftButton, leftIco, Icons.left_gray);
-            LockImageControl(saveButton, saveIco, Icons.save, true);
-            LockImageControl(editButton, editIco, Icons.edit_gray);
-            LockImageControl(openButton, openIco, Icons.open_gray);
 
             var file = this.openedImage.CurrentPath;
             editor.loadImage(file);
