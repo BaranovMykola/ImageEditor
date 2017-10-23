@@ -11,6 +11,7 @@ namespace WPF_GUI.ImageContainer
     public class ImageStorageModel : INotifyPropertyChanged
     {
         private List<Uri> imageSourses = new List<Uri>();
+        private int _currentIndex = 0;
 
         public ImageStorageModel()
         {
@@ -31,7 +32,16 @@ namespace WPF_GUI.ImageContainer
 
         public event Action<int> ImageChanged;
 
-        public int CurrentIndex { get; set; } = 0;
+        public int CurrentIndex
+        {
+            get { return _currentIndex; }
+            set
+            {
+                _currentIndex = value;
+                OnPropertyChanged(nameof(CurrentIndex));
+                OnPropertyChanged(nameof(Current));
+            }
+        }
 
         public BitmapImage Current
         {

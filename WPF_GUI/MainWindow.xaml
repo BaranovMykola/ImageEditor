@@ -109,9 +109,9 @@
                   HorizontalAlignment="Right"
                   Margin="0,87,9.6,10" Width="146"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  SelectionChanged="Preview_OnSelectionChanged"
                   SelectionMode="Single"
-                  ItemsSource="{Binding ImagesPreview}">
+                  ItemsSource="{Binding ImagesPreview}"
+                  SelectedIndex="{Binding OpenedImage.CurrentIndex}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>

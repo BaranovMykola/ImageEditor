@@ -38,8 +38,23 @@ namespace WPF_GUI
             }
         }
 
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged(nameof(SelectedIndex));
+                Console.WriteLine("selected index = " + _selectedIndex);
+                OpenedImage.CurrentIndex = SelectedIndex;
+                OnPropertyChanged(nameof(OpenedImage));
+            }
+        }
+
         private ImageProc editor = new ImageProc();
+
         private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
+        private int _selectedIndex;
 
         public ViewModel()
         {
