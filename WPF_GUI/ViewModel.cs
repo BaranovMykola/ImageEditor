@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using CoreWrapper;
 using Microsoft.Win32;
 using WPF_GUI.Command;
@@ -38,6 +39,10 @@ namespace WPF_GUI
         public RelayCommand NextCommand { get; set; }
 
         public RelayCommand PrevCommand { get; set; }
+
+        public ImageSource LeftIcoGray { get; set; } = Icons.left_gray.ToImageSource();
+
+        public ImageSource LeftIco { get; set; } = Icons.left.ToImageSource();
 
         private void OpenImage(object parameter)
         {

@@ -199,6 +199,96 @@
   <ItemGroup>
     <None Include="icons\open_gray.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\contandbright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\edit_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\left_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\open_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\remove_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\resize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\right_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\rotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\save_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\contandbright_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\edit_gray_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\edit_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\left_gray_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\left_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\open_gray_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\open_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\remove_gray_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\remove_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\resize_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\right_gray_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\right_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\rotate_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\save_gray_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\save_img.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
