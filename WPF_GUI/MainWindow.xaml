@@ -69,6 +69,7 @@
                         </Image>
                     </StackPanel>
                 </Button>
+                
                 <Button Name ="removeButton" Click="Remove_OnClick" IsEnabled="False">
                     <StackPanel>
                         <Image Height="43" Width="43" Opacity="1" Name ="removeIco"/>
@@ -109,7 +110,15 @@
                   Margin="0,87,9.6,10" Width="146"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   SelectionChanged="Preview_OnSelectionChanged"
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  ItemsSource="{Binding ImagesPreview}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Image Source ="{Binding Source}"></Image>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </Window>
