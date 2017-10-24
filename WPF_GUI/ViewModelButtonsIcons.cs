@@ -26,5 +26,9 @@ namespace WPF_GUI
         public ImageSource RemoveIco { get; set; } = Icons.remove.ToImageSource();
 
         public ImageSource RemoveIcoGray { get; set; } = Icons.remove_gray.ToImageSource();
+
+        public ImageSource ContrastIco { get; set; } = Icons.contandbirght.ToImageSource();
+
+        public ImageSource ContrastIcoGray { get; set; } = Icons.contandbirght_gray.ToImageSource();
     }
 }

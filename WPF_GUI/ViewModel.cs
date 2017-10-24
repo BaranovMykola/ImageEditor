@@ -42,13 +42,17 @@ namespace WPF_GUI
 
         private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
 
-        public ViewModel()
+        public WindowMediator ContrastAndBrightnessWindowMediator { get; set; }
+
+        public ViewModel(WindowMediator mediator)
         {
             OpenImageCommand = new RelayCommand(OpenImage);
             OpenedImage = new ImageStorageModel();
             NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext);
             PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
             RemoveCommand = new RelayCommand(RemoveImage, s=> !OpenedImage.IsEmpty);
+            ContrastAndBrightnessWindowMediator = mediator;
+            ContrastAndBrightnessCommand = new RelayCommand(ContrastAndBrightnessWindowMediator.ShowDialog);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -63,6 +67,8 @@ namespace WPF_GUI
         public RelayCommand PrevCommand { get; set; }
 
         public RelayCommand RemoveCommand { get; set; }
+
+        public RelayCommand ContrastAndBrightnessCommand { get; set; }
 
         private void OpenImage(object parameter)
         {

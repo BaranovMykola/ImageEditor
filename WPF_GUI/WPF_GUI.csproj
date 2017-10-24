@@ -76,10 +76,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfirmationWindowAction.cs" />
     <Compile Include="Const\Constants.cs" />
     <Compile Include="ContrastAndBrightness.xaml.cs">
       <DependentUpon>ContrastAndBrightness.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContrastAndBrightnessViewModel.cs" />
+    <Compile Include="ContrastConverter.cs" />
     <Compile Include="Icons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

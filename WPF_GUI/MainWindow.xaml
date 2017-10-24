@@ -88,6 +88,7 @@
                         </Image>
                     </StackPanel>
                 </Button>
+                
                 <Button Name ="editButton" IsEnabled="False" Click="EditButton_OnClick">
                     <StackPanel>
                         <Image Height="43" Width="43" Opacity="1" Name ="editIco"/>
@@ -98,9 +99,22 @@
                         <Image Height="43" Width="43" Opacity="1" Name ="saveIco"/>
                     </StackPanel>
                 </Button>
-                <Button Name ="contAndBrightButton" IsEnabled="False" Click="ContAndBrightButton_OnClick">
+                <Button Name ="contAndBrightButton" Width="50" Height="50" Command="{Binding ContrastAndBrightnessCommand}">
                     <StackPanel>
-                        <Image Height="43" Width="43" Opacity="1" Name ="contAndBrightIco"/>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding ContrastIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding ContrastIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
                 <Button Name ="rotateButton" IsEnabled="False">
