@@ -22,7 +22,33 @@ namespace WPF_GUI
 {
     internal partial class ViewModel : INotifyPropertyChanged
     {
+        private ImageProc editor = new ImageProc();
+
+        private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
+
+        private ImageSource _currentView;
+
+        public ViewModel(WindowMediator mediator)
+        {
+            OpenImageCommand = new RelayCommand(OpenImage);
+            OpenedImage = new ImageStorageModel();
+            NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext);
+            PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
+            RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
+            ContrastAndBrightnessWindowMediator = mediator;
+            ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
+            BrightnessViewModel.PropertyChanged += BrigthnessChanged;
+            OpenedImage.PropertyChanged += UpdateCurrentView;
+            ContrastAndBrightnessCommand = new RelayCommand(s =>
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
+            });
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Properties
 
         public ImageStorageModel OpenedImage { get; set; }
 
@@ -40,11 +66,6 @@ namespace WPF_GUI
             }
         }
 
-        private ImageProc editor = new ImageProc();
-
-        private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
-        private ImageSource _currentView;
-
         public WindowMediator ContrastAndBrightnessWindowMediator { get; set; }
 
         public ContrastAndBrightnessViewModel BrightnessViewModel { get; set; } = new ContrastAndBrightnessViewModel();
@@ -59,28 +80,9 @@ namespace WPF_GUI
             }
         }
 
-        public ViewModel(WindowMediator mediator)
-        {
-            OpenImageCommand = new RelayCommand(OpenImage);
-            OpenedImage = new ImageStorageModel();
-            NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext);
-            PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
-            RemoveCommand = new RelayCommand(RemoveImage, s=> !OpenedImage.IsEmpty);
-            ContrastAndBrightnessWindowMediator = mediator;
-            ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
-            BrightnessViewModel.PropertyChanged += BrigthnessChanged;
-            OpenedImage.PropertyChanged += UpdateCurrentView;
-            ContrastAndBrightnessCommand = new RelayCommand(s =>
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
-            });
-        }
+        #endregion
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #region Commands Properties
 
         public RelayCommand OpenImageCommand { get; set; }
 
@@ -91,6 +93,15 @@ namespace WPF_GUI
         public RelayCommand RemoveCommand { get; set; }
 
         public RelayCommand ContrastAndBrightnessCommand { get; set; }
+
+        #endregion
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #region Private methods
 
         private void OpenImage(object parameter)
         {
@@ -112,12 +123,12 @@ namespace WPF_GUI
                 original.UriSource = new Uri(path);
                 original.EndInit();
 
-                double ratio = Constants.PreviewWidth / original.Width;
+                double ratio = Constants.PreviewWidth/original.Width;
                 var reducedPreview = new BitmapImage();
                 reducedPreview.BeginInit();
                 reducedPreview.UriSource = new Uri(path);
                 reducedPreview.DecodePixelWidth = Constants.PreviewWidth;
-                reducedPreview.DecodePixelHeight = (int)(original.Height * ratio);
+                reducedPreview.DecodePixelHeight = (int) (original.Height*ratio);
                 reducedPreview.EndInit();
 
                 var im = new Image
@@ -154,6 +165,11 @@ namespace WPF_GUI
             this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
         }
 
+        private void UpdateCurrentView(object sender, EventArgs e)
+        {
+            CurrentView = OpenedImage.Current;
+        }
+
         private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
         {
             Bitmap bmp = new Bitmap(bitmapImage);
@@ -171,9 +187,6 @@ namespace WPF_GUI
             return sc;
         }
 
-        private void UpdateCurrentView(object sender, EventArgs e)
-        {
-            CurrentView = OpenedImage.Current;
-        }
+        #endregion
     }
 }
