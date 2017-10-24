@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CoreWrapper;
@@ -15,6 +16,7 @@ using Microsoft.Win32;
 using WPF_GUI.Command;
 using WPF_GUI.Const;
 using WPF_GUI.ImageContainer;
+using Image = System.Windows.Controls.Image;
 
 namespace WPF_GUI
 {
@@ -41,8 +43,21 @@ namespace WPF_GUI
         private ImageProc editor = new ImageProc();
 
         private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
+        private ImageSource _currentView;
 
         public WindowMediator ContrastAndBrightnessWindowMediator { get; set; }
+
+        public ContrastAndBrightnessViewModel BrightnessViewModel { get; set; } = new ContrastAndBrightnessViewModel();
+
+        public ImageSource CurrentView
+        {
+            get { return _currentView; }
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged(nameof(CurrentView));
+            }
+        }
 
         public ViewModel(WindowMediator mediator)
         {
@@ -52,7 +67,14 @@ namespace WPF_GUI
             PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
             RemoveCommand = new RelayCommand(RemoveImage, s=> !OpenedImage.IsEmpty);
             ContrastAndBrightnessWindowMediator = mediator;
-            ContrastAndBrightnessCommand = new RelayCommand(ContrastAndBrightnessWindowMediator.ShowDialog);
+            ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
+            BrightnessViewModel.PropertyChanged += BrigthnessChanged;
+            OpenedImage.PropertyChanged += UpdateCurrentView;
+            ContrastAndBrightnessCommand = new RelayCommand(s =>
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
+            });
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -117,6 +139,41 @@ namespace WPF_GUI
             OpenedImage.CurrentIndex = pos - 1;
             OnPropertyChanged(nameof(OpenedImage));
             Console.WriteLine(OpenedImage.CurrentIndex);
+        }
+
+        private void BrigthnessWindowClosed(object sender, EventArgs e)
+        {
+            Console.WriteLine("win closed");
+            Console.WriteLine((sender as Window).DialogResult);
+        }
+
+        private void BrigthnessChanged(object sender, EventArgs e)
+        {
+            editor.applyContrastAndBrightness(BrightnessViewModel.Contrast, (int) BrightnessViewModel.Birghtness);
+            Console.WriteLine("contrast = " + BrightnessViewModel.Contrast);
+            this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
+        }
+
+        private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
+        {
+            Bitmap bmp = new Bitmap(bitmapImage);
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+
+            BitmapImage image1 = new BitmapImage();
+            image1.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image1.StreamSource = ms;
+            image1.EndInit();
+
+            ImageSource sc = (ImageSource)image1;
+
+            return sc;
+        }
+
+        private void UpdateCurrentView(object sender, EventArgs e)
+        {
+            CurrentView = OpenedImage.Current;
         }
     }
 }

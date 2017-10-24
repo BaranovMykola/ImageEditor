@@ -30,17 +30,7 @@
             //openedImage.LockLeft += () => LockImageControl(leftButton, leftIco, Icons.left_gray);
             openedImage.UnlockAll += UnlockAllButton;
             openedImage.ImageChanged += index => preview.SelectedIndex = index;
-            DataContext =
-                new ViewModel(new WindowMediator()
-                {
-                    CreateWindow =
-                        s =>
-                            new ContrastAndBrightness()
-                            {
-                                DataContext =
-                                    new ContrastAndBrightnessViewModel() {MainViewModel = this.DataContext as ViewModel}
-                            }
-                });
+            DataContext = new ViewModel(new WindowMediator() {CreateWindow = () => new ContrastAndBrightness() });
         }
 
         private void InitializeButtonsIcons()

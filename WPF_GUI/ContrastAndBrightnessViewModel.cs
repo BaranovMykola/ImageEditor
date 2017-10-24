@@ -11,24 +11,24 @@ namespace WPF_GUI
 {
     class ContrastAndBrightnessViewModel : INotifyPropertyChanged
     {
-        private int _birghtness;
+        private double _birghtness;
         private float _contrast;
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        public ViewModel MainViewModel { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ContrastAndBrightnessViewModel()
         {
 
         }
 
-        public int Birghtness
+        public double Birghtness
         {
             get { return _birghtness; }
             set
             {
                 _birghtness = value;
                 OnPropertyChanged(nameof(Birghtness));
+                Console.WriteLine(_birghtness);
             }
         }
 
