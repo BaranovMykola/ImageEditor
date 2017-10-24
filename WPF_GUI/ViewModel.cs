@@ -22,11 +22,15 @@ namespace WPF_GUI
 {
     internal partial class ViewModel : INotifyPropertyChanged
     {
+        #region Private Members
+
         private ImageProc editor = new ImageProc();
 
         private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
 
         private ImageSource _currentView;
+
+        #endregion
 
         public ViewModel(WindowMediator mediator)
         {
@@ -43,7 +47,7 @@ namespace WPF_GUI
             {
                 editor.loadImage(OpenedImage.CurrentPath);
                 ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
-            });
+            }, s => !OpenedImage.IsEmpty);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
