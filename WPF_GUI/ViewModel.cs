@@ -31,6 +31,8 @@
 
         private int currentIndex;
 
+        private int viewSeletedIndex;
+
         #endregion
 
         public ViewModel(WindowMediator mediator)
@@ -112,7 +114,7 @@
                         currentIndex = value;
                         OpenedImage.CurrentIndex = CurrentIndex;
                     }
-                    else if (IsEdit && IsRevert)
+                    else if (IsEdit && !IsRevert)
                     {
                         RevertChanges(value);
                         currentIndex = ImagesPreview.Count - 1;
@@ -207,6 +209,7 @@
                 LoadPreviews(OpenedImage.GetAllPathes());
                 ViewModelState = ProgrammState.View;
                 CurrentIndex = 0;
+                RestoreSelectedIndex();
             }
         }
 
@@ -312,6 +315,7 @@
 
         private void OpenBrightness(object parameter)
         {
+            StoreSelectedIndex();
             if (IsView)
             {
                 editor.loadImage(OpenedImage.CurrentPath);
@@ -322,6 +326,16 @@
 
             ViewModelState = ProgrammState.Edit;
             ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
+        }
+
+        private void StoreSelectedIndex()
+        {
+            viewSeletedIndex = CurrentIndex;
+        }
+
+        private void RestoreSelectedIndex()
+        {
+            CurrentIndex = viewSeletedIndex;
         }
 
         #endregion
