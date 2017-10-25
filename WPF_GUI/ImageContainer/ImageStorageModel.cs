@@ -34,7 +34,7 @@
             set
             {
                 currentIndex = value < 0 ? 0 : value;
-                if (currentIndex >= imageSourses.Count)
+                if (currentIndex >= imageSourses.Count && !IsEmpty)
                 {
                     currentIndex = imageSourses.Count - 1;
                 }

@@ -107,8 +107,8 @@
                 {
                     if (IsView)
                     {
-                        OpenedImage.CurrentIndex = CurrentIndex;
                         currentIndex = value;
+                        OpenedImage.CurrentIndex = CurrentIndex;
                     }
                     else if (IsEdit)
                     {
