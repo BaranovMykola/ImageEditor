@@ -30,5 +30,9 @@ namespace WPF_GUI
         public ImageSource ContrastIco { get; set; } = Icons.contandbirght.ToImageSource();
 
         public ImageSource ContrastIcoGray { get; set; } = Icons.contandbirght_gray.ToImageSource();
+
+        public ImageSource SaveIco { get; set; } = Icons.save.ToImageSource();
+
+        public ImageSource SaveIcoGray { get; set; } = Icons.save_gray.ToImageSource();
     }
 }

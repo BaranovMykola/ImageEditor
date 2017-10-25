@@ -38,8 +38,8 @@ namespace WPF_GUI.ImageContainer
             set
             {
                 _currentIndex = value< 0 ? 0 : value;
-                    OnPropertyChanged(nameof(CurrentIndex));
-                    OnPropertyChanged(nameof(Current));
+                OnPropertyChanged(nameof(CurrentIndex));
+                OnPropertyChanged(nameof(Current));
             }
         }
 

@@ -36,16 +36,24 @@ namespace WPF_GUI
         {
             OpenImageCommand = new RelayCommand(OpenImage);
             OpenedImage = new ImageStorageModel();
-            NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext);
-            PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev);
+            NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext && IsView);
+            PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev && IsView);
             RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
+            SaveCommand = new RelayCommand(SaveImage, s => IsEdit);
             ContrastAndBrightnessWindowMediator = mediator;
             ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             OpenedImage.PropertyChanged += UpdateCurrentView;
             ContrastAndBrightnessCommand = new RelayCommand(s =>
             {
-                editor.loadImage(OpenedImage.CurrentPath);
+                if (IsView)
+                {
+                    editor.loadImage(OpenedImage.CurrentPath);
+                    var v = CurrentView;
+                    ImagesPreview.Clear();
+                    AddPreviewIcon(v);
+                }
+                ViewModelState = ProgrammState.Edit;
                 ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
             }, s => !OpenedImage.IsEmpty);
         }
@@ -84,6 +92,12 @@ namespace WPF_GUI
             }
         }
 
+        public ProgrammState ViewModelState { get; set; } = ProgrammState.View;
+
+        public bool IsView => ViewModelState == ProgrammState.View;
+
+        public bool IsEdit => ViewModelState == ProgrammState.Edit;
+
         #endregion
 
         #region Commands Properties
@@ -97,6 +111,8 @@ namespace WPF_GUI
         public RelayCommand RemoveCommand { get; set; }
 
         public RelayCommand ContrastAndBrightnessCommand { get; set; }
+
+        public RelayCommand SaveCommand { get; set; }
 
         #endregion
 
@@ -158,8 +174,15 @@ namespace WPF_GUI
 
         private void BrigthnessWindowClosed(object sender, EventArgs e)
         {
-            Console.WriteLine("win closed");
-            Console.WriteLine((sender as Window).DialogResult);
+            if ((sender as Window)?.DialogResult ?? false)
+            {
+                editor.apply();
+                AddPreviewIcon(CurrentView);
+            }
+            else
+            {
+                CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            }
         }
 
         private void BrigthnessChanged(object sender, EventArgs e)
@@ -172,6 +195,18 @@ namespace WPF_GUI
         private void UpdateCurrentView(object sender, EventArgs e)
         {
             CurrentView = OpenedImage.Current;
+        }
+
+        private void SaveImage(object parametr)
+        {
+            FileDialog save = new SaveFileDialog();
+            save.Filter = "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP(*.bmp)|*.bmp";
+            if (save.ShowDialog() ?? false)
+            {
+                string path = save.FileName;
+                editor.save(path);
+                ViewModelState = ProgrammState.View;
+            }
         }
 
         private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
@@ -189,6 +224,17 @@ namespace WPF_GUI
             ImageSource sc = (ImageSource)image1;
 
             return sc;
+        }
+
+        private void AddPreviewIcon(ImageSource icon)
+        {
+            Image im = new Image()
+            {
+                Source = icon,
+                Height = Constants.PreviewHeight,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            ImagesPreview.Add(im);
         }
 
         #endregion

@@ -169,7 +169,6 @@
                 removeButton.Click -= ReturnToImageviewMode;
 
                 UnlockAllButton();
-                LockImageControl(saveButton, saveIco, Icons.save_gray);
 
                 contAndBrightButton.IsEnabled = false;
                 rotateButton.IsEnabled = false;

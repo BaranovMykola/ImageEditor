@@ -94,11 +94,26 @@
                         <Image Height="43" Width="43" Opacity="1" Name ="editIco"/>
                     </StackPanel>
                 </Button>
-                <Button Name ="saveButton" IsEnabled="False" Click="SaveButton_OnClick">
+                
+                <Button Name ="saveButton" Click="SaveButton_OnClick">
                     <StackPanel>
-                        <Image Height="43" Width="43" Opacity="1" Name ="saveIco"/>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding SaveIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding SaveIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
+                
                 <Button Name ="contAndBrightButton" Width="50" Height="50" Command="{Binding ContrastAndBrightnessCommand}">
                     <StackPanel>
                         <Image>

@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="ImageContainer\ImageStorageModel.cs" />
+    <Compile Include="ProgrammState.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModelButtonsIcons.cs" />
