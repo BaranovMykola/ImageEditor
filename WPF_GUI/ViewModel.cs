@@ -112,9 +112,23 @@ namespace WPF_GUI
             get { return _currentIndex; }
             set
             {
+                bool u = value != _currentIndex;
+                
                 _currentIndex = value;
-                OnPropertyChanged(nameof(CurrentIndex));
-                OpenedImage.CurrentIndex = CurrentIndex;
+                if (u)
+                {
+                    if (ViewModelState == ProgrammState.View)
+                    {
+                        OpenedImage.CurrentIndex = CurrentIndex;
+                        OnPropertyChanged(nameof(CurrentIndex));
+                    }
+                    else if (ViewModelState == ProgrammState.Edit)
+                    {
+                        Console.WriteLine("index = " + value);
+                        RevertChanges(value);
+                        OnPropertyChanged(nameof(CurrentIndex));
+                    }
+                }
             }
         }
 
@@ -255,6 +269,22 @@ namespace WPF_GUI
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             ImagesPreview.Add(im);
+        }
+
+        private void RevertChanges(int selectedIndex)
+        {
+            MessageBoxResult confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+            if (confirm == MessageBoxResult.Yes)
+            {
+                editor.restore(selectedIndex);
+                CurrentView = ConvertBitmapToImageSource(editor.getSource());
+                var t = ImagesPreview.ToList();
+                for (int i = ImagesPreview.Count - 1; i > selectedIndex; i--)
+                {
+                    ImagesPreview.RemoveAt(i);
+                }
+                //ImagesPreview = new ObservableCollection<Image>(t);
+            }
         }
 
         #endregion
