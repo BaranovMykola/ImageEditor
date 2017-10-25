@@ -1,36 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using CoreWrapper;
-using Microsoft.Win32;
-using WPF_GUI.Command;
-using WPF_GUI.Const;
-using WPF_GUI.ImageContainer;
-using Image = System.Windows.Controls.Image;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.IO;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using CoreWrapper;
+    using Microsoft.Win32;
+    using WPF_GUI.Command;
+    using WPF_GUI.Const;
+    using WPF_GUI.ImageContainer;
+    using Image = System.Windows.Controls.Image;
+
+    /// <summary>
+    /// ViewModel for MainWindow
+    /// </summary>
     internal partial class ViewModel : INotifyPropertyChanged
     {
         #region Private Members
 
-        private ImageProc editor = new ImageProc();
+        private readonly ImageProc editor = new ImageProc();
 
-        private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
+        private ObservableCollection<Image> imagesPreview = new ObservableCollection<Image>();
 
-        private ImageSource _currentView;
-        private int _currentIndex;
+        private ImageSource currentView;
+
+        private int currentIndex;
 
         #endregion
 
@@ -38,23 +37,16 @@ namespace WPF_GUI
         {
             OpenImageCommand = new RelayCommand(OpenImage);
             OpenedImage = new ImageStorageModel();
-            NextCommand = new RelayCommand(s =>
-            {
-                //OpenedImage.Next();
-                ++CurrentIndex;
-            }, s => OpenedImage.IsNext && IsView);
-            PrevCommand = new RelayCommand(s =>
-            {
-                //OpenedImage.Prev();
-                --CurrentIndex;
-            }, s => OpenedImage.IsPrev && IsView);
+            NextCommand = new RelayCommand(s => ++CurrentIndex, s => OpenedImage.IsNext && IsView);
+            PrevCommand = new RelayCommand(s => --CurrentIndex, s => OpenedImage.IsPrev && IsView);
             RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
             SaveCommand = new RelayCommand(SaveImage, s => IsEdit);
+            ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
+
             ContrastAndBrightnessWindowMediator = mediator;
             ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             OpenedImage.PropertyChanged += UpdateCurrentView;
-            ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,12 +59,12 @@ namespace WPF_GUI
         {
             get
             {
-                return _imagesPreview;
-                OnPropertyChanged("ImagesPreview");
+                return imagesPreview;
             }
+
             set
             {
-                _imagesPreview = value;
+                imagesPreview = value;
                 OnPropertyChanged("ImagesPreview");
             }
         }
@@ -83,10 +75,14 @@ namespace WPF_GUI
 
         public ImageSource CurrentView
         {
-            get { return _currentView; }
+            get
+            {
+                return currentView;
+            }
+
             set
             {
-                _currentView = value;
+                currentView = value;
                 OnPropertyChanged(nameof(CurrentView));
             }
         }
@@ -99,24 +95,29 @@ namespace WPF_GUI
 
         public int CurrentIndex
         {
-            get { return _currentIndex; }
+            get
+            {
+                return currentIndex;
+            }
+
             set
             {
-                bool isNewIndex = value != _currentIndex;
+                bool isNewIndex = value != currentIndex;
                 if (isNewIndex)
                 {
                     if (IsView)
                     {
                         OpenedImage.CurrentIndex = CurrentIndex;
-                        _currentIndex = value;
+                        currentIndex = value;
                     }
                     else if (IsEdit)
                     {
                         if (RevertChanges(value))
                         {
-                            _currentIndex = value;
+                            currentIndex = value;
                         }
                     }
+
                     OnPropertyChanged(nameof(CurrentIndex));
                 }
             }
@@ -293,6 +294,7 @@ namespace WPF_GUI
                     ImagesPreview.RemoveAt(i);
                 }
             }
+
             return confirm;
         }
 
@@ -305,6 +307,7 @@ namespace WPF_GUI
                 ImagesPreview.Clear();
                 AddPreviewIcon(v);
             }
+
             ViewModelState = ProgrammState.Edit;
             ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
         }
