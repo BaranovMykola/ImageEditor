@@ -29,6 +29,7 @@ namespace WPF_GUI
         private ObservableCollection<Image> _imagesPreview = new ObservableCollection<Image>();
 
         private ImageSource _currentView;
+        private int _currentIndex;
 
         #endregion
 
@@ -36,8 +37,16 @@ namespace WPF_GUI
         {
             OpenImageCommand = new RelayCommand(OpenImage);
             OpenedImage = new ImageStorageModel();
-            NextCommand = new RelayCommand(s => OpenedImage.Next(), s => OpenedImage.IsNext && IsView);
-            PrevCommand = new RelayCommand(s => OpenedImage.Prev(), s => OpenedImage.IsPrev && IsView);
+            NextCommand = new RelayCommand(s =>
+            {
+                //OpenedImage.Next();
+                ++CurrentIndex;
+            }, s => OpenedImage.IsNext && IsView);
+            PrevCommand = new RelayCommand(s =>
+            {
+                //OpenedImage.Prev();
+                --CurrentIndex;
+            }, s => OpenedImage.IsPrev && IsView);
             RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
             SaveCommand = new RelayCommand(SaveImage, s => IsEdit);
             ContrastAndBrightnessWindowMediator = mediator;
@@ -97,6 +106,17 @@ namespace WPF_GUI
         public bool IsView => ViewModelState == ProgrammState.View;
 
         public bool IsEdit => ViewModelState == ProgrammState.Edit;
+
+        public int CurrentIndex
+        {
+            get { return _currentIndex; }
+            set
+            {
+                _currentIndex = value;
+                OnPropertyChanged(nameof(CurrentIndex));
+                OpenedImage.CurrentIndex = CurrentIndex;
+            }
+        }
 
         #endregion
 
