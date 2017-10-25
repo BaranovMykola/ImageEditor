@@ -102,22 +102,22 @@ namespace WPF_GUI
             get { return _currentIndex; }
             set
             {
-                bool u = value != _currentIndex;
-                
-                _currentIndex = value;
-                if (u)
+                bool isNewIndex = value != _currentIndex;
+                if (isNewIndex)
                 {
-                    if (ViewModelState == ProgrammState.View)
+                    if (IsView)
                     {
                         OpenedImage.CurrentIndex = CurrentIndex;
-                        OnPropertyChanged(nameof(CurrentIndex));
+                        _currentIndex = value;
                     }
-                    else if (ViewModelState == ProgrammState.Edit)
+                    else if (IsEdit)
                     {
-                        Console.WriteLine("index = " + value);
-                        RevertChanges(value);
-                        OnPropertyChanged(nameof(CurrentIndex));
+                        if (RevertChanges(value))
+                        {
+                            _currentIndex = value;
+                        }
                     }
+                    OnPropertyChanged(nameof(CurrentIndex));
                 }
             }
         }
@@ -167,12 +167,12 @@ namespace WPF_GUI
                 original.UriSource = new Uri(path);
                 original.EndInit();
 
-                double ratio = Constants.PreviewWidth/original.Width;
+                double ratio = Constants.PreviewWidth / original.Width;
                 var reducedPreview = new BitmapImage();
                 reducedPreview.BeginInit();
                 reducedPreview.UriSource = new Uri(path);
                 reducedPreview.DecodePixelWidth = Constants.PreviewWidth;
-                reducedPreview.DecodePixelHeight = (int) (original.Height*ratio);
+                reducedPreview.DecodePixelHeight = (int)(original.Height * ratio);
                 reducedPreview.EndInit();
 
                 var im = new Image
@@ -181,33 +181,40 @@ namespace WPF_GUI
                     Height = Constants.PreviewHeight,
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
-                //preview.Items.Add(im);
                 ImagesPreview.Add(im);
             }
         }
 
         private void RemoveImage(object parametr)
         {
-            if (ViewModelState == ProgrammState.View)
+            if (IsView)
             {
-                int pos = OpenedImage.CurrentIndex;
-                OpenedImage.Remove();
-                ImagesPreview.RemoveAt(OpenedImage.CurrentIndex);
-                OpenedImage.CurrentIndex = pos - 1;
-                OnPropertyChanged(nameof(OpenedImage));
-                Console.WriteLine(OpenedImage.CurrentIndex);
+                RemoveImageFromView();
             }
-            else if (ViewModelState == ProgrammState.Edit)
+            else if (IsEdit)
             {
-                MessageBoxResult confirm = MessageBox.Show("Are you sure to discard all changes?", "Discarding all changes...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
-                if (confirm == MessageBoxResult.Yes)
-                {
-                    ImagesPreview.Clear();
-                    LoadPreviews(OpenedImage.GetAllPathes());
-                    ViewModelState = ProgrammState.View;
-                    CurrentIndex = 0;
-                }
+                DiscardChanges();
             }
+        }
+
+        private void DiscardChanges()
+        {
+            MessageBoxResult confirm = MessageBox.Show("Are you sure to discard all changes?", "Discarding all changes...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+            if (confirm == MessageBoxResult.Yes)
+            {
+                ImagesPreview.Clear();
+                LoadPreviews(OpenedImage.GetAllPathes());
+                ViewModelState = ProgrammState.View;
+                CurrentIndex = 0;
+            }
+        }
+
+        private void RemoveImageFromView()
+        {
+            OpenedImage.Remove();
+            ImagesPreview.RemoveAt(CurrentIndex);
+            OnPropertyChanged(nameof(OpenedImage));
+            Console.WriteLine(OpenedImage.CurrentIndex);
         }
 
         private void BrigthnessWindowClosed(object sender, EventArgs e)
@@ -225,8 +232,7 @@ namespace WPF_GUI
 
         private void BrigthnessChanged(object sender, EventArgs e)
         {
-            editor.applyContrastAndBrightness(BrightnessViewModel.Contrast, (int) BrightnessViewModel.Birghtness);
-            Console.WriteLine("contrast = " + BrightnessViewModel.Contrast);
+            editor.applyContrastAndBrightness(BrightnessViewModel.Contrast, (int)BrightnessViewModel.Birghtness);
             this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
         }
 
@@ -239,10 +245,12 @@ namespace WPF_GUI
         {
             FileDialog save = new SaveFileDialog();
             save.Filter = "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP(*.bmp)|*.bmp";
-            save.ShowDialog();
+            var confirm = save.ShowDialog();
+            if (confirm ?? false)
+            {
                 string path = save.FileName;
                 editor.save(path);
-                ViewModelState = ProgrammState.View;
+            }
         }
 
         private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
@@ -273,20 +281,19 @@ namespace WPF_GUI
             ImagesPreview.Add(im);
         }
 
-        private void RevertChanges(int selectedIndex)
+        private bool RevertChanges(int selectedIndex)
         {
-            MessageBoxResult confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
-            if (confirm == MessageBoxResult.Yes)
+            var confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes;
+            if (confirm)
             {
                 editor.restore(selectedIndex);
                 CurrentView = ConvertBitmapToImageSource(editor.getSource());
-                var t = ImagesPreview.ToList();
                 for (int i = ImagesPreview.Count - 1; i > selectedIndex; i--)
                 {
                     ImagesPreview.RemoveAt(i);
                 }
-                //ImagesPreview = new ObservableCollection<Image>(t);
             }
+            return confirm;
         }
 
         private void OpenBrightness(object parameter)

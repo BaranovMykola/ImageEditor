@@ -101,6 +101,7 @@ namespace WPF_GUI.ImageContainer
             {
                 imageSourses.RemoveAt(CurrentIndex);
             }
+            CurrentIndex--;
             OnPropertyChanged(nameof(Current));
         }
 
