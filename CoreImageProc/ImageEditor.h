@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "AbstractChange.h"
 #include "ContrastAndBrightnessChange.h"
@@ -33,6 +34,8 @@ public:
 		original = imread(file);
 		source = original.clone();
 		preview = source.clone();
+		imshow("file", source);
+		waitKey();
 	}
 
 	cv::Mat getSource()const
@@ -116,6 +119,10 @@ public:
 
 	void save(std::string fileName)
 	{
+		if (original.empty())
+		{
+			imshow(fileName, Mat::zeros(300, 300, CV_8UC3));
+		}
 		imwrite(fileName, source);
 	}
 

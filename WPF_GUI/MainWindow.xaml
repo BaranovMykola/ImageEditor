@@ -95,7 +95,7 @@
                     </StackPanel>
                 </Button>
                 
-                <Button Name ="saveButton" Click="SaveButton_OnClick">
+                <Button Name ="saveButton" Command="{Binding SaveCommand}">
                     <StackPanel>
                         <Image>
                             <Image.Style>

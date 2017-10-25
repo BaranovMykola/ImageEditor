@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -53,18 +54,7 @@ namespace WPF_GUI
             ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             OpenedImage.PropertyChanged += UpdateCurrentView;
-            ContrastAndBrightnessCommand = new RelayCommand(s =>
-            {
-                if (IsView)
-                {
-                    editor.loadImage(OpenedImage.CurrentPath);
-                    var v = CurrentView;
-                    ImagesPreview.Clear();
-                    AddPreviewIcon(v);
-                }
-                ViewModelState = ProgrammState.Edit;
-                ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
-            }, s => !OpenedImage.IsEmpty);
+            ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -235,12 +225,10 @@ namespace WPF_GUI
         {
             FileDialog save = new SaveFileDialog();
             save.Filter = "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP(*.bmp)|*.bmp";
-            if (save.ShowDialog() ?? false)
-            {
+            save.ShowDialog();
                 string path = save.FileName;
                 editor.save(path);
                 ViewModelState = ProgrammState.View;
-            }
         }
 
         private ImageSource ConvertBitmapToImageSource(Bitmap bitmapImage)
@@ -285,6 +273,19 @@ namespace WPF_GUI
                 }
                 //ImagesPreview = new ObservableCollection<Image>(t);
             }
+        }
+
+        private void OpenBrightness(object parameter)
+        {
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+            ViewModelState = ProgrammState.Edit;
+            ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
         }
 
         #endregion
