@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI
+﻿using System.Linq;
+
+namespace WPF_GUI
 {
     using System;
     using System.Collections.ObjectModel;
@@ -110,12 +112,10 @@
                         currentIndex = value;
                         OpenedImage.CurrentIndex = CurrentIndex;
                     }
-                    else if (IsEdit)
+                    else if (IsEdit && ViewModelState != ProgrammState.Revert)
                     {
-                        if (RevertChanges(value))
-                        {
-                            currentIndex = value;
-                        }
+                        RevertChanges(value);
+                        currentIndex = ImagesPreview.Count - 1;
                     }
 
                     OnPropertyChanged(nameof(CurrentIndex));
@@ -224,11 +224,17 @@
             {
                 editor.apply();
                 AddPreviewIcon(CurrentView);
+                //SetSelectedLast();
             }
             else
             {
                 CurrentView = ConvertBitmapToImageSource(editor.getSource());
             }
+        }
+
+        private void SetSelectedLast()
+        {
+            CurrentIndex = ImagesPreview.Count - 1; 
         }
 
         private void BrigthnessChanged(object sender, EventArgs e)
@@ -282,20 +288,29 @@
             ImagesPreview.Add(im);
         }
 
-        private bool RevertChanges(int selectedIndex)
+        private void RevertChanges(int selectedIndex)
         {
-            var confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes;
-            if (confirm)
+            if (selectedIndex < ImagesPreview.Count - 1)
             {
-                editor.restore(selectedIndex);
-                CurrentView = ConvertBitmapToImageSource(editor.getSource());
-                for (int i = ImagesPreview.Count - 1; i > selectedIndex; i--)
+                var confirm =
+                    MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo,
+                        MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) ==
+                    MessageBoxResult.Yes;
+                if (confirm)
                 {
-                    ImagesPreview.RemoveAt(i);
+                    ViewModelState = ProgrammState.Revert;
+                    editor.restore(selectedIndex);
+                    CurrentView = ConvertBitmapToImageSource(editor.getSource());
+                    var t = ImagesPreview.ToList();
+                    for (int i = ImagesPreview.Count - 1; i > selectedIndex; i--)
+                    {
+                        t.RemoveAt(i);
+                    }
+                    ImagesPreview = new ObservableCollection<Image>(t);
+                    ViewModelState = ProgrammState.Edit;
                 }
             }
 
-            return confirm;
         }
 
         private void OpenBrightness(object parameter)

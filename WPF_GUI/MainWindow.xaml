@@ -146,7 +146,7 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   SelectionMode="Single"
                   ItemsSource="{Binding ImagesPreview}"
-                  SelectedIndex="{Binding CurrentIndex}">
+                  SelectedIndex="{Binding CurrentIndex, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>

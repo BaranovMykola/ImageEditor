@@ -10,6 +10,11 @@ namespace WPF_GUI
         /// <summary>
         /// Represent edit state. User can edit single image, but cannot view other images
         /// </summary>
-        Edit
+        Edit,
+
+        /// <summary>
+        /// Represent revert state. It is used by VivewModel when user reverts changes
+        /// </summary>
+        Revert
     }
 }
