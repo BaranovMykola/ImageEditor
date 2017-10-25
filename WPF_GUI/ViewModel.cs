@@ -188,12 +188,26 @@ namespace WPF_GUI
 
         private void RemoveImage(object parametr)
         {
-            int pos = OpenedImage.CurrentIndex;
-            OpenedImage.Remove();
-            ImagesPreview.RemoveAt(OpenedImage.CurrentIndex);
-            OpenedImage.CurrentIndex = pos - 1;
-            OnPropertyChanged(nameof(OpenedImage));
-            Console.WriteLine(OpenedImage.CurrentIndex);
+            if (ViewModelState == ProgrammState.View)
+            {
+                int pos = OpenedImage.CurrentIndex;
+                OpenedImage.Remove();
+                ImagesPreview.RemoveAt(OpenedImage.CurrentIndex);
+                OpenedImage.CurrentIndex = pos - 1;
+                OnPropertyChanged(nameof(OpenedImage));
+                Console.WriteLine(OpenedImage.CurrentIndex);
+            }
+            else if (ViewModelState == ProgrammState.Edit)
+            {
+                MessageBoxResult confirm = MessageBox.Show("Are you sure to discard all changes?", "Discarding all changes...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    ImagesPreview.Clear();
+                    LoadPreviews(OpenedImage.GetAllPathes());
+                    ViewModelState = ProgrammState.View;
+                    CurrentIndex = 0;
+                }
+            }
         }
 
         private void BrigthnessWindowClosed(object sender, EventArgs e)

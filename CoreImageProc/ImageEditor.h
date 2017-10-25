@@ -34,8 +34,6 @@ public:
 		original = imread(file);
 		source = original.clone();
 		preview = source.clone();
-		imshow("file", source);
-		waitKey();
 	}
 
 	cv::Mat getSource()const

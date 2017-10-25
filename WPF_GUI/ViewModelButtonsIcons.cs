@@ -33,6 +33,6 @@ namespace WPF_GUI
 
         public ImageSource SaveIco { get; set; } = Icons.save.ToImageSource();
 
-        public ImageSource SaveIcoGray { get; set; } = Icons.save_gray.ToImageSource();
+        public ImageSource SaveIcoGray { get; set; } = Icons.save_gray.ToImageSource(); 
     }
 }
