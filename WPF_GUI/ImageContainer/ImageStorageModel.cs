@@ -1,17 +1,17 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using WPF_GUI.Annotations;
-
-namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.ImageContainer
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Media.Imaging;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using Annotations;
 
     public class ImageStorageModel : INotifyPropertyChanged
     {
-        private List<Uri> imageSourses = new List<Uri>();
-        private int _currentIndex = 0;
+        private readonly List<Uri> imageSourses = new List<Uri>();
+
+        private int currentIndex = 0;
 
         public ImageStorageModel()
         {
@@ -22,26 +22,23 @@ namespace WPF_GUI.ImageContainer
             LoadImages(pathes);
         }
 
-        public event Action LockLeft;
-
-        public event Action LockRight;
-
-        public event Action LockRemove;
-
-        public event Action UnlockAll;
-
-        public event Action<int> ImageChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public int CurrentIndex
         {
-            get { return _currentIndex; }
+            get
+            {
+                return currentIndex;
+            }
+
             set
             {
-                _currentIndex = value < 0 ? 0 : value;
-                if (_currentIndex >= imageSourses.Count)
+                currentIndex = value < 0 ? 0 : value;
+                if (currentIndex >= imageSourses.Count)
                 {
-                    _currentIndex = imageSourses.Count - 1;
+                    currentIndex = imageSourses.Count - 1;
                 }
+
                 OnPropertyChanged(nameof(CurrentIndex));
                 OnPropertyChanged(nameof(Current));
             }
@@ -51,17 +48,6 @@ namespace WPF_GUI.ImageContainer
         {
             get
             {
-                UnlockAll?.Invoke();
-                if (CurrentIndex == 0)
-                {
-                    LockLeft?.Invoke();
-                }
-
-                if (CurrentIndex + 1 == imageSourses.Count)
-                {
-                    LockRight?.Invoke();
-                }
-
                 if (imageSourses.Count != 0)
                 {
                     var b = new BitmapImage();
@@ -70,32 +56,28 @@ namespace WPF_GUI.ImageContainer
                     b.EndInit();
                     return b;
                 }
-                else
-                {
-                    LockLeft?.Invoke();
-                    LockRight?.Invoke();
-                    LockRemove?.Invoke();
-                    return new BitmapImage();
-                }
+
+                return new BitmapImage();
             }
         }
 
-        public string CurrentPath
-        {
-            get { return imageSourses[CurrentIndex].AbsolutePath; }
-        }
+        public string CurrentPath => imageSourses[CurrentIndex].AbsolutePath;
+
+        public bool IsNext => CurrentIndex + 1 < imageSourses.Count;
+
+        public bool IsPrev => CurrentIndex > 0;
+
+        public bool IsEmpty => imageSourses.Count == 0;
 
         public void Next()
         {
             ++CurrentIndex;
-            ImageChanged?.Invoke(CurrentIndex);
             OnPropertyChanged(nameof(Current));
         }
 
         public void Prev()
         {
             --CurrentIndex;
-            ImageChanged?.Invoke(CurrentIndex);
             OnPropertyChanged(nameof(Current));
         }
 
@@ -105,7 +87,8 @@ namespace WPF_GUI.ImageContainer
             {
                 imageSourses.RemoveAt(CurrentIndex);
             }
-            CurrentIndex--;
+
+            --CurrentIndex;
             OnPropertyChanged(nameof(Current));
         }
 
@@ -115,6 +98,7 @@ namespace WPF_GUI.ImageContainer
             {
                 imageSourses.Add(new Uri(path, UriKind.Absolute));
             }
+
             OnPropertyChanged(nameof(Current));
         }
 
@@ -128,19 +112,6 @@ namespace WPF_GUI.ImageContainer
 
             return pathes;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public bool IsNext {
-            get
-            {
-                return CurrentIndex+1 < imageSourses.Count;
-            }
-        }
-
-        public bool IsPrev => CurrentIndex > 0;
-
-        public bool IsEmpty => imageSourses.Count == 0;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
