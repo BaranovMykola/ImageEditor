@@ -35,7 +35,7 @@
 
         public ViewModel(WindowMediator mediator)
         {
-            OpenImageCommand = new RelayCommand(OpenImage);
+            OpenImageCommand = new RelayCommand(OpenImage, s => IsView);
             OpenedImage = new ImageStorageModel();
             NextCommand = new RelayCommand(s => ++CurrentIndex, s => OpenedImage.IsNext && IsView);
             PrevCommand = new RelayCommand(s => --CurrentIndex, s => OpenedImage.IsPrev && IsView);
@@ -93,6 +93,8 @@
 
         public bool IsEdit => ViewModelState == ProgrammState.Edit;
 
+        public bool IsRevert => ViewModelState == ProgrammState.Revert;
+
         public int CurrentIndex
         {
             get
@@ -110,7 +112,7 @@
                         currentIndex = value;
                         OpenedImage.CurrentIndex = CurrentIndex;
                     }
-                    else if (IsEdit && ViewModelState != ProgrammState.Revert)
+                    else if (IsEdit && IsRevert)
                     {
                         RevertChanges(value);
                         currentIndex = ImagesPreview.Count - 1;
