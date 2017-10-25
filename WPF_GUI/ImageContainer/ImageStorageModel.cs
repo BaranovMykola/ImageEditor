@@ -37,7 +37,11 @@ namespace WPF_GUI.ImageContainer
             get { return _currentIndex; }
             set
             {
-                _currentIndex = value< 0 ? 0 : value;
+                _currentIndex = value < 0 ? 0 : value;
+                if (_currentIndex >= imageSourses.Count)
+                {
+                    _currentIndex = imageSourses.Count - 1;
+                }
                 OnPropertyChanged(nameof(CurrentIndex));
                 OnPropertyChanged(nameof(Current));
             }

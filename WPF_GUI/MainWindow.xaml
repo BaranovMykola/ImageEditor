@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:WPF_GUI"
         xmlns:prop="clr-namespace:WPF_GUI.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450"
-        KeyUp="MainWindow_OnKeyUp">
+        Title="MainWindow" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="0,0,0,0">
@@ -86,12 +85,6 @@
                                 </Style>
                             </Image.Style>
                         </Image>
-                    </StackPanel>
-                </Button>
-                
-                <Button Name ="editButton" IsEnabled="False" Click="EditButton_OnClick">
-                    <StackPanel>
-                        <Image Height="43" Width="43" Opacity="1" Name ="editIco"/>
                     </StackPanel>
                 </Button>
                 

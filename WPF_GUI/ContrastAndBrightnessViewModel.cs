@@ -1,43 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using WPF_GUI.Annotations;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
-    class ContrastAndBrightnessViewModel : INotifyPropertyChanged
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using WPF_GUI.Annotations;
+
+    internal class ContrastAndBrightnessViewModel : INotifyPropertyChanged
     {
-        private double _birghtness;
-        private float _contrast;
+        private double birghtness;
+
+        private float contrast;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ContrastAndBrightnessViewModel()
-        {
-
-        }
-
         public double Birghtness
         {
-            get { return _birghtness; }
+            get
+            {
+                return birghtness; 
+            }
+
             set
             {
-                _birghtness = value;
+                birghtness = value;
                 OnPropertyChanged(nameof(Birghtness));
-                Console.WriteLine(_birghtness);
+                Console.WriteLine(birghtness);
             }
         }
 
         public float Contrast
         {
-            get { return _contrast; }
+            get
+            {
+                return contrast;
+            }
+
             set
             {
-                _contrast = value;
+                contrast = value;
                 OnPropertyChanged(nameof(Contrast));
             }
         }

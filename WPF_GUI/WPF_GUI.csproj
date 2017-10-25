@@ -76,7 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfirmationWindowAction.cs" />
+    <Compile Include="WindowMediator.cs" />
     <Compile Include="Const\Constants.cs" />
     <Compile Include="ContrastAndBrightness.xaml.cs">
       <DependentUpon>ContrastAndBrightness.xaml</DependentUpon>

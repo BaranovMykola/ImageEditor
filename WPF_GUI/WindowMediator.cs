@@ -1,13 +1,13 @@
-using System;
-using System.Windows;
-
 namespace WPF_GUI
 {
+    using System;
+    using System.Windows;
+
     internal class WindowMediator
     {
-        public Func<Window> CreateWindow;
-
         public event EventHandler OnClose;
+
+        public Func<Window> CreateWindow { get; set; }
 
         public void Show(object dataContext)
         {

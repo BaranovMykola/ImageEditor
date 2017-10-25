@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using WPF_GUI.ImageContainer;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
+    using System.Windows.Media;
+    using WPF_GUI.ImageContainer;
+
+    /// <summary>
+    /// Part of ViewModel. Provides icons for binding buttons in MainWindow
+    /// </summary>
     internal partial class ViewModel
     {
         public ImageSource LeftIcoGray { get; set; } = Icons.left_gray.ToImageSource();

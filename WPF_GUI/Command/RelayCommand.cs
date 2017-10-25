@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Input;
-
-namespace WPF_GUI.Command
+﻿namespace WPF_GUI.Command
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows.Input;
+
     /// <summary>
     /// A command whose sole purpose is to 
     /// relay its functionality to other
@@ -16,8 +16,6 @@ namespace WPF_GUI.Command
         #region Fields
 
         private readonly Action<object> execute;
-
-        private readonly Action<object> executeParam;
 
         private readonly Predicate<object> canExecute;
 
