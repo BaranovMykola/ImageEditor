@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
     using System;
     using System.Collections.ObjectModel;
@@ -104,7 +102,7 @@ namespace WPF_GUI
 
             set
             {
-                bool isNewIndex = value != currentIndex;
+                bool isNewIndex = value != currentIndex && value != -1;
                 if (isNewIndex)
                 {
                     if (IsView)
@@ -224,17 +222,18 @@ namespace WPF_GUI
             {
                 editor.apply();
                 AddPreviewIcon(CurrentView);
-                //SetSelectedLast();
             }
             else
             {
                 CurrentView = ConvertBitmapToImageSource(editor.getSource());
             }
+
+            SetSelectedLast();
         }
 
         private void SetSelectedLast()
         {
-            CurrentIndex = ImagesPreview.Count - 1; 
+            CurrentIndex = ImagesPreview.Count - 1;
         }
 
         private void BrigthnessChanged(object sender, EventArgs e)
@@ -292,25 +291,21 @@ namespace WPF_GUI
         {
             if (selectedIndex < ImagesPreview.Count - 1)
             {
-                var confirm =
-                    MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo,
-                        MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) ==
+                var confirm = MessageBox.Show("Are you sure to restore image?", "Restoring...", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) ==
                     MessageBoxResult.Yes;
                 if (confirm)
                 {
                     ViewModelState = ProgrammState.Revert;
                     editor.restore(selectedIndex);
                     CurrentView = ConvertBitmapToImageSource(editor.getSource());
-                    var t = ImagesPreview.ToList();
                     for (int i = ImagesPreview.Count - 1; i > selectedIndex; i--)
                     {
-                        t.RemoveAt(i);
+                        ImagesPreview.RemoveAt(i);
                     }
-                    ImagesPreview = new ObservableCollection<Image>(t);
+
                     ViewModelState = ProgrammState.Edit;
                 }
             }
-
         }
 
         private void OpenBrightness(object parameter)
