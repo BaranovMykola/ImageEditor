@@ -125,11 +125,26 @@
                         </Image>
                     </StackPanel>
                 </Button>
-                <Button Name ="rotateButton" IsEnabled="False">
+
+                <Button Name ="rotateButton" Width="50" Height="50" Command="{Binding RotateCommand}">
                     <StackPanel>
-                        <Image Height="43" Width="43" Opacity="1" Name ="rotateIco"/>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding RotateIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding RotateIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
+
                 <Button Name ="resizeButton" IsEnabled="False">
                     <StackPanel>
                         <Image Height="43" Width="43" Opacity="1" Name ="resizeIco"/>

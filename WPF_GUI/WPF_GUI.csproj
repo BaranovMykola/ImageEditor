@@ -76,6 +76,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RotateWindow.xaml.cs">
+      <DependentUpon>RotateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RotateViewModel.cs" />
     <Compile Include="WindowMediator.cs" />
     <Compile Include="Const\Constants.cs" />
     <Compile Include="ContrastAndBrightness.xaml.cs">
@@ -115,6 +119,10 @@
       <SubType>Code</SubType>
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Page Include="RotateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

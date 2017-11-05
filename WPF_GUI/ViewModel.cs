@@ -35,7 +35,7 @@
 
         #endregion
 
-        public ViewModel(WindowMediator mediator)
+        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator)
         {
             OpenImageCommand = new RelayCommand(OpenImage, s => IsView);
             OpenedImage = new ImageStorageModel();
@@ -43,10 +43,14 @@
             PrevCommand = new RelayCommand(s => --CurrentIndex, s => OpenedImage.IsPrev && IsView);
             RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
             SaveCommand = new RelayCommand(SaveImage, s => IsEdit);
+            RotateCommand = new RelayCommand(OpenRotate, s => !OpenedImage.IsEmpty);
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
 
-            ContrastAndBrightnessWindowMediator = mediator;
-            ContrastAndBrightnessWindowMediator.OnClose += BrigthnessWindowClosed;
+            ContrastAndBrightnessWindowContrastMediator = contrastMediator;
+            RotateWindowMediator = rotateMediator;
+            ContrastAndBrightnessWindowContrastMediator.OnClose += BrigthnessWindowClosed;
+            RotateWindowMediator.OnClose += RotateClosed;
+
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             OpenedImage.PropertyChanged += UpdateCurrentView;
         }
@@ -71,9 +75,13 @@
             }
         }
 
-        public WindowMediator ContrastAndBrightnessWindowMediator { get; set; }
+        public WindowMediator ContrastAndBrightnessWindowContrastMediator { get; set; }
+
+        public WindowMediator RotateWindowMediator { get; set; }
 
         public ContrastAndBrightnessViewModel BrightnessViewModel { get; set; } = new ContrastAndBrightnessViewModel();
+
+        public RotateViewModel RotateViewModel { get; set; } = new RotateViewModel();
 
         public ImageSource CurrentView
         {
@@ -140,6 +148,8 @@
         public RelayCommand ContrastAndBrightnessCommand { get; set; }
 
         public RelayCommand SaveCommand { get; set; }
+
+        public RelayCommand RotateCommand { get; set; }
 
         #endregion
 
@@ -325,7 +335,7 @@
             }
 
             ViewModelState = ProgrammState.Edit;
-            ContrastAndBrightnessWindowMediator.ShowDialog(BrightnessViewModel);
+            ContrastAndBrightnessWindowContrastMediator.ShowDialog(BrightnessViewModel);
         }
 
         private void StoreSelectedIndex()
@@ -336,6 +346,16 @@
         private void RestoreSelectedIndex()
         {
             CurrentIndex = viewSeletedIndex;
+        }
+
+        private void RotateClosed(object sender, EventArgs e)
+        {
+            MessageBox.Show("Rotate closed");
+        }
+
+        private void OpenRotate(object parameter)
+        {
+            RotateWindowMediator.ShowDialog(RotateViewModel);
         }
 
         #endregion

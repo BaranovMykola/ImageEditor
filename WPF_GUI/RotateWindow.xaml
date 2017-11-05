@@ -1,0 +1,15 @@
+﻿<Window x:Class="WPF_GUI.RotateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_GUI"
+        mc:Ignorable="d"
+        Title="ResizeWindow" Height="82.344" Width="272.927">
+    <Grid>
+        <Slider x:Name="angle" HorizontalAlignment="Left" Margin="10,11,0,-0.2" Width="193" Minimum="-180" Maximum="180" Value="{Binding Angle, Mode=OneWayToSource}"/>
+        <TextBox x:Name="angleVisual" HorizontalAlignment="Left" Height="23" Margin="208,11,0,0"
+                 TextWrapping="Wrap" Text="{Binding Angle, Mode=OneWay}" Width="48" IsEnabled="False" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
