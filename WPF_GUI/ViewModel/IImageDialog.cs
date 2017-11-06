@@ -1,8 +1,7 @@
-using System.Windows.Input;
-using WPF_GUI.Command;
-
 namespace WPF_GUI
 {
+    using System.Windows.Input;
+
     public interface IImageDialog
     {
         bool DialogResult { get; set; }

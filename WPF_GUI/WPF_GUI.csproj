@@ -76,7 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="IImageDialog.cs" />
+    <Compile Include="ViewModel\IImageDialog.cs" />
     <Compile Include="ViewModel\ResizeViewModel.cs" />
     <Compile Include="View\ResizeWindow.xaml.cs">
       <DependentUpon>ResizeWindow.xaml</DependentUpon>
@@ -88,7 +88,7 @@
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ViewModel\Convertor\StringDoubleConverter.cs" />
-    <Compile Include="WindowMediator.cs" />
+    <Compile Include="ViewModel\Command\WindowMediator.cs" />
     <Compile Include="Const\Constants.cs" />
     <Compile Include="View\ContrastAndBrightness.xaml.cs">
       <DependentUpon>ContrastAndBrightness.xaml</DependentUpon>
@@ -102,7 +102,7 @@
     </Compile>
     <Compile Include="ViewModel\Command\RelayCommand.cs" />
     <Compile Include="ImageContainer\ImageStorageModel.cs" />
-    <Compile Include="ProgrammState.cs" />
+    <Compile Include="ViewModel\ProgrammState.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelButtonsIcons.cs" />

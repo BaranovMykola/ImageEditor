@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI
+﻿using WPF_GUI.Command;
+
+namespace WPF_GUI
 {
     using System;
     using System.Drawing;
