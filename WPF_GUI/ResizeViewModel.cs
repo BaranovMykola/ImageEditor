@@ -1,18 +1,13 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using WPF_GUI.Annotations;
-using WPF_GUI.Command;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
-    public class ResizeViewModel: INotifyPropertyChanged, IImageDialog
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using WPF_GUI.Annotations;
+    using WPF_GUI.Command;
+
+    public class ResizeViewModel : INotifyPropertyChanged, IImageDialog
     {
         private double scaleRatio = 1;
 
@@ -30,14 +25,19 @@ namespace WPF_GUI
 
         public double ScaleRatio
         {
-            get { return scaleRatio; }
+            get
+            {
+                return scaleRatio;  
+            }
+
             set
             {
                 if (value <= 0)
                 {
                     value = 1;
                 }
-                scaleRatio = Math.Round(value, 2); 
+
+                scaleRatio = Math.Round(value, 2);
                 OnPropertyChanged(nameof(ScaleRatio));
             }
         }
@@ -47,12 +47,6 @@ namespace WPF_GUI
         public RelayCommand OkCommand { get; set; }
 
         public RelayCommand CancelCommand { get; set; }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public void Ok(object parameter)
         {
@@ -69,6 +63,12 @@ namespace WPF_GUI
         public void Close(object parameter)
         {
             (parameter as Window)?.Close();
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

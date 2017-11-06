@@ -409,17 +409,26 @@
             ViewModelState = ProgrammState.Edit;
 
             ResizeViewModel.Heigth = (int) CurrentView.Height;
-            ResizeViewModel.Width= (int)CurrentView.Width;
+            ResizeViewModel.Width= (int) CurrentView.Width;
             ResizeWindowMediator.ShowDialog(ResizeViewModel);
+
         }
 
         private void ResizeWindowClosed(object sender, EventArgs e)
         {
             if (ResizeViewModel.DialogResult)
             {
-                editor.applyResize((float) ResizeViewModel.ScaleRatio);
-                editor.apply();
-                AddPreviewIcon(CurrentView);
+                try
+                {
+                    editor.applyResize((float) ResizeViewModel.ScaleRatio);
+                    editor.apply();
+                    CurrentView = ConvertBitmapToImageSource(editor.getSource());
+                    AddPreviewIcon(CurrentView);
+                }
+                catch
+                {
+                    MessageBox.Show("You cannot apply this change", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             SetSelectedLast();
