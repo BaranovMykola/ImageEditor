@@ -35,5 +35,9 @@
         public ImageSource RotateIco { get; set; } = Icons.rotate.ToImageSource();
 
         public ImageSource RotateIcoGray { get; set; } = Icons.rotate_gray.ToImageSource();
+
+        public ImageSource ResizeIco { get; set; } = Icons.resize.ToImageSource();
+
+        public ImageSource ResizeIcoGray { get; set; } = Icons.resize_gray.ToImageSource();
     }
 }

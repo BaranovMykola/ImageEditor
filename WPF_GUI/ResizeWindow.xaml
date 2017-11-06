@@ -1,0 +1,28 @@
+﻿<Window x:Class="WPF_GUI.ResizeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_GUI"
+        mc:Ignorable="d"
+        Title="ResizeWindow" Height="152.928" Width="308.781"
+        ResizeMode="NoResize">
+    <Grid>
+        <GroupBox x:Name="groupBox" Header="Size" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="71" Width="138">
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" Text="w" VerticalAlignment="Top" Width="53"/>
+                <Label x:Name="label" Content="x" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" Text="h" VerticalAlignment="Top" Width="53"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Header="Scale Ratio" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Height="71" Width="138">
+            <StackPanel>
+                <TextBox></TextBox>
+                <Slider Maximum="2" Margin="0,10,0,0"></Slider>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="button" Content="_Ok" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="button_Copy" Content="_Cancel" HorizontalAlignment="Left" Margin="164,86,0,0" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+</Window>

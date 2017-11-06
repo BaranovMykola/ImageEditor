@@ -35,7 +35,7 @@
 
         #endregion
 
-        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator)
+        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator, WindowMediator resizeMediator)
         {
             OpenImageCommand = new RelayCommand(OpenImage, s => IsView);
             OpenedImage = new ImageStorageModel();
@@ -44,12 +44,15 @@
             RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
             SaveCommand = new RelayCommand(SaveImage, s => IsEdit);
             RotateCommand = new RelayCommand(OpenRotate, s => !OpenedImage.IsEmpty);
+            ResizeCommand = new RelayCommand(OpenResize, s=> !OpenedImage.IsEmpty);
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
             RotateWindowMediator = rotateMediator;
+            ResizeWindowMediator = resizeMediator;
             ContrastAndBrightnessWindowContrastMediator.OnClose += BrigthnessWindowClosed;
             RotateWindowMediator.OnClose += RotateClosed;
+            ResizeWindowMediator.OnClose += ResizeWindowClosed;
 
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             RotateViewModel.PropertyChanged += RotateChanged;
@@ -80,9 +83,13 @@
 
         public WindowMediator RotateWindowMediator { get; set; }
 
+        public WindowMediator ResizeWindowMediator { get; set; }
+
         public ContrastAndBrightnessViewModel BrightnessViewModel { get; set; } = new ContrastAndBrightnessViewModel();
 
         public RotateViewModel RotateViewModel { get; set; } = new RotateViewModel();
+
+        public ResizeViewModel ResizeViewModel{ get; set; } = new ResizeViewModel();
 
         public ImageSource CurrentView
         {
@@ -151,6 +158,8 @@
         public RelayCommand SaveCommand { get; set; }
 
         public RelayCommand RotateCommand { get; set; }
+
+        public RelayCommand ResizeCommand { get; set; }
 
         #endregion
 
@@ -384,6 +393,16 @@
         {
             editor.applyRotate((float) RotateViewModel.Angle);
             this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
+        }
+
+        private void OpenResize(object parameter)
+        {
+            ResizeWindowMediator?.ShowDialog(ResizeViewModel);
+        }
+
+        private void ResizeWindowClosed(object sender, EventArgs e)
+        {
+            Console.WriteLine("resize closed");
         }
 
         #endregion
