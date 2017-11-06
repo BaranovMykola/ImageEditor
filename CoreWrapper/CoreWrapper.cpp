@@ -130,32 +130,21 @@ void CoreWrapper::ImageProc::save(System::String ^ fileName)
 
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
-	int a = img.cols;
-	int b = img.rows;
-	int c = img.step;
-	uchar* d = img.ptr();
-	//return gcnew Bitmap(matToConvert.cols, matToConvert.rows, 3*matToConvert.cols, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.ptr()));
 	if (img.type() != CV_8UC3)
 	{
 		throw gcnew NotSupportedException("Only images of type CV_8UC3 are supported for conversion to Bitmap");
 	}
 
-	//create the bitmap and get the pointer to the data
 	System::Drawing::Imaging::PixelFormat fmt(System::Drawing::Imaging::PixelFormat::Format24bppRgb);
 	Bitmap ^bmpimg = gcnew Bitmap(img.cols, img.rows, fmt);
-
 	System::Drawing::Imaging::BitmapData ^data = bmpimg->LockBits(System::Drawing::Rectangle(0, 0, img.cols, img.rows), System::Drawing::Imaging::ImageLockMode::WriteOnly, fmt);
-
 	char *dstData = reinterpret_cast<char*>(data->Scan0.ToPointer());
-
 	unsigned char *srcData = img.data;
-
 	for (int row = 0; row < data->Height; ++row)
 	{
 		memcpy(reinterpret_cast<void*>(&dstData[row*data->Stride]), reinterpret_cast<void*>(&srcData[row*img.step]), img.cols*img.channels());
 	}
 
 	bmpimg->UnlockBits(data);
-
 	return bmpimg;
 }

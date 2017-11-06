@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using WPF_GUI.Annotations;
-using WPF_GUI.Command;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI
 {
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Input;
+    using WPF_GUI.Annotations;
+    using WPF_GUI.Command;
+
     public class RotateViewModel : INotifyPropertyChanged
     {
-        private double _angle;
+        private double angle;
 
         public RotateViewModel()
         {
@@ -22,12 +18,18 @@ namespace WPF_GUI
             CancelCommand = new RelayCommand(Cancel);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public double Angle
         {
-            get { return _angle; }
+            get
+            {
+                return angle;
+            }
+
             set
             {
-                _angle = Math.Round(value, 1);
+                angle = Math.Round(value, 1);
                 OnPropertyChanged(nameof(Angle));
             }
         }
@@ -37,8 +39,6 @@ namespace WPF_GUI
         public ICommand OkCommand { get; set; }
 
         public ICommand CancelCommand { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
