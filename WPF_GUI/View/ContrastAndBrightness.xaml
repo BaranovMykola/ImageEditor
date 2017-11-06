@@ -13,7 +13,7 @@
     </Window.Resources>
     <Grid>
         <Slider x:Name="contrastSlider" HorizontalAlignment="Left" Margin="89,10,0,0" VerticalAlignment="Top"
-                Width="218" Minimum="-15.937" Maximum="15.937" Value="{Binding Contrast, Mode=OneWayToSource,
+                Width="218" Minimum="-6.3" Maximum="6.3" Value="{Binding Contrast, Mode=OneWayToSource,
             Converter={StaticResource ContrastConverter}, FallbackValue=0}" ValueChanged="ContrastSlider_OnValueChanged"/>
         <Label x:Name="label" Content="Contrast" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="72"/>
         <Label x:Name="label_Copy" Content="Brightness" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="72"/>

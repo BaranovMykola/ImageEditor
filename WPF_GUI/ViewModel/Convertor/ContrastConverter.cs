@@ -18,18 +18,25 @@
                 return 1;
             }
 
-            float input = (float)(double)value;
+            float input = (float)((double)value + 6.3);
             float contrast;
-            if (input >= 0)
+            if (input < 4.3)
             {
-                contrast = (float)(Math.Pow(input, 2) + 1);
+                contrast = (float)(Math.Pow(input, 1 / 3.0) / (3 * 1.64));
+            }
+            else if (input >= 4.3 && input < 6.3)
+            {
+                contrast = (float)((input * 0.332) - 1.0916);
+            }
+            else if (input >= 6.3 && input < 8.3)
+            {
+                contrast = (float)(input - 5.3);
             }
             else
             {
-                contrast = (float)(1 / (Math.Pow(input, 2) + 1));
+                contrast = (float)Math.Pow(input - 8.3 + 1.44, 3);
             }
-
-            Console.WriteLine(contrast);
+            
             return contrast;
         }
     }
