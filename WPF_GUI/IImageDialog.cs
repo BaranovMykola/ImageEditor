@@ -6,7 +6,7 @@ namespace WPF_GUI
     {
         bool DialogResult { get; set; }
         RelayCommand OkCommand { get; set; }
-        RelayCommand CancelDialog { get; set; }
+        RelayCommand CancelCommand { get; set; }
         void Ok(object parameter);
         void Cancel(object parameter);
         void Close(object parameter);

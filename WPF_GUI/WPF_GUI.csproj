@@ -87,6 +87,7 @@
     <Compile Include="RotateViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="StringDoubleConverter.cs" />
     <Compile Include="WindowMediator.cs" />
     <Compile Include="Const\Constants.cs" />
     <Compile Include="ContrastAndBrightness.xaml.cs">

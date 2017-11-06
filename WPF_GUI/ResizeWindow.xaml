@@ -7,22 +7,29 @@
         mc:Ignorable="d"
         Title="ResizeWindow" Height="152.928" Width="308.781"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <local:StringDoubleConverter x:Key="StringDoubleConverter"></local:StringDoubleConverter>
+    </Window.Resources>
     <Grid>
         <GroupBox x:Name="groupBox" Header="Size" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="71" Width="138">
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" Text="w" VerticalAlignment="Top" Width="53"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding Width}"
+                         IsEnabled="False" VerticalAlignment="Top" Width="53"/>
                 <Label x:Name="label" Content="x" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" Text="h" VerticalAlignment="Top" Width="53"/>
+                <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding Heigth}" IsEnabled="False"
+                         VerticalAlignment="Top" Width="53"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="groupBox1" Header="Scale Ratio" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Height="71" Width="138">
             <StackPanel>
-                <TextBox></TextBox>
-                <Slider Maximum="2" Margin="0,10,0,0"></Slider>
+                <TextBox Text="{Binding ScaleRatio, Converter={StaticResource StringDoubleConverter}}"></TextBox>
+                <Slider Maximum="2" Minimum="0.1" Value="{Binding ScaleRatio, Mode=TwoWay}" Margin="0,10,0,0"></Slider>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="button" Content="_Ok" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="button_Copy" Content="_Cancel" HorizontalAlignment="Left" Margin="164,86,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="button" Content="_Ok" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="120"
+                Command="{Binding OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        <Button x:Name="button_Copy" Content="_Cancel" HorizontalAlignment="Left" Margin="164,86,0,0" VerticalAlignment="Top" Width="120" Command="{Binding CancelCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
 
     </Grid>
 </Window>
