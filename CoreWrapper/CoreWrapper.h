@@ -24,6 +24,7 @@ namespace CoreWrapper {
 		void loadImage(System::String^ file);
 		void applyContrastAndBrightness(float contrast, int brightness);
 		void applyRotate(float angle);
+		void applyResize(float ratio);
 		int getMinimumOfImage();
 		void apply();
 		void restore(int changeIndex);

@@ -397,12 +397,32 @@
 
         private void OpenResize(object parameter)
         {
-            ResizeWindowMediator?.ShowDialog(ResizeViewModel);
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
+            ResizeViewModel.Heigth = (int) CurrentView.Height;
+            ResizeViewModel.Width= (int)CurrentView.Width;
+            ResizeWindowMediator.ShowDialog(ResizeViewModel);
         }
 
         private void ResizeWindowClosed(object sender, EventArgs e)
         {
-            Console.WriteLine("resize closed");
+            if (ResizeViewModel.DialogResult)
+            {
+                editor.applyResize((float) ResizeViewModel.ScaleRatio);
+                editor.apply();
+                AddPreviewIcon(CurrentView);
+            }
+
+            SetSelectedLast();
         }
 
         #endregion

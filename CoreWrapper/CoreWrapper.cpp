@@ -106,6 +106,11 @@ void CoreWrapper::ImageProc::applyRotate(float angle)
 	editor->rotate(angle);
 }
 
+void CoreWrapper::ImageProc::applyResize(float ratio)
+{
+	editor->resize(ratio);
+}
+
 int CoreWrapper::ImageProc::getMinimumOfImage()
 {
 	return editor->getMinimum();
