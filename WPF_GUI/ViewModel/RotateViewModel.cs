@@ -29,7 +29,7 @@
 
             set
             {
-                angle = Math.Round(value, 1);
+                angle = Math.Round(value);
                 OnPropertyChanged(nameof(Angle));
             }
         }

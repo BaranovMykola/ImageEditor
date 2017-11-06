@@ -1,12 +1,11 @@
-﻿using WPF_GUI.Properties;
-
-namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.ImageContainer
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Media.Imaging;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using WPF_GUI.Properties;
 
     public class ImageStorageModel : INotifyPropertyChanged
     {

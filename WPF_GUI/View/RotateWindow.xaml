@@ -10,13 +10,13 @@
     <Grid>
         <Slider x:Name="angle" HorizontalAlignment="Left" Margin="10,14,0,0" Width="193" Minimum="-180" Maximum="180" Value="{Binding Angle, Mode=OneWayToSource}" VerticalAlignment="Top"/>
         <TextBox x:Name="angleVisual" HorizontalAlignment="Left" Height="23" Margin="208,11,0,0"
-                 TextWrapping="Wrap" Text="{Binding Angle, Mode=OneWay}" Width="28" IsEnabled="False" VerticalAlignment="Top"/>
+                 TextWrapping="Wrap" Text="{Binding Angle, Mode=OneWay}" Width="40" IsEnabled="False" VerticalAlignment="Top"/>
         <Button x:Name="button" Content="_Ok" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" Width="101" Command="{Binding OkCommand}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
         <Button x:Name="button_Copy" Content="_Cancel" HorizontalAlignment="Left" Margin="156,44,0,0"
                 VerticalAlignment="Top" Width="100" Command="{Binding CancelCommand}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        <Label x:Name="label" Content="°" HorizontalAlignment="Left" Margin="241,11,0,0" VerticalAlignment="Top" Width="15" Height="23" Padding="0,0,10,0"/>
+        <Label x:Name="label" Content="°" HorizontalAlignment="Left" Margin="253,11,0,0" VerticalAlignment="Top" Width="15" Height="23" Padding="0,0,10,0" RenderTransformOrigin="1.499,0.585"/>
 
     </Grid>
 </Window>

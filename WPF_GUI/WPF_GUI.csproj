@@ -119,9 +119,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ImageContainer\IconExtension.cs" />
-    <Compile Include="ImageContainer\ImageStorage.cs">
-      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -166,12 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\left_arrow.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoreWrapper\CoreWrapper.vcxproj">
