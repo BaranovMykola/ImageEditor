@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_GUI"
+        xmlns:convertor="clr-namespace:WPF_GUI.Convertor"
         mc:Ignorable="d"
         Title="ResizeWindow" Height="152.928" Width="308.781"
         ResizeMode="NoResize">
     <Window.Resources>
-        <local:StringDoubleConverter x:Key="StringDoubleConverter"></local:StringDoubleConverter>
+        <convertor:StringDoubleConverter x:Key="StringDoubleConverter"></convertor:StringDoubleConverter>
     </Window.Resources>
     <Grid>
         <GroupBox x:Name="groupBox" Header="Size" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="71" Width="138">

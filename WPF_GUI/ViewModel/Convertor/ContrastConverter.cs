@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI
+﻿namespace WPF_GUI.Convertor
 {
     using System;
     using System.Globalization;

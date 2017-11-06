@@ -87,20 +87,20 @@
     <Compile Include="ViewModel\RotateViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="StringDoubleConverter.cs" />
+    <Compile Include="ViewModel\Convertor\StringDoubleConverter.cs" />
     <Compile Include="WindowMediator.cs" />
     <Compile Include="Const\Constants.cs" />
     <Compile Include="View\ContrastAndBrightness.xaml.cs">
       <DependentUpon>ContrastAndBrightness.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ContrastAndBrightnessViewModel.cs" />
-    <Compile Include="ContrastConverter.cs" />
+    <Compile Include="ViewModel\Convertor\ContrastConverter.cs" />
     <Compile Include="Icons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Icons.resx</DependentUpon>
     </Compile>
-    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="ViewModel\Command\RelayCommand.cs" />
     <Compile Include="ImageContainer\ImageStorageModel.cs" />
     <Compile Include="ProgrammState.cs" />
     <Compile Include="Properties\Annotations1.cs" />

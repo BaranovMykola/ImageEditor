@@ -1,9 +1,9 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI.Convertor
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+
     public class StringDoubleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
