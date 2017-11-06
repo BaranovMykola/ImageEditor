@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI
+﻿namespace WPF_GUI.ViewModel
 {
     using System.Windows.Media;
     using WPF_GUI.ImageContainer;

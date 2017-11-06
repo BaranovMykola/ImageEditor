@@ -23,7 +23,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
-            DataContext = new ViewModel(new WindowMediator() {CreateWindow = () => new ContrastAndBrightness()}, new WindowMediator() {CreateWindow = () => new RotateWindow()}, new WindowMediator() {CreateWindow = () => new ResizeWindow()});
+            DataContext = new ViewModel.ViewModel(new WindowMediator() {CreateWindow = () => new ContrastAndBrightness()}, new WindowMediator() {CreateWindow = () => new RotateWindow()}, new WindowMediator() {CreateWindow = () => new ResizeWindow()});
         }
     }
 }

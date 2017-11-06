@@ -77,14 +77,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="IImageDialog.cs" />
-    <Compile Include="ResizeViewModel.cs" />
+    <Compile Include="ViewModel\ResizeViewModel.cs" />
     <Compile Include="ResizeWindow.xaml.cs">
       <DependentUpon>ResizeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RotateWindow.xaml.cs">
       <DependentUpon>RotateWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RotateViewModel.cs">
+    <Compile Include="ViewModel\RotateViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="StringDoubleConverter.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="ContrastAndBrightness.xaml.cs">
       <DependentUpon>ContrastAndBrightness.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContrastAndBrightnessViewModel.cs" />
+    <Compile Include="ViewModel\ContrastAndBrightnessViewModel.cs" />
     <Compile Include="ContrastConverter.cs" />
     <Compile Include="Icons.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -104,8 +104,8 @@
     <Compile Include="ImageContainer\ImageStorageModel.cs" />
     <Compile Include="ProgrammState.cs" />
     <Compile Include="Properties\Annotations1.cs" />
-    <Compile Include="ViewModel.cs" />
-    <Compile Include="ViewModelButtonsIcons.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelButtonsIcons.cs" />
     <Page Include="ContrastAndBrightness.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

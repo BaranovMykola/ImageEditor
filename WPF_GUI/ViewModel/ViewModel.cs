@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI
+﻿namespace WPF_GUI.ViewModel
 {
     using System;
     using System.Collections.ObjectModel;
@@ -44,7 +44,7 @@
             RemoveCommand = new RelayCommand(RemoveImage, s => !OpenedImage.IsEmpty);
             SaveCommand = new RelayCommand(SaveImage, s => IsEdit);
             RotateCommand = new RelayCommand(OpenRotate, s => !OpenedImage.IsEmpty);
-            ResizeCommand = new RelayCommand(OpenResize, s=> !OpenedImage.IsEmpty);
+            ResizeCommand = new RelayCommand(OpenResize, s => !OpenedImage.IsEmpty);
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
@@ -89,7 +89,7 @@
 
         public RotateViewModel RotateViewModel { get; set; } = new RotateViewModel();
 
-        public ResizeViewModel ResizeViewModel{ get; set; } = new ResizeViewModel();
+        public ResizeViewModel ResizeViewModel { get; set; } = new ResizeViewModel();
 
         public ImageSource CurrentView
         {
@@ -392,7 +392,7 @@
 
         private void RotateChanged(object sender, EventArgs e)
         {
-            editor.applyRotate((float) RotateViewModel.Angle);
+            editor.applyRotate((float)RotateViewModel.Angle);
             this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
         }
 
@@ -409,8 +409,8 @@
 
             ViewModelState = ProgrammState.Edit;
 
-            ResizeViewModel.Heigth = (int) CurrentView.Height;
-            ResizeViewModel.Width= (int) CurrentView.Width;
+            ResizeViewModel.Heigth = (int)CurrentView.Height;
+            ResizeViewModel.Width = (int)CurrentView.Width;
             ResizeViewModel.ScaleRatio = 1;
             ResizeWindowMediator.ShowDialog(ResizeViewModel);
 
@@ -422,7 +422,7 @@
             {
                 try
                 {
-                    editor.applyResize((float) ResizeViewModel.ScaleRatio);
+                    editor.applyResize((float)ResizeViewModel.ScaleRatio);
                     editor.apply();
                     CurrentView = ConvertBitmapToImageSource(editor.getSource());
                     AddPreviewIcon(CurrentView);

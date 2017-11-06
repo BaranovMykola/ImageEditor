@@ -1,18 +1,18 @@
-﻿namespace WPF_GUI
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Input;
+using WPF_GUI.Command;
+using WPF_GUI.Properties;
+
+namespace WPF_GUI.ViewModel
 {
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using System.Windows;
-    using System.Windows.Input;
-    using WPF_GUI.Annotations;
-    using WPF_GUI.Command;
-
-    public class ResizeViewModel : INotifyPropertyChanged, IImageDialog
+    public class RotateViewModel : INotifyPropertyChanged, IImageDialog
     {
-        private double scaleRatio = 1;
+        private double angle;
 
-        public ResizeViewModel()
+        public RotateViewModel()
         {
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
@@ -20,26 +20,17 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int Width { get; set; }
-
-        public int Heigth { get; set; }
-
-        public double ScaleRatio
+        public double Angle
         {
             get
             {
-                return scaleRatio;  
+                return angle;
             }
 
             set
             {
-                if (value <= 0)
-                {
-                    value = 1;
-                }
-
-                scaleRatio = Math.Round(value, 2);
-                OnPropertyChanged(nameof(ScaleRatio));
+                angle = Math.Round(value, 1);
+                OnPropertyChanged(nameof(Angle));
             }
         }
 

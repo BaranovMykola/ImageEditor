@@ -1,18 +1,20 @@
-﻿namespace WPF_GUI
+﻿namespace WPF_GUI.ViewModel
 {
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Input;
-    using WPF_GUI.Annotations;
     using WPF_GUI.Command;
+    using WPF_GUI.Properties;
 
-    public class RotateViewModel : INotifyPropertyChanged, IImageDialog
+    internal class ContrastAndBrightnessViewModel : INotifyPropertyChanged, IImageDialog
     {
-        private double angle;
+        private double birghtness;
 
-        public RotateViewModel()
+        private float contrast;
+
+        public ContrastAndBrightnessViewModel()
         {
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
@@ -20,17 +22,32 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public double Angle
+        public double Birghtness
         {
             get
             {
-                return angle;
+                return birghtness; 
             }
 
             set
             {
-                angle = Math.Round(value, 1);
-                OnPropertyChanged(nameof(Angle));
+                birghtness = value;
+                OnPropertyChanged(nameof(Birghtness));
+                Console.WriteLine(birghtness);
+            }
+        }
+
+        public float Contrast
+        {
+            get
+            {
+                return contrast;
+            }
+
+            set
+            {
+                contrast = value;
+                OnPropertyChanged(nameof(Contrast));
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WPF_GUI.Annotations;
+using WPF_GUI.Properties;
 
 namespace WPF_GUI.ImageContainer
 {

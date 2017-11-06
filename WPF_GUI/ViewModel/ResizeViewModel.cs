@@ -1,20 +1,18 @@
-﻿namespace WPF_GUI
+﻿namespace WPF_GUI.ViewModel
 {
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Input;
-    using WPF_GUI.Annotations;
     using WPF_GUI.Command;
+    using WPF_GUI.Properties;
 
-    internal class ContrastAndBrightnessViewModel : INotifyPropertyChanged, IImageDialog
+    public class ResizeViewModel : INotifyPropertyChanged, IImageDialog
     {
-        private double birghtness;
+        private double scaleRatio = 1;
 
-        private float contrast;
-
-        public ContrastAndBrightnessViewModel()
+        public ResizeViewModel()
         {
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
@@ -22,32 +20,26 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public double Birghtness
+        public int Width { get; set; }
+
+        public int Heigth { get; set; }
+
+        public double ScaleRatio
         {
             get
             {
-                return birghtness; 
+                return scaleRatio;  
             }
 
             set
             {
-                birghtness = value;
-                OnPropertyChanged(nameof(Birghtness));
-                Console.WriteLine(birghtness);
-            }
-        }
+                if (value <= 0)
+                {
+                    value = 1;
+                }
 
-        public float Contrast
-        {
-            get
-            {
-                return contrast;
-            }
-
-            set
-            {
-                contrast = value;
-                OnPropertyChanged(nameof(Contrast));
+                scaleRatio = Math.Round(value, 2);
+                OnPropertyChanged(nameof(ScaleRatio));
             }
         }
 
