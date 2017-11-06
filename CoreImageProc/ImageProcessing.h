@@ -24,7 +24,5 @@ namespace imp
 		cv::Mat rotatedImg = Mat::zeros(source.size(), source.type());
 		warpAffine(source, rotatedImg, rotateMat, rotRect.size()-Size(1,1), 1, BORDER_TRANSPARENT);
 		source = rotatedImg;
-		cv::imshow("img", source);
-		//waitKey();
 	}
 }

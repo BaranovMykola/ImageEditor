@@ -351,7 +351,17 @@
 
         private void RotateClosed(object sender, EventArgs e)
         {
-            MessageBox.Show("Rotate closed");
+            if (RotateViewModel.DialogResult)
+            {
+                editor.apply();
+                AddPreviewIcon(CurrentView);
+            }
+            else
+            {
+                CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            }
+
+            SetSelectedLast();
         }
 
         private void OpenRotate(object parameter)
@@ -366,6 +376,7 @@
             }
 
             ViewModelState = ProgrammState.Edit;
+            RotateViewModel.DialogResult = false;
             RotateWindowMediator.ShowDialog(RotateViewModel);
         }
 
