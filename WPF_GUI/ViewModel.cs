@@ -243,7 +243,7 @@
 
         private void BrigthnessWindowClosed(object sender, EventArgs e)
         {
-            if ((sender as Window)?.DialogResult ?? false)
+            if (BrightnessViewModel.DialogResult)
             {
                 editor.apply();
                 AddPreviewIcon(CurrentView);
@@ -345,6 +345,7 @@
             }
 
             ViewModelState = ProgrammState.Edit;
+            BrightnessViewModel.DialogResult = false;
             ContrastAndBrightnessWindowContrastMediator.ShowDialog(BrightnessViewModel);
         }
 

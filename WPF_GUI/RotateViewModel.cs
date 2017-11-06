@@ -8,7 +8,7 @@
     using WPF_GUI.Annotations;
     using WPF_GUI.Command;
 
-    public class RotateViewModel : INotifyPropertyChanged
+    public class RotateViewModel : INotifyPropertyChanged, IImageDialog
     {
         private double angle;
 
@@ -40,27 +40,27 @@
 
         public ICommand CancelCommand { get; set; }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void Ok(object parameter)
+        public void Ok(object parameter)
         {
             DialogResult = true;
             Close(parameter);
         }
 
-        private void Cancel(object parameter)
+        public void Cancel(object parameter)
         {
             DialogResult = false;
             Close(parameter);
         }
 
-        private void Close(object parameter)
+        public void Close(object parameter)
         {
             (parameter as Window)?.Close();
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

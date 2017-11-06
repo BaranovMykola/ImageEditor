@@ -14,7 +14,8 @@
         <Button x:Name="button" Content="_Ok" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" Width="101" Command="{Binding OkCommand}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
         <Button x:Name="button_Copy" Content="_Cancel" HorizontalAlignment="Left" Margin="156,44,0,0"
-                VerticalAlignment="Top" Width="100" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                VerticalAlignment="Top" Width="100" Command="{Binding CancelCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
 
     </Grid>
 </Window>

@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
+    using System.Windows.Input;
     using WPF_GUI.Annotations;
     using WPF_GUI.Command;
 
@@ -44,9 +45,9 @@
 
         public bool DialogResult { get; set; }
 
-        public RelayCommand OkCommand { get; set; }
+        public ICommand OkCommand { get; set; }
 
-        public RelayCommand CancelCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
 
         public void Ok(object parameter)
         {
