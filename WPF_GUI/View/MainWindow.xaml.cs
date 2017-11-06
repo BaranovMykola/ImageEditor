@@ -1,4 +1,4 @@
-﻿using WPF_GUI.Command;
+﻿using WPF_GUI.ViewModel.Command;
 
 namespace WPF_GUI
 {

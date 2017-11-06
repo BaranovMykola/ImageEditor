@@ -1,13 +1,13 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Input;
-using WPF_GUI.Command;
-using WPF_GUI.Properties;
-
-namespace WPF_GUI.ViewModel
+﻿namespace WPF_GUI.ViewModel
 {
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Input;
+    using WPF_GUI.Properties;
+    using WPF_GUI.ViewModel.Command;
+
     internal class RotateViewModel : INotifyPropertyChanged, IImageDialog
     {
         private double angle;

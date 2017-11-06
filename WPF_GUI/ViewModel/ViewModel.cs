@@ -11,9 +11,9 @@
     using System.Windows.Media.Imaging;
     using CoreWrapper;
     using Microsoft.Win32;
-    using WPF_GUI.Command;
     using WPF_GUI.Const;
     using WPF_GUI.ImageContainer;
+    using WPF_GUI.ViewModel.Command;
     using Image = System.Windows.Controls.Image;
 
     /// <summary>

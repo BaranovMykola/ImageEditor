@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_GUI"
-        xmlns:convertor="clr-namespace:WPF_GUI.Convertor"
+        xmlns:convertor1="clr-namespace:WPF_GUI.ViewModel.Convertor"
         mc:Ignorable="d"
-        Title="ContrastAndBrightness" Height="135.365" Width="335.96">
+        Title="Contrast And Brightness..." Height="135.365" Width="335.96"
+        ResizeMode="NoResize">
     <Window.Resources>
-        <convertor:ContrastConverter x:Key="ContrastConverter"></convertor:ContrastConverter>
+        <convertor1:ContrastConverter x:Key="ContrastConverter"></convertor1:ContrastConverter>
     </Window.Resources>
     <Grid>
         <Slider x:Name="contrastSlider" HorizontalAlignment="Left" Margin="89,10,0,0" VerticalAlignment="Top"

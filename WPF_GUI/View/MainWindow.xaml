@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_GUI"
         xmlns:prop="clr-namespace:WPF_GUI.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450">
+        Title="Image Editor" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="0,0,0,0">

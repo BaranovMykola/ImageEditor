@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI.Convertor
+﻿namespace WPF_GUI.ViewModel.Convertor
 {
     using System;
     using System.Globalization;

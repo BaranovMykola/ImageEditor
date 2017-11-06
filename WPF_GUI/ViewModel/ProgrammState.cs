@@ -1,4 +1,4 @@
-namespace WPF_GUI
+namespace WPF_GUI.ViewModel
 {
     public enum ProgrammState
     {

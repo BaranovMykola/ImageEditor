@@ -1,4 +1,4 @@
-namespace WPF_GUI.Command
+namespace WPF_GUI.ViewModel.Command
 {
     using System;
     using System.Windows;

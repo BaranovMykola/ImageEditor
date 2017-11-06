@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI.Convertor
+﻿namespace WPF_GUI.ViewModel.Convertor
 {
     using System;
     using System.Globalization;
@@ -6,20 +6,13 @@
 
     public class StringDoubleConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value?.ToString();
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value?.ToString();
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double res;
             var readed = double.TryParse(value.ToString(), out res);
-            if (readed)
-            {
-                return res;
-            }
-            return 1;
+            return readed ? res : 1;
         }
     }
 }
