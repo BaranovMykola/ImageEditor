@@ -52,6 +52,7 @@
             RotateWindowMediator.OnClose += RotateClosed;
 
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
+            RotateViewModel.PropertyChanged += RotateChanged;
             OpenedImage.PropertyChanged += UpdateCurrentView;
         }
 
@@ -355,7 +356,23 @@
 
         private void OpenRotate(object parameter)
         {
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
             RotateWindowMediator.ShowDialog(RotateViewModel);
+        }
+
+        private void RotateChanged(object sender, EventArgs e)
+        {
+            editor.applyRotate((float) RotateViewModel.Angle);
+            this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
         }
 
         #endregion

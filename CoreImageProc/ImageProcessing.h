@@ -1,6 +1,7 @@
 #pragma once
 #include <opencv2\core.hpp>
 #include <opencv2\imgproc.hpp>
+#include <opencv2\highgui.hpp>
 
 using namespace cv;
 namespace imp
@@ -20,8 +21,10 @@ namespace imp
 		rotateMat.at<double>(0, 2) += rotRect.width / 2.0 - center.x;
 		rotateMat.at<double>(1, 2) += rotRect.height / 2.0 - center.y;
 
-		cv::Mat rotatedImg;
-		warpAffine(source, rotatedImg, rotateMat, rotRect.size(), 1, BORDER_TRANSPARENT);
+		cv::Mat rotatedImg = Mat::zeros(source.size(), source.type());
+		warpAffine(source, rotatedImg, rotateMat, rotRect.size()-Size(1,1), 1, BORDER_TRANSPARENT);
 		source = rotatedImg;
+		cv::imshow("img", source);
+		//waitKey();
 	}
 }

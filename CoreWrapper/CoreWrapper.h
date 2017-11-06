@@ -23,6 +23,7 @@ namespace CoreWrapper {
 		System::Collections::Generic::List<Bitmap^>^ getPreivewIcons(float resizeRatio);
 		void loadImage(System::String^ file);
 		void applyContrastAndBrightness(float contrast, int brightness);
+		void applyRotate(float angle);
 		int getMinimumOfImage();
 		void apply();
 		void restore(int changeIndex);

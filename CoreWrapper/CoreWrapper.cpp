@@ -4,6 +4,8 @@
 #include <opencv2\imgproc.hpp>
 
 #include "CoreWrapper.h"
+//#include <windows.h>
+//#include <windef.h>
 
 #include "../CoreImageProc/ImageProcess.h"
 //
@@ -71,6 +73,8 @@ Bitmap ^ CoreWrapper::ImageProc::getSource()
 Bitmap ^ CoreWrapper::ImageProc::getPreview()
 {
 	auto img = editor->getPreview();
+	//cv::imshow("img", img);
+	//waitKey();
 	return ConvertMatToBitmap(img);
 }
 
@@ -97,6 +101,11 @@ void CoreWrapper::ImageProc::applyContrastAndBrightness(float contrast, int brig
 	editor->changeContrastAndBrightness(contrast, brightness);
 }
 
+void CoreWrapper::ImageProc::applyRotate(float angle)
+{
+	editor->rotate(angle);
+}
+
 int CoreWrapper::ImageProc::getMinimumOfImage()
 {
 	return editor->getMinimum();
@@ -119,7 +128,34 @@ void CoreWrapper::ImageProc::save(System::String ^ fileName)
 	editor->save(stdFileName);
 }
 
-Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat matToConvert)
+Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
-	return gcnew Bitmap(matToConvert.cols, matToConvert.rows, matToConvert.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.ptr()));
+	int a = img.cols;
+	int b = img.rows;
+	int c = img.step;
+	uchar* d = img.ptr();
+	//return gcnew Bitmap(matToConvert.cols, matToConvert.rows, 3*matToConvert.cols, System::Drawing::Imaging::PixelFormat::Format24bppRgb, IntPtr(matToConvert.ptr()));
+	if (img.type() != CV_8UC3)
+	{
+		throw gcnew NotSupportedException("Only images of type CV_8UC3 are supported for conversion to Bitmap");
+	}
+
+	//create the bitmap and get the pointer to the data
+	System::Drawing::Imaging::PixelFormat fmt(System::Drawing::Imaging::PixelFormat::Format24bppRgb);
+	Bitmap ^bmpimg = gcnew Bitmap(img.cols, img.rows, fmt);
+
+	System::Drawing::Imaging::BitmapData ^data = bmpimg->LockBits(System::Drawing::Rectangle(0, 0, img.cols, img.rows), System::Drawing::Imaging::ImageLockMode::WriteOnly, fmt);
+
+	char *dstData = reinterpret_cast<char*>(data->Scan0.ToPointer());
+
+	unsigned char *srcData = img.data;
+
+	for (int row = 0; row < data->Height; ++row)
+	{
+		memcpy(reinterpret_cast<void*>(&dstData[row*data->Stride]), reinterpret_cast<void*>(&srcData[row*img.step]), img.cols*img.channels());
+	}
+
+	bmpimg->UnlockBits(data);
+
+	return bmpimg;
 }
