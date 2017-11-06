@@ -8,7 +8,7 @@ using WPF_GUI.Properties;
 
 namespace WPF_GUI.ViewModel
 {
-    public class RotateViewModel : INotifyPropertyChanged, IImageDialog
+    internal class RotateViewModel : INotifyPropertyChanged, IImageDialog
     {
         private double angle;
 

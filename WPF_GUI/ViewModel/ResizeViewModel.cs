@@ -8,7 +8,7 @@
     using WPF_GUI.Command;
     using WPF_GUI.Properties;
 
-    public class ResizeViewModel : INotifyPropertyChanged, IImageDialog
+    internal class ResizeViewModel : INotifyPropertyChanged, IImageDialog
     {
         private double scaleRatio = 1;
 

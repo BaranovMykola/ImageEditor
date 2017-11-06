@@ -78,10 +78,10 @@
     </ApplicationDefinition>
     <Compile Include="IImageDialog.cs" />
     <Compile Include="ViewModel\ResizeViewModel.cs" />
-    <Compile Include="ResizeWindow.xaml.cs">
+    <Compile Include="View\ResizeWindow.xaml.cs">
       <DependentUpon>ResizeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RotateWindow.xaml.cs">
+    <Compile Include="View\RotateWindow.xaml.cs">
       <DependentUpon>RotateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\RotateViewModel.cs">
@@ -90,7 +90,7 @@
     <Compile Include="StringDoubleConverter.cs" />
     <Compile Include="WindowMediator.cs" />
     <Compile Include="Const\Constants.cs" />
-    <Compile Include="ContrastAndBrightness.xaml.cs">
+    <Compile Include="View\ContrastAndBrightness.xaml.cs">
       <DependentUpon>ContrastAndBrightness.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ContrastAndBrightnessViewModel.cs" />
@@ -106,11 +106,11 @@
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelButtonsIcons.cs" />
-    <Page Include="ContrastAndBrightness.xaml">
+    <Page Include="View\ContrastAndBrightness.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -122,16 +122,16 @@
     <Compile Include="ImageContainer\ImageStorage.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Page Include="ResizeWindow.xaml">
+    <Page Include="View\ResizeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RotateWindow.xaml">
+    <Page Include="View\RotateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
