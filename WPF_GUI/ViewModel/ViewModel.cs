@@ -413,7 +413,6 @@
             ResizeViewModel.Width = (int)CurrentView.Width;
             ResizeViewModel.ScaleRatio = 1;
             ResizeWindowMediator.ShowDialog(ResizeViewModel);
-
         }
 
         private void ResizeWindowClosed(object sender, EventArgs e)

@@ -24,7 +24,7 @@
         #region Constructors
 
         /// <summary>
-        /// Creates a new command that can always execute.
+        /// Initializes a new instance of the <see cref="RelayCommand"/> class
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         public RelayCommand(Action<object> execute)
@@ -33,7 +33,7 @@
         }
 
         /// <summary>
-        /// Creates a new command.
+        /// Initializes a new instance of the <see cref="RelayCommand"/> class
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>

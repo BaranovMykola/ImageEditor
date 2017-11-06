@@ -1,6 +1,4 @@
-﻿using WPF_GUI.ViewModel.Command;
-
-namespace WPF_GUI.ViewModel
+﻿namespace WPF_GUI.ViewModel
 {
     using System;
     using System.ComponentModel;
@@ -8,6 +6,7 @@ namespace WPF_GUI.ViewModel
     using System.Windows;
     using System.Windows.Input;
     using WPF_GUI.Properties;
+    using WPF_GUI.ViewModel.Command;
 
     internal class ContrastAndBrightnessViewModel : INotifyPropertyChanged, IImageDialog
     {

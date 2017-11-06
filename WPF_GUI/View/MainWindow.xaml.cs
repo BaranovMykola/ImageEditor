@@ -1,21 +1,7 @@
-﻿using WPF_GUI.ViewModel.Command;
-
-namespace WPF_GUI
+﻿namespace WPF_GUI.View
 {
-    using System;
-    using System.Drawing;
-    using System.IO;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Input;
-    using System.Collections.Generic;
-    using System.Windows.Media;
-    using CoreWrapper;
-    using Microsoft.Win32;
-    using ImageContainer;
-    using Const;
-    using Image = System.Windows.Controls.Image;
+    using WPF_GUI.ViewModel.Command;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,8 +10,11 @@ namespace WPF_GUI
     {
         public MainWindow()
         {
-            this.InitializeComponent();
-            DataContext = new ViewModel.ViewModel(new WindowMediator() {CreateWindow = () => new ContrastAndBrightness()}, new WindowMediator() {CreateWindow = () => new RotateWindow()}, new WindowMediator() {CreateWindow = () => new ResizeWindow()});
+            InitializeComponent();
+            var contrastWindow = new WindowMediator { CreateWindow = () => new ContrastAndBrightness() };
+            var rotateWindow = new WindowMediator { CreateWindow = () => new RotateWindow() };
+            var resizeWindow = new WindowMediator { CreateWindow = () => new ResizeWindow() };
+            DataContext = new ViewModel.ViewModel(contrastWindow, rotateWindow, resizeWindow);
         }
     }
 }

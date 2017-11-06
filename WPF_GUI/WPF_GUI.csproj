@@ -103,7 +103,9 @@
     <Compile Include="ViewModel\Command\RelayCommand.cs" />
     <Compile Include="ImageContainer\ImageStorageModel.cs" />
     <Compile Include="ViewModel\ProgrammState.cs" />
-    <Compile Include="Properties\Annotations1.cs" />
+    <Compile Include="Properties\Annotations1.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelButtonsIcons.cs" />
     <Page Include="View\ContrastAndBrightness.xaml">
@@ -117,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ImageContainer\IconExtension.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
@@ -136,6 +139,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

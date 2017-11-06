@@ -1,13 +1,12 @@
 ﻿namespace WPF_GUI.ViewModel
 {
-    using WPF_GUI.ViewModel.Command;
-
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Input;
     using WPF_GUI.Properties;
+    using WPF_GUI.ViewModel.Command;
 
     internal class ResizeViewModel : INotifyPropertyChanged, IImageDialog
     {
