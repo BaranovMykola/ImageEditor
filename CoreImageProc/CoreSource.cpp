@@ -1,7 +1,7 @@
 #include <opencv2\core.hpp>
 #include <iostream>
 #include <opencv2\highgui.hpp>
-
+#include "opencv2/objdetect/objdetect.hpp"
 #include "ImageProcess.h"
 #include "ImageEditor.h"
 
@@ -51,6 +51,10 @@ int main()
 		else if (act == "history")
 		{
 			edit.getPreviewIcons(0.5);
+		}
+		else if (act == "detect")
+		{
+			edit.detectFace();
 		}
 	}
 	while (true);

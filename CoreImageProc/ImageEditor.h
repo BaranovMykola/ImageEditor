@@ -12,6 +12,7 @@
 #include "RotateChange.h"
 #include "ResizeChange.h"
 #include "ImageProcessing.h"
+#include "FaceDetactionChange.h"
 
 using namespace cv;
 
@@ -122,6 +123,33 @@ public:
 			imshow(fileName, Mat::zeros(300, 300, CV_8UC3));
 		}
 		imwrite(fileName, source);
+	}
+
+	void detectFace()
+	{
+		preview = source.clone();
+		std::vector<Rect> faces;
+		Mat frame_gray;
+
+		Mat frame = preview;
+		cvtColor(frame, frame_gray, CV_BGR2GRAY);
+		equalizeHist(frame_gray, frame_gray);
+
+		CascadeClassifier face_cascade;
+		face_cascade.load("haarcascade_frontalface_alt2.xml");
+
+		//-- Detect faces
+		face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+
+		for (size_t i = 0; i < faces.size(); i++)
+		{
+			Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
+			rectangle(frame, faces[i], Scalar(0, 255, 0), 4);
+
+			Mat faceROI = frame_gray(faces[i]);
+			std::vector<Rect> eyes;
+		}
+		currentChange = new FaceDetectionChange(faces);
 	}
 
 public:
