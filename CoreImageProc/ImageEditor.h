@@ -137,7 +137,9 @@ public:
 		equalizeHist(frame_gray, frame_gray);
 
 		CascadeClassifier face_cascade;
-		face_cascade.load("haarcascade_frontalface_alt2.xml");
+		bool loaded = face_cascade.load("haarcascade_frontalface_alt2.xml");
+		cout << "Loaded " << loaded << endl;
+
 
 		//-- Detect faces
 		face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));

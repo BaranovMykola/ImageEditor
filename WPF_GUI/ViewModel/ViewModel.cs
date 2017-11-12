@@ -451,6 +451,9 @@
 
             ViewModelState = ProgrammState.Edit;
 
+            editor.detectFace();
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
         }
 
         #endregion

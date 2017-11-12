@@ -133,6 +133,12 @@ void CoreWrapper::ImageProc::save(System::String ^ fileName)
 	editor->save(stdFileName);
 }
 
+void CoreWrapper::ImageProc::detectFace()
+{
+	editor->detectFace();
+	editor->apply();
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
 	if (img.type() != CV_8UC3)
