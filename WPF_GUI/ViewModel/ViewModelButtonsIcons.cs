@@ -39,5 +39,9 @@
         public ImageSource ResizeIco { get; set; } = Icons.resize.ToImageSource();
 
         public ImageSource ResizeIcoGray { get; set; } = Icons.resize_gray.ToImageSource();
+
+        public ImageSource FaceIco { get; set; } = Icons.face.ToImageSource();
+
+        public ImageSource FaceIcoGray { get; set; } = Icons.face_gray.ToImageSource();
     }
 }

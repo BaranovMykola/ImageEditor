@@ -46,6 +46,7 @@
             RotateCommand = new RelayCommand(OpenRotate, s => !OpenedImage.IsEmpty);
             ResizeCommand = new RelayCommand(OpenResize, s => !OpenedImage.IsEmpty);
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
+            DetectFaceCommand = new RelayCommand(DetectFace, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
             RotateWindowMediator = rotateMediator;
@@ -160,6 +161,8 @@
         public RelayCommand RotateCommand { get; set; }
 
         public RelayCommand ResizeCommand { get; set; }
+
+        public RelayCommand DetectFaceCommand { get; set; }
 
         #endregion
 
@@ -433,6 +436,21 @@
             }
 
             SetSelectedLast();
+        }
+
+        private void DetectFace(object parameter)
+        {
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
         }
 
         #endregion

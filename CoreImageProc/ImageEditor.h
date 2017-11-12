@@ -13,6 +13,7 @@
 #include "ResizeChange.h"
 #include "ImageProcessing.h"
 #include "FaceDetactionChange.h"
+#include "opencv2/objdetect/objdetect.hpp"
 
 using namespace cv;
 
