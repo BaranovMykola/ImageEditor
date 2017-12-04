@@ -183,7 +183,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name ="paletteButton" Width="50" Height="50" Command="{Binding PaletteCommand}">
+                <Button Name ="paletteButton" Width="50" Height="50" Command="{Binding PalettingCommand}">
                     <StackPanel>
                         <Image>
                             <Image.Style>

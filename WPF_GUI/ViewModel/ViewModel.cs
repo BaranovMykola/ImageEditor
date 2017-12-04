@@ -47,6 +47,9 @@
             ResizeCommand = new RelayCommand(OpenResize, s => !OpenedImage.IsEmpty);
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
             DetectFaceCommand = new RelayCommand(DetectFace, s => !OpenedImage.IsEmpty);
+            PalettingCommand = new RelayCommand(Paletting, s => !OpenedImage.IsEmpty);
+            FilterCommand = new RelayCommand(Filter, s => !OpenedImage.IsEmpty);
+            GrayscaleCommand = new RelayCommand(Grayscale, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
             RotateWindowMediator = rotateMediator;
@@ -163,6 +166,12 @@
         public RelayCommand ResizeCommand { get; set; }
 
         public RelayCommand DetectFaceCommand { get; set; }
+
+        public RelayCommand PalettingCommand { get; set; }
+
+        public RelayCommand FilterCommand { get; set; }
+
+        public RelayCommand GrayscaleCommand { get; set; }
 
         #endregion
 
@@ -454,6 +463,34 @@
             editor.detectFace();
             CurrentView = ConvertBitmapToImageSource(editor.getSource());
             AddPreviewIcon(CurrentView);
+        }
+
+        private void Paletting(object parameter)
+        {
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
+            editor.paletting();
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
+        }
+
+        private void Filter(object parameter)
+        {
+
+        }
+
+        private void Grayscale(object parameter)
+        {
+
         }
 
         #endregion
