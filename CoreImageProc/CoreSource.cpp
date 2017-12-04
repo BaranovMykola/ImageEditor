@@ -8,7 +8,7 @@
 int main()
 {
 	std::string act;
-	ImageEditor edit("fox.jpg");
+	ImageEditor edit("img.jpg");
 	do
 	{
 		cin >> act;
@@ -58,11 +58,7 @@ int main()
 		}
 		else if (act == "bmp")
 		{
-
-			Mat img;
-			img = imread("tiger.bmp", CV_LOAD_IMAGE_UNCHANGED);
-			imp::palleting256(img);
-
+			edit.palleting256();
 		}
 	}
 	while (true);

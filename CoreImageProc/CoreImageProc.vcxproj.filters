@@ -47,5 +47,8 @@
     <ClInclude Include="FaceDetactionChange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PalletingChange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

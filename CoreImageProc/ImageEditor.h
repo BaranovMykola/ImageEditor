@@ -11,6 +11,7 @@
 #include "ContrastAndBrightnessChange.h"
 #include "RotateChange.h"
 #include "ResizeChange.h"
+#include "PalletingChange.h"
 #include "ImageProcessing.h"
 #include "FaceDetactionChange.h"
 #include "opencv2/objdetect/objdetect.hpp"
@@ -153,6 +154,14 @@ public:
 			std::vector<Rect> eyes;
 		}
 		currentChange = new FaceDetectionChange(faces);
+	}
+
+	void palleting256()
+	{
+		preview = source.clone();
+		imp::palleting256(preview);
+		eraseChange();
+		changes.push_back(new PalletingChange());
 	}
 
 public:
