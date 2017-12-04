@@ -30,6 +30,7 @@ namespace CoreWrapper {
 		void restore(int changeIndex);
 		void save(System::String^ fileName);
 		void detectFace();
+		void paletting();
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

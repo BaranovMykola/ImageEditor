@@ -43,5 +43,17 @@
         public ImageSource FaceIco { get; set; } = Icons.face.ToImageSource();
 
         public ImageSource FaceIcoGray { get; set; } = Icons.face_gray.ToImageSource();
+
+        public ImageSource PaletteIco { get; set; } = Icons.palette.ToImageSource();
+
+        public ImageSource PaletteIcoGray { get; set; } = Icons.palette_gray.ToImageSource();
+
+        public ImageSource GrayscaleIco { get; set; } = Icons.grayscale.ToImageSource();
+
+        public ImageSource GrayscaleIcoGray { get; set; } = Icons.grayscale_gray.ToImageSource();
+
+        public ImageSource FilterIco { get; set; } = Icons.filter.ToImageSource();
+
+        public ImageSource FilterIcoGray { get; set; } = Icons.filter_gray.ToImageSource();
     }
 }

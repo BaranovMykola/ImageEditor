@@ -176,6 +176,24 @@
       <Name>CoreWrapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\palette.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\palette_gray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\filter.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\filter_gray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\grayscale.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\grayscale_gray.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

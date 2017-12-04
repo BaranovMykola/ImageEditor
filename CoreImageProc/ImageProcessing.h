@@ -26,7 +26,7 @@ namespace imp
 		source = rotatedImg;
 	}
 
-	void palleting256(cv::Mat& source)
+	void paletting256(cv::Mat& source)
 	{
 		for (int i = 0; i < source.rows; i++)
 		{

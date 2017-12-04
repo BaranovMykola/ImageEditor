@@ -139,6 +139,11 @@ void CoreWrapper::ImageProc::detectFace()
 	editor->apply();
 }
 
+void CoreWrapper::ImageProc::paletting()
+{
+	editor->paletting256();
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
 	if (img.type() != CV_8UC3)

@@ -156,10 +156,10 @@ public:
 		currentChange = new FaceDetectionChange(faces);
 	}
 
-	void palleting256()
+	void paletting256()
 	{
 		preview = source.clone();
-		imp::palleting256(preview);
+		imp::paletting256(preview);
 		eraseChange();
 		changes.push_back(new PalletingChange());
 	}
