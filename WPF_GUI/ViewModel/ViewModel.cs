@@ -35,7 +35,7 @@
 
         #endregion
 
-        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator, WindowMediator resizeMediator)
+        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator, WindowMediator resizeMediator, WindowMediator filterWindowMediator)
         {
             OpenImageCommand = new RelayCommand(OpenImage, s => IsView);
             OpenedImage = new ImageStorageModel();
@@ -54,9 +54,12 @@
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
             RotateWindowMediator = rotateMediator;
             ResizeWindowMediator = resizeMediator;
+            FilterWindowMediator = filterWindowMediator;
+
             ContrastAndBrightnessWindowContrastMediator.OnClose += BrigthnessWindowClosed;
             RotateWindowMediator.OnClose += RotateClosed;
             ResizeWindowMediator.OnClose += ResizeWindowClosed;
+            FilterWindowMediator.OnClose += FilterClosed;
 
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             RotateViewModel.PropertyChanged += RotateChanged;
@@ -89,11 +92,15 @@
 
         public WindowMediator ResizeWindowMediator { get; set; }
 
+        public WindowMediator FilterWindowMediator { get; set; }
+
         public ContrastAndBrightnessViewModel BrightnessViewModel { get; set; } = new ContrastAndBrightnessViewModel();
 
         public RotateViewModel RotateViewModel { get; set; } = new RotateViewModel();
 
         public ResizeViewModel ResizeViewModel { get; set; } = new ResizeViewModel();
+
+        public FilterViewModel FilterViewModel { get; set; } = new FilterViewModel();
 
         public ImageSource CurrentView
         {
@@ -485,12 +492,17 @@
 
         private void Filter(object parameter)
         {
-
+            FilterWindowMediator.ShowDialog(FilterViewModel);
         }
 
         private void Grayscale(object parameter)
         {
 
+        }
+
+        private void FilterClosed(object sender, EventArgs e)
+        {
+            Console.WriteLine("filter closed");
         }
 
         #endregion

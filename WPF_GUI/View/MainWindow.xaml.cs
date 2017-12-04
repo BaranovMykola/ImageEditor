@@ -14,7 +14,8 @@
             var contrastWindow = new WindowMediator { CreateWindow = () => new ContrastAndBrightness() };
             var rotateWindow = new WindowMediator { CreateWindow = () => new RotateWindow() };
             var resizeWindow = new WindowMediator { CreateWindow = () => new ResizeWindow() };
-            DataContext = new ViewModel.ViewModel(contrastWindow, rotateWindow, resizeWindow);
+            var filterWindow = new WindowMediator {CreateWindow = () => new FilterWindow()};
+            DataContext = new ViewModel.ViewModel(contrastWindow, rotateWindow, resizeWindow, filterWindow);
         }
     }
 }
