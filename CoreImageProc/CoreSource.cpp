@@ -56,6 +56,14 @@ int main()
 		{
 			edit.detectFace();
 		}
+		else if (act == "bmp")
+		{
+
+			Mat img;
+			img = imread("tiger.bmp", CV_LOAD_IMAGE_UNCHANGED);
+			imp::palleting256(img);
+
+		}
 	}
 	while (true);
 	return 0;

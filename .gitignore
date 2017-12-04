@@ -241,3 +241,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/CoreImageProc/tiger.bmp
+/CoreImageProc/red-fox.jpg

@@ -25,4 +25,18 @@ namespace imp
 		warpAffine(source, rotatedImg, rotateMat, rotRect.size()-Size(1,1), 1, BORDER_TRANSPARENT);
 		source = rotatedImg;
 	}
+
+	void palleting256(cv::Mat& source)
+	{
+		for (int i = 0; i < source.rows; i++)
+		{
+			for (int j = 0; j < source.cols*source.channels(); j++)
+			{
+				int val = source.at<uchar>(i, j);
+				int diff = val%43;
+				val -= diff;
+				source.at<uchar>(i, j) = val;
+			}
+		}
+	}
 }
