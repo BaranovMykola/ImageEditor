@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageContainer\Filter.cs" />
     <Compile Include="ViewModel\IImageDialog.cs" />
     <Compile Include="ViewModel\ResizeViewModel.cs" />
     <Compile Include="View\ResizeWindow.xaml.cs">
