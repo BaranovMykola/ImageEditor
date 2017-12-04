@@ -15,11 +15,11 @@ namespace WPF_GUI.ImageContainer
             Matrix = new List<List<double>>();
         }
 
-        public Filter(int rows, int cols)
+        public Filter(int rows, int cols): this()
         {
             for (int i = 0; i < rows; i++)
             {
-                Matrix.Add( new List<double>(cols));
+                Matrix.Add(Enumerable.Repeat(0.0, cols).ToList());
             }
         }
 
