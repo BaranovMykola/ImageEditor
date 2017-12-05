@@ -9,22 +9,21 @@ namespace WPF_GUI.ImageContainer
 {
     public class Filter
     {
-        private Point anchor;
-
-        public Filter()
+        public Filter(int rows, int cols)
         {
             Matrix = new List<List<FilterItem>>();
-        }
-
-        public Filter(int rows, int cols): this()
-        {
-            for (int i = 0; i < rows; i++)
+            if (rows > 0 && cols > 0)
             {
-                Matrix.Add((new List<FilterItem>()));
-                for (int j = 0; j < cols; j++)
+                for (int i = 0; i < rows; i++)
                 {
-                    Matrix[i].Add(new FilterItem(j));
+                    Matrix.Add((new List<FilterItem>()));
+                    for (int j = 0; j < cols; j++)
+                    {
+                        Matrix[i].Add(new FilterItem(j));
+                    }
                 }
+
+                Matrix[rows/2][cols/2].IsAnchor = true;
             }
         }
 

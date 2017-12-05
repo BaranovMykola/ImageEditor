@@ -48,7 +48,7 @@
                         </WrapPanel>
                     </GroupBox>
 
-                    <GroupBox Name ="ancor" Header="Ancor">
+                    <GroupBox Name ="anchor" Header="AncHor">
                         <WrapPanel>
                             <Label Content="X:" Width="40"/>
                             <TextBox Name="x" Width="100" Text="{Binding Rows, Converter={StaticResource StringDoubleConverter}}"/>
