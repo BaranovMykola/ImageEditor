@@ -85,6 +85,7 @@ namespace WPF_GUI.ViewModel
             {
                 rows = value;
                 OnPropertyChanged(nameof(Rows));
+                ResizeFilter();
             }
         }
 
@@ -99,6 +100,7 @@ namespace WPF_GUI.ViewModel
             {
                 cols = value;
                 OnPropertyChanged(nameof(Cols));
+                ResizeFilter();
             }
         }
 
@@ -116,12 +118,17 @@ namespace WPF_GUI.ViewModel
 
         public void Close(object parameter)
         {
-            var w = (parameter as FilterWindow);//?.Close();
+            (parameter as Window)?.Close();
                                                 //w.dataGrid.Items.Refresh();
-            var bindingExpression = BindingOperations.GetBindingExpression(w.dataGrid as DependencyObject, UIElement.RenderTransformProperty);
-            bindingExpression?.UpdateSource();
+            //var bindingExpression = BindingOperations.GetBindingExpression(w.dataGrid as DependencyObject, UIElement.RenderTransformProperty);
+            //bindingExpression?.UpdateSource();
         }
 
+        private void ResizeFilter()
+        {
+            Filter = new Filter(rows,cols);
+            OnPropertyChanged(nameof(Filter));
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

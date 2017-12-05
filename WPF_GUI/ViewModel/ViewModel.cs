@@ -48,7 +48,7 @@
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
             DetectFaceCommand = new RelayCommand(DetectFace, s => !OpenedImage.IsEmpty);
             PalettingCommand = new RelayCommand(Paletting, s => !OpenedImage.IsEmpty);
-            FilterCommand = new RelayCommand(Filter, s => !OpenedImage.IsEmpty);
+            FilterCommand = new RelayCommand(Filter, s => OpenedImage.IsEmpty);
             GrayscaleCommand = new RelayCommand(Grayscale, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
