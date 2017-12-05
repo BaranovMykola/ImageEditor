@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using WPF_GUI.Annotations;
@@ -29,18 +30,12 @@ namespace WPF_GUI.ViewModel
 
             Filter = new Filter(Rows,Cols) {Name = "Custom"};
 
-            var box = new Filter(5,5) {Name = "Box Filter"};
-            foreach (var i in box.Matrix)
-            {
-                foreach (var j in i)
-                {
-                    j.Coeficient = (float) (1.0/25);
-                }
-            }
+            var f = new ObservableCollection<Filter>(
+                    typeof(StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter));
 
-            var custom = Filter;
+            f.Add(Filter);
 
-            FilterCollection = new ObservableCollection<Filter>() {box,custom};
+            FilterCollection = f;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
