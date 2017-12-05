@@ -40,8 +40,6 @@ namespace WPF_GUI.ViewModel
 
         public Filter Filter { get; set; }
 
-        public string Str { get; set; } = "abc";
-
         public int Rows
         {
             get

@@ -11,7 +11,7 @@
         <convertor:StringDoubleConverter x:Key="StringDoubleConverter"></convertor:StringDoubleConverter>
 
         <DataTemplate x:Key="DataTemplate_Level2">
-            <TextBox Text="{Binding MyProperty, Mode=TwoWay, Converter={StaticResource StringDoubleConverter}, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="50" Margin="4,4,4,4"/>
+            <TextBox Text="{Binding Coeficient, Mode=TwoWay, Converter={StaticResource StringDoubleConverter}, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="50" Margin="4,4,4,4"/>
         </DataTemplate>
 
         <DataTemplate x:Key="DataTemplate_Level1">
