@@ -40,39 +40,7 @@ namespace WPF_GUI.ViewModel
 
         public Filter Filter { get; set; }
 
-        public DataTable dt
-        {
-            get
-            {
-                var t = new DataTable();
-                for (int i = 0; i < Filter.Matrix.Count; i++)
-                {
-                    t.Columns.Add(new DataColumn(i.ToString()));
-                }
-
-                for (var r = 0; r < rows; r++)
-                {
-                    var newRow = t.NewRow();
-                    for (var c = 0; c < cols; c++)
-                    {
-                        var v = Filter.Matrix[r][c];
-
-                        // Round if parameter is set
-                        newRow[c] = v;
-                    }
-
-                    t.Rows.Add(newRow);
-                }
-                return t;
-            }
-            set
-            {
-                var v = value;
-                Console.WriteLine("setted");
-            }
-        }
-
-        public ObservableCollection<row> UserSet { get; set; } = new ObservableCollection<row>() {new row(1,2), new row(3,4)};
+        public string Str { get; set; } = "abc";
 
         public int Rows
         {
@@ -113,15 +81,12 @@ namespace WPF_GUI.ViewModel
         public void Cancel(object parameter)
         {
             DialogResult = false;
-            Close(parameter);
+            //Close(parameter);
         }
 
         public void Close(object parameter)
         {
             (parameter as Window)?.Close();
-                                                //w.dataGrid.Items.Refresh();
-            //var bindingExpression = BindingOperations.GetBindingExpression(w.dataGrid as DependencyObject, UIElement.RenderTransformProperty);
-            //bindingExpression?.UpdateSource();
         }
 
         private void ResizeFilter()
@@ -129,47 +94,6 @@ namespace WPF_GUI.ViewModel
             Filter = new Filter(rows,cols);
             OnPropertyChanged(nameof(Filter));
         }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-
-    class row : INotifyPropertyChanged
-    {
-        private int _a;
-        private int _b;
-
-        public int a
-        {
-            get { return _a; }
-            set
-            {
-                _a = value; 
-                OnPropertyChanged(nameof(a));
-            }
-        }
-
-        public int b
-        {
-            get { return _b; }
-            set
-            {
-                _b = value; 
-                OnPropertyChanged(nameof(b));
-            }
-        }
-
-        public row(int _a, int _b)
-        {
-            a = _a;
-            b = _b;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

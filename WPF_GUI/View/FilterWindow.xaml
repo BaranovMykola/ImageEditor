@@ -11,7 +11,7 @@
         <convertor:StringDoubleConverter x:Key="StringDoubleConverter"></convertor:StringDoubleConverter>
 
         <DataTemplate x:Key="DataTemplate_Level2">
-            <Button Content="{Binding}" Height="40" Width="50" Margin="4,4,4,4"/>
+            <TextBox Text="{Binding MyProperty, Mode=TwoWay, Converter={StaticResource StringDoubleConverter}, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="50" Margin="4,4,4,4"/>
         </DataTemplate>
 
         <DataTemplate x:Key="DataTemplate_Level1">
@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <WrapPanel>    
-            <Button Content="_Ok" Width="100" Command="{Binding OkCammand}"
+            <Button Content="_Ok" Width="100" Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
             <Button Content="_Cancel" Width="100" Command="{Binding CancelCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
