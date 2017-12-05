@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI.ImageContainer
+﻿using System.Drawing;
+
+namespace WPF_GUI.ImageContainer
 {
     public static class StandartFilters
     {
@@ -14,6 +16,9 @@
                         j.Coeficient = (float) (1.0/25);
                     }
                 }
+
+                box.Matrix[2][2].IsAnchor = true;
+
                 return box;
             }
         }
@@ -34,6 +39,9 @@
                 xdev.Matrix[0][2] = new FilterItem(1);
                 xdev.Matrix[1][2] = new FilterItem(1);
                 xdev.Matrix[2][2] = new FilterItem(1);
+
+                xdev.Matrix[1][1].IsAnchor = true;
+
                 return xdev;
             }
         }
@@ -54,6 +62,9 @@
                 xdev.Matrix[0][2] = new FilterItem(-1);
                 xdev.Matrix[1][2] = new FilterItem(-1);
                 xdev.Matrix[2][2] = new FilterItem(-1);
+
+                xdev.Matrix[1][1].IsAnchor = true;
+
                 return xdev;
             }
         }

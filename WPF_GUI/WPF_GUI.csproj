@@ -80,6 +80,7 @@
     <Compile Include="ImageContainer\FilterItem.cs" />
     <Compile Include="ImageContainer\StandartFilters.cs" />
     <Compile Include="Properties\Annotations2.cs" />
+    <Compile Include="ViewModel\Convertor\BoolToBrushConverter.cs" />
     <Compile Include="ViewModel\FilterViewModel.cs" />
     <Compile Include="ViewModel\IImageDialog.cs" />
     <Compile Include="ViewModel\ResizeViewModel.cs" />

@@ -19,6 +19,12 @@ namespace WPF_GUI.ImageContainer
             this.coeficient = coeficient;
         }
 
+        public FilterItem(float coeficient, bool isAnchor)
+        {
+            Coeficient = coeficient;
+            IsAnchor = isAnchor;
+        }
+
         private float coeficient;
 
         public float Coeficient
@@ -30,6 +36,8 @@ namespace WPF_GUI.ImageContainer
                 OnPropertyChanged(nameof(Coeficient));
             }
         }
+
+        public bool IsAnchor { get; set; } = false;
 
         public override string ToString()
         {

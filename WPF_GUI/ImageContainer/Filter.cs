@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace WPF_GUI.ImageContainer
 {
     public class Filter
     {
+        private Point anchor;
+
         public Filter()
         {
             Matrix = new List<List<FilterItem>>();
@@ -30,7 +33,7 @@ namespace WPF_GUI.ImageContainer
             Matrix = matrix;
         }
 
-        public List<List<FilterItem>> Matrix { get; set; }
+        public List<List<FilterItem>> Matrix { get; }
 
         public string Name { get; set; }
 
