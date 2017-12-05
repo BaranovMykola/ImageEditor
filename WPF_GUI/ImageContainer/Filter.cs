@@ -8,8 +8,6 @@ namespace WPF_GUI.ImageContainer
 {
     public class Filter
     {
-        public List<List<FilterItem>> Matrix { get; set; }
-
         public Filter()
         {
             Matrix = new List<List<FilterItem>>();
@@ -30,6 +28,15 @@ namespace WPF_GUI.ImageContainer
         public Filter(List<List<FilterItem>> matrix)
         {
             Matrix = matrix;
+        }
+
+        public List<List<FilterItem>> Matrix { get; set; }
+
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

@@ -27,7 +27,20 @@ namespace WPF_GUI.ViewModel
             Rows = 3;
             Cols = 3;
 
-            Filter = new Filter(Rows,Cols);
+            Filter = new Filter(Rows,Cols) {Name = "Custom"};
+
+            var box = new Filter(5,5) {Name = "Box Filter"};
+            foreach (var i in box.Matrix)
+            {
+                foreach (var j in i)
+                {
+                    j.Coeficient = (float) (1.0/25);
+                }
+            }
+
+            var custom = Filter;
+
+            FilterCollection = new ObservableCollection<Filter>() {box,custom};
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,6 +52,8 @@ namespace WPF_GUI.ViewModel
         public ICommand CancelCommand { get; set; }
 
         public Filter Filter { get; set; }
+
+        public ObservableCollection<Filter> FilterCollection { get; set; }
 
         public int Rows
         {

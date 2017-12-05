@@ -54,15 +54,17 @@
                 </StackPanel>
             </GroupBox>
             <WrapPanel>
-                
-                <ComboBox></ComboBox>
+
+                <ComboBox ItemsSource="{Binding FilterCollection}" SelectedIndex="0" Name="selectedFilter">
+                    
+                </ComboBox>
                 
             </WrapPanel>
         </StackPanel>
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl x:Name="lst" ItemTemplate="{DynamicResource DataTemplate_Level1}" ItemsSource="{Binding Filter.Matrix}"/>
+            <ItemsControl x:Name="lst" ItemTemplate="{DynamicResource DataTemplate_Level1}" ItemsSource="{Binding ElementName=selectedFilter, Path = SelectedItem.Matrix}"/>
 
         </ScrollViewer>
 
