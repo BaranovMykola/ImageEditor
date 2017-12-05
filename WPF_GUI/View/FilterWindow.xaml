@@ -55,9 +55,10 @@
             </GroupBox>
             <WrapPanel>
 
-                <ComboBox ItemsSource="{Binding FilterCollection}" SelectedIndex="0" Name="selectedFilter">
-                    
-                </ComboBox>
+                <ComboBox ItemsSource="{Binding FilterCollection}" SelectedIndex="0" Name="selectedFilter"/>
+                <Button Name="refresh" Content="_Reset Templates" Command="{Binding RefreshCommand}"
+                        CommandParameter="{Binding ElementName=selectedFilter}"
+                        Margin="10,0,0,0"/>
                 
             </WrapPanel>
         </StackPanel>

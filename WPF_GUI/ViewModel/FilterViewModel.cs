@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Windows.Data;
 using WPF_GUI.Annotations;
 using WPF_GUI.View;
@@ -19,23 +20,20 @@ namespace WPF_GUI.ViewModel
     {
         private int rows;
         private int cols;
+        private ObservableCollection<Filter> filterCollection;
 
         public FilterViewModel()
         {
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
+            RefreshCommand = new RelayCommand(RefreshFilterTemplates);
 
             Rows = 3;
             Cols = 3;
 
             Filter = new Filter(Rows,Cols) {Name = "Custom"};
 
-            var f = new ObservableCollection<Filter>(
-                    typeof(StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter));
-
-            f.Add(Filter);
-
-            FilterCollection = f;
+            RefreshFilterTemplates(null);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -46,9 +44,23 @@ namespace WPF_GUI.ViewModel
 
         public ICommand CancelCommand { get; set; }
 
+        public ICommand RefreshCommand { get; set; }
+
         public Filter Filter { get; set; }
 
-        public ObservableCollection<Filter> FilterCollection { get; set; }
+        public ObservableCollection<Filter> FilterCollection
+        {
+            get
+            {
+                return filterCollection;
+            }
+
+            set
+            {
+                filterCollection = value;
+                OnPropertyChanged(nameof(FilterCollection));
+            }
+        }
 
         public int Rows
         {
@@ -101,6 +113,17 @@ namespace WPF_GUI.ViewModel
         {
             Filter = new Filter(rows,cols);
             OnPropertyChanged(nameof(Filter));
+        }
+
+        public void RefreshFilterTemplates(object parameter)
+        {
+            FilterCollection = new ObservableCollection<Filter>(
+                    typeof(StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter));
+
+            FilterCollection.Add(Filter);
+
+            var comboBox = parameter as ComboBox;
+            if (comboBox != null) comboBox.SelectedIndex = 0;
         }
 
         [NotifyPropertyChangedInvocator]
