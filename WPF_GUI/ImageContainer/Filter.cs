@@ -22,7 +22,11 @@ namespace WPF_GUI.ImageContainer
         {
             for (int i = 0; i < rows; i++)
             {
-                Matrix.Add(Enumerable.Repeat(new MyInt(1), cols).ToList());
+                Matrix.Add((new List<MyInt>()));
+                for (int j = 0; j < cols; j++)
+                {
+                    Matrix[i].Add(new MyInt(j));
+                }
             }
         }
 
