@@ -76,12 +76,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ImageContainer\Filter.cs" />
+    <Compile Include="ImageContainer\Filter.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="ImageContainer\FilterItem.cs" />
     <Compile Include="ImageContainer\StandartFilters.cs" />
     <Compile Include="Properties\Annotations2.cs" />
     <Compile Include="ViewModel\Convertor\BoolToBrushConverter.cs" />
-    <Compile Include="ViewModel\FilterViewModel.cs" />
+    <Compile Include="ViewModel\FilterViewModel.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="ViewModel\IImageDialog.cs" />
     <Compile Include="ViewModel\ResizeViewModel.cs" />
     <Compile Include="View\FilterWindow.xaml.cs">

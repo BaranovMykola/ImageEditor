@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Controls;
-using System.Windows.Data;
-using WPF_GUI.Annotations;
-using WPF_GUI.View;
-
-namespace WPF_GUI.ViewModel
+﻿namespace WPF_GUI.ViewModel
 {
     using System.Windows;
     using System.Windows.Input;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
     using ImageContainer;
     using Command;
+    using Annotations;
 
     internal class FilterViewModel : IImageDialog, INotifyPropertyChanged
     {
@@ -40,7 +33,7 @@ namespace WPF_GUI.ViewModel
             Rows = 3;
             Cols = 3;
 
-            Filter = new Filter(Rows,Cols) {Name = "Custom"};
+            Filter = new Filter(Rows, Cols) { Name = "Custom" };
             CurrentFilter = Filter;
 
             RefreshFilterTemplates(null);
@@ -160,7 +153,7 @@ namespace WPF_GUI.ViewModel
         public void Cancel(object parameter)
         {
             DialogResult = false;
-            //Close(parameter);
+            Close(parameter);
         }
 
         public void Close(object parameter)
@@ -168,9 +161,21 @@ namespace WPF_GUI.ViewModel
             (parameter as Window)?.Close();
         }
 
+        public void RefreshFilterTemplates(object parameter)
+        {
+            FilterCollection = new ObservableCollection<Filter>(typeof(StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter)) { Filter };
+            CurrentFilter = Filter;
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private void ResizeFilter()
         {
-            CurrentFilter = new Filter(rows,cols) {Name = "Custom"};
+            CurrentFilter = new Filter(rows, cols) { Name = "Custom" };
             OnPropertyChanged(nameof(Filter));
         }
 
@@ -194,18 +199,6 @@ namespace WPF_GUI.ViewModel
                     CurrentFilter.SetDefaultAnchor();
                 }
             }
-        }
-
-        public void RefreshFilterTemplates(object parameter)
-        {
-            FilterCollection = new ObservableCollection<Filter>(typeof (StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter)) {Filter};
-            CurrentFilter = Filter;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

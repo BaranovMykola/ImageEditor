@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using WPF_GUI.Annotations;
-
-namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.ImageContainer
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using Annotations;
+
     public class Filter : INotifyPropertyChanged
     {
         public Filter(int rows, int cols)
@@ -19,14 +16,14 @@ namespace WPF_GUI.ImageContainer
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    Matrix.Add((new List<FilterItem>()));
+                    Matrix.Add(new List<FilterItem>());
                     for (int j = 0; j < cols; j++)
                     {
                         Matrix[i].Add(new FilterItem(j));
                     }
                 }
 
-                Matrix[rows/2][cols/2].IsAnchor = true;
+                Matrix[rows / 2][cols / 2].IsAnchor = true;
             }
         }
 
@@ -34,6 +31,8 @@ namespace WPF_GUI.ImageContainer
         {
             Matrix = matrix;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public List<List<FilterItem>> Matrix { get; }
 
@@ -53,6 +52,7 @@ namespace WPF_GUI.ImageContainer
                         }
                     }
                 }
+
                 return new Point(-1, -1);
             }
         }
@@ -66,11 +66,12 @@ namespace WPF_GUI.ImageContainer
                     filterItem.IsAnchor = false;
                 }
             }
+
             var rows = Matrix.Count;
             if (rows > 0)
             {
                 var cols = Matrix.FirstOrDefault()?.Count ?? 0;
-                Matrix[rows/2][cols/2].IsAnchor = true;
+                Matrix[rows / 2][cols / 2].IsAnchor = true;
             }
         }
 
@@ -78,8 +79,6 @@ namespace WPF_GUI.ImageContainer
         {
             return Name;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

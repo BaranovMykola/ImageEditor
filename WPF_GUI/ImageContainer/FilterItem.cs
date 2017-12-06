@@ -1,17 +1,18 @@
-using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using WPF_GUI.Annotations;
-
 namespace WPF_GUI.ImageContainer
 {
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Runtime.CompilerServices;
+    using Annotations;
+
     public class FilterItem : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        private float coeficient;
+
+        private bool isAnchor;
 
         public FilterItem()
         {
-            
         }
 
         public FilterItem(float coeficient)
@@ -25,12 +26,15 @@ namespace WPF_GUI.ImageContainer
             IsAnchor = isAnchor;
         }
 
-        private float coeficient;
-        private bool isAnchor = false;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public float Coeficient
         {
-            get { return coeficient; }
+            get
+            {
+                return coeficient;
+            }
+
             set
             {
                 coeficient = value;
@@ -52,10 +56,7 @@ namespace WPF_GUI.ImageContainer
             }
         }
 
-        public override string ToString()
-        {
-            return Coeficient.ToString(CultureInfo.InvariantCulture);
-        }
+        public override string ToString() => Coeficient.ToString(CultureInfo.InvariantCulture);
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

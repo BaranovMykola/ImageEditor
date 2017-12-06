@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.ImageContainer
 {
     public static class StandartFilters
     {
@@ -8,12 +6,12 @@ namespace WPF_GUI.ImageContainer
         {
             get
             {
-                var box = new Filter(5, 5) {Name = "Box Filter"};
+                var box = new Filter(5, 5) { Name = "Box Filter" };
                 foreach (var i in box.Matrix)
                 {
                     foreach (var j in i)
                     {
-                        j.Coeficient = (float) (1.0/25);
+                        j.Coeficient = (float)(1.0 / 25);
                     }
                 }
 
