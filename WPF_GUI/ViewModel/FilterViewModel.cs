@@ -219,34 +219,41 @@ namespace WPF_GUI.ViewModel
             func.Parameters["rows"] = (float)Rows;
             func.Parameters["cols"] = (float)Cols;
 
-            for (int x = 0; x < CurrentFilter.Matrix.Count; x++)
+            try
             {
-                for (int y = 0; y < CurrentFilter.Matrix.FirstOrDefault()?.Count; y++)
+                for (int x = 0; x < CurrentFilter.Matrix.Count; x++)
                 {
-                    func.Parameters["x"] = (float)x;
-                    func.Parameters["y"] = (float)y;
-                    var item = func.Evaluate();
-                    float digit;
-                    if (item is int)
+                    for (int y = 0; y < CurrentFilter.Matrix.FirstOrDefault()?.Count; y++)
                     {
-                        digit = (int) item;
+                        func.Parameters["x"] = (float)x;
+                        func.Parameters["y"] = (float)y;
+                        var item = func.Evaluate();
+                        float digit;
+                        if (item is int)
+                        {
+                            digit = (int) item;
+                        }
+                        else if (item is float)
+                        {
+                            digit = (float) item;
+                        }
+                        else if (item is double)
+                        {
+                            digit = (float)(double) item;
+                        }
+                        else
+                        {
+                            throw new IndexOutOfRangeException();
+                        }
+                        CurrentFilter.Matrix[x][y].Coeficient = digit;
                     }
-                    else if (item is float)
-                    {
-                        digit = (float) item;
-                    }
-                    else if (item is double)
-                    {
-                        digit = (float)(double) item;
-                    }
-                    else
-                    {
-                        throw new IndexOutOfRangeException();
-                    }
-                    CurrentFilter.Matrix[x][y] = new FilterItem(digit);
                 }
+                OnPropertyChanged(nameof(CurrentFilter));
             }
-            OnPropertyChanged(nameof(CurrentFilter));
+            catch (Exception exception)
+            {
+                MessageBox.Show($"Function Error {exception.Message}", "Function evaluating", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI.FilterEntity
+﻿using System.Collections.ObjectModel;
+
+namespace WPF_GUI.FilterEntity
 {
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -12,12 +14,12 @@
     {
         public Filter(int rows, int cols)
         {
-            Matrix = new List<List<FilterItem>>();
+            Matrix = new ObservableCollection<ObservableCollection<FilterItem>>();
             if (rows > 0 && cols > 0)
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    Matrix.Add(new List<FilterItem>());
+                    Matrix.Add(new ObservableCollection<FilterItem>());
                     for (int j = 0; j < cols; j++)
                     {
                         Matrix[i].Add(new FilterItem(j));
@@ -28,14 +30,14 @@
             }
         }
 
-        public Filter(List<List<FilterItem>> matrix)
+        public Filter(ObservableCollection<ObservableCollection<FilterItem>> matrix)
         {
             Matrix = matrix;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<List<FilterItem>> Matrix { get; }
+        public ObservableCollection<ObservableCollection<FilterItem>> Matrix { get; }
 
         public string Name { get; set; }
 
