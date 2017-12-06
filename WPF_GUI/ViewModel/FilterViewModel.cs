@@ -20,11 +20,15 @@ namespace WPF_GUI.ViewModel
     internal class FilterViewModel : IImageDialog, INotifyPropertyChanged
     {
         private int rows;
+
         private int cols;
+
         private ObservableCollection<Filter> filterCollection;
-        private Point anchor;
+
         private Filter currentFilter;
+
         private int anchorX;
+
         private int anchorY;
 
         public FilterViewModel()
@@ -65,14 +69,11 @@ namespace WPF_GUI.ViewModel
             {
                 currentFilter = value;
                 OnPropertyChanged(nameof(CurrentFilter));
-                //if (CurrentFilter != null)
-                {
-                    anchorX = CurrentFilter?.Anchor.X ?? -1;
-                    anchorY = CurrentFilter?.Anchor.Y ?? -1;
-                    RefreshAnchor();
-                    OnPropertyChanged(nameof(AnchorX));
-                    OnPropertyChanged(nameof(AnchorY));
-                }
+                anchorX = CurrentFilter?.Anchor.X ?? -1;
+                anchorY = CurrentFilter?.Anchor.Y ?? -1;
+                RefreshAnchor();
+                OnPropertyChanged(nameof(AnchorX));
+                OnPropertyChanged(nameof(AnchorY));
             }
         }
 
@@ -175,18 +176,25 @@ namespace WPF_GUI.ViewModel
 
         private void RefreshAnchor()
         {
-            CurrentFilter.Matrix[CurrentFilter.Anchor.X][CurrentFilter.Anchor.Y].IsAnchor = false;
-            CurrentFilter.Matrix[AnchorX][AnchorY].IsAnchor = true;
-            OnPropertyChanged(nameof(CurrentFilter));
+            var anchor = CurrentFilter.Anchor;
+            if (anchor.X != -1 && anchor.Y != -1)
+            {
+                CurrentFilter.Matrix[CurrentFilter.Anchor.X][CurrentFilter.Anchor.Y].IsAnchor = false;
+            }
+
+            if (AnchorX >= 0 && AnchorY >= 0 && AnchorX < CurrentFilter.Matrix.Count && AnchorY < CurrentFilter.Matrix[0].Count)
+            {
+                CurrentFilter.Matrix[AnchorX][AnchorY].IsAnchor = true;
+            }
+            else
+            {
+                CurrentFilter.SetDefaultAnchor();
+            }
         }
 
         public void RefreshFilterTemplates(object parameter)
         {
-            FilterCollection = new ObservableCollection<Filter>(
-                    typeof(StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter));
-
-            FilterCollection.Add(Filter);
-
+            FilterCollection = new ObservableCollection<Filter>(typeof (StandartFilters).GetProperties().Select(p => p.GetValue(null) as Filter)) {Filter};
             CurrentFilter = Filter;
         }
 

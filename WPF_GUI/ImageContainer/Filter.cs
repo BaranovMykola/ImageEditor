@@ -57,6 +57,20 @@ namespace WPF_GUI.ImageContainer
             }
         }
 
+        public void SetDefaultAnchor()
+        {
+            foreach (var row in Matrix)
+            {
+                foreach (var filterItem in row)
+                {
+                    filterItem.IsAnchor = false;
+                }
+            }
+            var rows = Matrix.Count;
+            var cols = Matrix[0].Count;
+            Matrix[rows/2][cols/2].IsAnchor = true;
+        }
+
         public override string ToString()
         {
             return Name;
