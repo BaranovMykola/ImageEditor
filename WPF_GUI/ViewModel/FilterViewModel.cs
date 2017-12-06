@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI.ViewModel
+﻿using WPF_GUI.FilterEntity;
+
+namespace WPF_GUI.ViewModel
 {
     using System.Windows;
     using System.Windows.Input;

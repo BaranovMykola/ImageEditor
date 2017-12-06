@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.FilterEntity
 {
     public static class StandartFilters
     {

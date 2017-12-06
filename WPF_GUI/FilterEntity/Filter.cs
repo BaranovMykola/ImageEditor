@@ -1,4 +1,4 @@
-﻿namespace WPF_GUI.ImageContainer
+﻿namespace WPF_GUI.FilterEntity
 {
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
     using Annotations;
+    using ImageContainer;
 
     public class Filter : INotifyPropertyChanged
     {
