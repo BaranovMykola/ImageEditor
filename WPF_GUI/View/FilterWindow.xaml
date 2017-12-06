@@ -9,12 +9,12 @@
         Title="FilterDialog" Height="431.2" Width="438.4">
     <Window.Resources>
         <convertor:StringDoubleConverter x:Key="StringDoubleConverter"></convertor:StringDoubleConverter>
-        <convertor:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
+        <convertor:BoolToThicknessConverter x:Key="BoolToThicknessConverter"/>
 
         <DataTemplate x:Key="DataTemplate_Level2">
             <TextBox Text="{Binding Coeficient, Mode=TwoWay, Converter={StaticResource StringDoubleConverter}, UpdateSourceTrigger=PropertyChanged}"
                      Height="40" Width="50" Margin="4,4,4,4"
-                BorderThickness="{Binding IsAnchor, Converter={StaticResource BoolToBrushConverter}}"  
+                BorderThickness="{Binding IsAnchor, Converter={StaticResource BoolToThicknessConverter}}"  
                      />
                      <!--BorderBrush="{Binding IsAnchor, Converter={StaticResource BoolToBrushConverter}}"-->
         </DataTemplate>
