@@ -1,14 +1,11 @@
-﻿using System.Collections.ObjectModel;
-
-namespace WPF_GUI.FilterEntity
+﻿namespace WPF_GUI.FilterEntity
 {
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Collections.ObjectModel;
     using Annotations;
-    using ImageContainer;
 
     public class Filter : INotifyPropertyChanged
     {

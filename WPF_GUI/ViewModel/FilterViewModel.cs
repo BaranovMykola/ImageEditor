@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace WPF_GUI.ViewModel
+﻿namespace WPF_GUI.ViewModel
 {
+    using System;
     using System.Windows;
     using System.Windows.Input;
     using System.Collections.ObjectModel;
@@ -213,11 +212,16 @@ namespace WPF_GUI.ViewModel
 
         private void ApplyFunction(object parameter)
         {
-            var func = new NCalc.Expression(Function);
-            func.Parameters["anchX"] = (float)AnchorX;
-            func.Parameters["anchY"] = (float)AnchorY;
-            func.Parameters["rows"] = (float)Rows;
-            func.Parameters["cols"] = (float)Cols;
+            var func = new NCalc.Expression(Function)
+            {
+                Parameters =
+                {
+                    ["anchX"] = (float) AnchorX,
+                    ["anchY"] = (float) AnchorY,
+                    ["rows"] = (float) Rows,
+                    ["cols"] = (float) Cols
+                }
+            };
 
             try
             {
@@ -225,36 +229,39 @@ namespace WPF_GUI.ViewModel
                 {
                     for (int y = 0; y < CurrentFilter.Matrix.FirstOrDefault()?.Count; y++)
                     {
-                        func.Parameters["x"] = (float)x;
-                        func.Parameters["y"] = (float)y;
-                        var item = func.Evaluate();
-                        float digit;
-                        if (item is int)
-                        {
-                            digit = (int) item;
-                        }
-                        else if (item is float)
-                        {
-                            digit = (float) item;
-                        }
-                        else if (item is double)
-                        {
-                            digit = (float)(double) item;
-                        }
-                        else
-                        {
-                            throw new IndexOutOfRangeException();
-                        }
+                        func.Parameters["y"] = (float)x;
+                        func.Parameters["x"] = (float)y;
+                        float digit = EvaluateFunction(func);
                         CurrentFilter.Matrix[x][y].Coeficient = digit;
                     }
                 }
+
                 OnPropertyChanged(nameof(CurrentFilter));
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"Function Error {exception.Message}", "Function evaluating", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Function Error:\n\t{exception.Message}", "Function evaluating", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private float EvaluateFunction(NCalc.Expression func)
+        {
+            var item = func.Evaluate();
+            float digit = 0;
+            if (item is int)
+            {
+                digit = (int)item;
+            }
+            else if (item is float)
+            {
+                digit = (float)item;
+            }
+            else if (item is double)
+            {
+                digit = (float)(double)item;
             }
 
+            return digit;
         }
     }
 }
