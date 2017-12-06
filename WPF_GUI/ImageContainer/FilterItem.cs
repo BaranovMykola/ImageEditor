@@ -26,6 +26,7 @@ namespace WPF_GUI.ImageContainer
         }
 
         private float coeficient;
+        private bool isAnchor = false;
 
         public float Coeficient
         {
@@ -37,7 +38,19 @@ namespace WPF_GUI.ImageContainer
             }
         }
 
-        public bool IsAnchor { get; set; } = false;
+        public bool IsAnchor
+        {
+            get
+            {
+                return isAnchor;
+            }
+
+            set
+            {
+                isAnchor = value;
+                OnPropertyChanged(nameof(IsAnchor));
+            }
+        }
 
         public override string ToString()
         {

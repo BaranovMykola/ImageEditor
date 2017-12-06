@@ -51,16 +51,16 @@
                     <GroupBox Name ="anchor" Header="AncHor">
                         <WrapPanel>
                             <Label Content="X:" Width="40"/>
-                            <TextBox Name="x" Width="100" Text="{Binding Rows, Converter={StaticResource StringDoubleConverter}}"/>
+                            <TextBox Name="x" Width="100" Text="{Binding AnchorX, Converter={StaticResource StringDoubleConverter}, Mode=TwoWay}"/>
                             <Label Content="Y: "/>
-                            <TextBox Name="y" Width="100"  Text="{Binding Cols, Converter={StaticResource StringDoubleConverter}}"/>
+                            <TextBox Name="y" Width="100"  Text="{Binding AnchorY, Converter={StaticResource StringDoubleConverter}}"/>
                         </WrapPanel>
                     </GroupBox>
                 </StackPanel>
             </GroupBox>
             <WrapPanel>
 
-                <ComboBox ItemsSource="{Binding FilterCollection}" SelectedIndex="0" Name="selectedFilter"/>
+                <ComboBox ItemsSource="{Binding FilterCollection}" SelectedItem="{Binding CurrentFilter}" Name="selectedFilter"/>
                 <Button Name="refresh" Content="_Reset Templates" Command="{Binding RefreshCommand}"
                         CommandParameter="{Binding ElementName=selectedFilter}"
                         Margin="10,0,0,0"/>
@@ -70,7 +70,7 @@
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl x:Name="lst" ItemTemplate="{DynamicResource DataTemplate_Level1}" ItemsSource="{Binding ElementName=selectedFilter, Path = SelectedItem.Matrix}"/>
+            <ItemsControl x:Name="lst" ItemTemplate="{DynamicResource DataTemplate_Level1}" ItemsSource="{Binding CurrentFilter.Matrix}"/>
 
         </ScrollViewer>
 

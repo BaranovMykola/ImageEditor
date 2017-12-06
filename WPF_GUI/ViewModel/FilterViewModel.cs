@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +22,10 @@ namespace WPF_GUI.ViewModel
         private int rows;
         private int cols;
         private ObservableCollection<Filter> filterCollection;
+        private Point anchor;
+        private Filter currentFilter;
+        private int anchorX;
+        private int anchorY;
 
         public FilterViewModel()
         {
@@ -32,6 +37,7 @@ namespace WPF_GUI.ViewModel
             Cols = 3;
 
             Filter = new Filter(Rows,Cols) {Name = "Custom"};
+            CurrentFilter = Filter;
 
             RefreshFilterTemplates(null);
         }
@@ -47,6 +53,28 @@ namespace WPF_GUI.ViewModel
         public ICommand RefreshCommand { get; set; }
 
         public Filter Filter { get; set; }
+
+        public Filter CurrentFilter
+        {
+            get
+            {
+                return currentFilter;
+            }
+
+            set
+            {
+                currentFilter = value;
+                OnPropertyChanged(nameof(CurrentFilter));
+                //if (CurrentFilter != null)
+                {
+                    anchorX = CurrentFilter?.Anchor.X ?? -1;
+                    anchorY = CurrentFilter?.Anchor.Y ?? -1;
+                    RefreshAnchor();
+                    OnPropertyChanged(nameof(AnchorX));
+                    OnPropertyChanged(nameof(AnchorY));
+                }
+            }
+        }
 
         public ObservableCollection<Filter> FilterCollection
         {
@@ -92,6 +120,36 @@ namespace WPF_GUI.ViewModel
             }
         }
 
+        public int AnchorX
+        {
+            get
+            {
+                return anchorX;
+            }
+
+            set
+            {
+                anchorX = value;
+                OnPropertyChanged(nameof(AnchorX));
+                RefreshAnchor();
+            }
+        }
+
+        public int AnchorY
+        {
+            get
+            {
+                return anchorY;
+            }
+
+            set
+            {
+                anchorY = value;
+                OnPropertyChanged(nameof(AnchorY));
+                RefreshAnchor();
+            }
+        }
+
         public void Ok(object parameter)
         {
             DialogResult = true;
@@ -115,6 +173,13 @@ namespace WPF_GUI.ViewModel
             OnPropertyChanged(nameof(Filter));
         }
 
+        private void RefreshAnchor()
+        {
+            CurrentFilter.Matrix[CurrentFilter.Anchor.X][CurrentFilter.Anchor.Y].IsAnchor = false;
+            CurrentFilter.Matrix[AnchorX][AnchorY].IsAnchor = true;
+            OnPropertyChanged(nameof(CurrentFilter));
+        }
+
         public void RefreshFilterTemplates(object parameter)
         {
             FilterCollection = new ObservableCollection<Filter>(
@@ -122,8 +187,7 @@ namespace WPF_GUI.ViewModel
 
             FilterCollection.Add(Filter);
 
-            var comboBox = parameter as ComboBox;
-            if (comboBox != null) comboBox.SelectedIndex = 0;
+            CurrentFilter = Filter;
         }
 
         [NotifyPropertyChangedInvocator]
