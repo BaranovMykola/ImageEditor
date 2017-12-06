@@ -30,10 +30,10 @@
             CancelCommand = new RelayCommand(Cancel);
             RefreshCommand = new RelayCommand(RefreshFilterTemplates);
 
-            Rows = 3;
-            Cols = 3;
+            rows = 3;
+            cols = 3;
 
-            Filter = new Filter(Rows, Cols) { Name = "Custom" };
+            Filter = new Filter(rows, cols) { Name = "Custom" };
             CurrentFilter = Filter;
 
             RefreshFilterTemplates(null);
@@ -63,10 +63,14 @@
                 currentFilter = value;
                 anchorX = CurrentFilter?.Anchor.X ?? -1;
                 anchorY = CurrentFilter?.Anchor.Y ?? -1;
+                rows = CurrentFilter?.Matrix.Count ?? 0;
+                cols = CurrentFilter?.Matrix.FirstOrDefault()?.Count ?? 0;
                 RefreshAnchor();
                 OnPropertyChanged(nameof(CurrentFilter));
                 OnPropertyChanged(nameof(AnchorX));
                 OnPropertyChanged(nameof(AnchorY));
+                OnPropertyChanged(nameof(Rows));
+                OnPropertyChanged(nameof(Cols));
             }
         }
 
@@ -176,7 +180,6 @@
         private void ResizeFilter()
         {
             CurrentFilter = new Filter(rows, cols) { Name = "Custom" };
-            OnPropertyChanged(nameof(Filter));
         }
 
         private void RefreshAnchor()
