@@ -81,7 +81,9 @@
     </Compile>
     <Compile Include="FilterEntity\FilterItem.cs" />
     <Compile Include="FilterEntity\StandartFilters.cs" />
-    <Compile Include="Properties\Annotations2.cs" />
+    <Compile Include="Properties\Annotations2.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="ViewModel\Convertor\BoolToThicknessConverter.cs" />
     <Compile Include="ViewModel\FilterViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>

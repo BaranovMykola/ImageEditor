@@ -497,7 +497,6 @@
 
         private void Grayscale(object parameter)
         {
-
         }
 
         private void FilterClosed(object sender, EventArgs e)

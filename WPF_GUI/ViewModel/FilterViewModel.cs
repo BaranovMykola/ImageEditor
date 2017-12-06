@@ -1,6 +1,4 @@
-﻿using WPF_GUI.FilterEntity;
-
-namespace WPF_GUI.ViewModel
+﻿namespace WPF_GUI.ViewModel
 {
     using System.Windows;
     using System.Windows.Input;
@@ -8,9 +6,9 @@ namespace WPF_GUI.ViewModel
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using ImageContainer;
     using Command;
     using Annotations;
+    using FilterEntity;
 
     internal class FilterViewModel : IImageDialog, INotifyPropertyChanged
     {
