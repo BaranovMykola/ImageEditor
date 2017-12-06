@@ -68,10 +68,10 @@ namespace WPF_GUI.ViewModel
             set
             {
                 currentFilter = value;
-                OnPropertyChanged(nameof(CurrentFilter));
                 anchorX = CurrentFilter?.Anchor.X ?? -1;
                 anchorY = CurrentFilter?.Anchor.Y ?? -1;
                 RefreshAnchor();
+                OnPropertyChanged(nameof(CurrentFilter));
                 OnPropertyChanged(nameof(AnchorX));
                 OnPropertyChanged(nameof(AnchorY));
             }
@@ -170,25 +170,29 @@ namespace WPF_GUI.ViewModel
 
         private void ResizeFilter()
         {
-            Filter = new Filter(rows,cols);
+            CurrentFilter = new Filter(rows,cols) {Name = "Custom"};
             OnPropertyChanged(nameof(Filter));
         }
 
         private void RefreshAnchor()
         {
-            var anchor = CurrentFilter.Anchor;
-            if (anchor.X != -1 && anchor.Y != -1)
+            if (CurrentFilter != null)
             {
-                CurrentFilter.Matrix[CurrentFilter.Anchor.X][CurrentFilter.Anchor.Y].IsAnchor = false;
-            }
+                var anchor = CurrentFilter.Anchor;
+                if (anchor.X != -1 && anchor.Y != -1)
+                {
+                    CurrentFilter.Matrix[CurrentFilter.Anchor.X][CurrentFilter.Anchor.Y].IsAnchor = false;
+                }
 
-            if (AnchorX >= 0 && AnchorY >= 0 && AnchorX < CurrentFilter.Matrix.Count && AnchorY < CurrentFilter.Matrix[0].Count)
-            {
-                CurrentFilter.Matrix[AnchorX][AnchorY].IsAnchor = true;
-            }
-            else
-            {
-                CurrentFilter.SetDefaultAnchor();
+                if (AnchorX >= 0 && AnchorY >= 0 && AnchorX < CurrentFilter.Matrix.Count &&
+                    AnchorY < CurrentFilter.Matrix[0].Count)
+                {
+                    CurrentFilter.Matrix[AnchorX][AnchorY].IsAnchor = true;
+                }
+                else
+                {
+                    CurrentFilter.SetDefaultAnchor();
+                }
             }
         }
 

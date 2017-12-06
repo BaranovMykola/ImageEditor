@@ -43,9 +43,9 @@ namespace WPF_GUI.ImageContainer
         {
             get
             {
-                for (int i = 0; i < Matrix[0].Count; i++)
+                for (int i = 0; i < Matrix.Count; i++)
                 {
-                    for (int j = 0; j < Matrix.Count; j++)
+                    for (int j = 0; j < Matrix.FirstOrDefault()?.Count; j++)
                     {
                         if (Matrix[i][j].IsAnchor)
                         {
@@ -67,8 +67,11 @@ namespace WPF_GUI.ImageContainer
                 }
             }
             var rows = Matrix.Count;
-            var cols = Matrix[0].Count;
-            Matrix[rows/2][cols/2].IsAnchor = true;
+            if (rows > 0)
+            {
+                var cols = Matrix.FirstOrDefault()?.Count ?? 0;
+                Matrix[rows/2][cols/2].IsAnchor = true;
+            }
         }
 
         public override string ToString()
