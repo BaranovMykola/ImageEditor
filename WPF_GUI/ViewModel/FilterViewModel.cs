@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI.ViewModel
+﻿using System;
+
+namespace WPF_GUI.ViewModel
 {
     using System.Windows;
     using System.Windows.Input;
@@ -29,6 +31,7 @@
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
             RefreshCommand = new RelayCommand(RefreshFilterTemplates);
+            ApplyFunctionCommand = new RelayCommand(ApplyFunction);
 
             rows = 3;
             cols = 3;
@@ -48,6 +51,8 @@
         public ICommand CancelCommand { get; set; }
 
         public ICommand RefreshCommand { get; set; }
+
+        public ICommand ApplyFunctionCommand { get; set; }
 
         public Filter Filter { get; set; }
 
@@ -148,6 +153,8 @@
             }
         }
 
+        public string Function { get; set; }
+
         public void Ok(object parameter)
         {
             DialogResult = true;
@@ -202,6 +209,45 @@
                     CurrentFilter.SetDefaultAnchor();
                 }
             }
+        }
+
+        private void ApplyFunction(object parameter)
+        {
+            var func = new NCalc.Expression(Function);
+            func.Parameters["anchX"] = (float)AnchorX;
+            func.Parameters["anchY"] = (float)AnchorY;
+            func.Parameters["rows"] = (float)Rows;
+            func.Parameters["cols"] = (float)Cols;
+
+            for (int x = 0; x < CurrentFilter.Matrix.Count; x++)
+            {
+                for (int y = 0; y < CurrentFilter.Matrix.FirstOrDefault()?.Count; y++)
+                {
+                    func.Parameters["x"] = (float)x;
+                    func.Parameters["y"] = (float)y;
+                    var item = func.Evaluate();
+                    float digit;
+                    if (item is int)
+                    {
+                        digit = (int) item;
+                    }
+                    else if (item is float)
+                    {
+                        digit = (float) item;
+                    }
+                    else if (item is double)
+                    {
+                        digit = (float)(double) item;
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                    CurrentFilter.Matrix[x][y] = new FilterItem(digit);
+                }
+            }
+            OnPropertyChanged(nameof(CurrentFilter));
+
         }
     }
 }

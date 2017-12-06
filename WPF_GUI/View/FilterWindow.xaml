@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_GUI.View"
         xmlns:convertor="clr-namespace:WPF_GUI.ViewModel.Convertor"
         mc:Ignorable="d"
-        Title="FilterDialog" Height="431.2" Width="438.4">
+        Title="FilterDialog" Height="431.2" Width="511.174">
     <Window.Resources>
         <convertor:StringDoubleConverter x:Key="StringDoubleConverter"></convertor:StringDoubleConverter>
         <convertor:BoolToThicknessConverter x:Key="BoolToThicknessConverter"/>
@@ -33,7 +33,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="240"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
@@ -49,7 +49,7 @@
                         </WrapPanel>
                     </GroupBox>
 
-                    <GroupBox Name ="anchor" Header="AncHor">
+                    <GroupBox Name ="anchor" Header="Anchor">
                         <WrapPanel>
                             <Label Content="X:" Width="40"/>
                             <TextBox Name="x" Width="100" Text="{Binding AnchorX, Converter={StaticResource StringDoubleConverter}, Mode=TwoWay}"/>
@@ -57,21 +57,35 @@
                             <TextBox Name="y" Width="100"  Text="{Binding AnchorY, Converter={StaticResource StringDoubleConverter}}"/>
                         </WrapPanel>
                     </GroupBox>
+                    
+                    <GroupBox Name="tempate" Header="Template">
+                        <WrapPanel>
+                            <ComboBox ItemsSource="{Binding FilterCollection}" SelectedItem="{Binding CurrentFilter}" Name="selectedFilter"/>
+                            <Button Name="refresh" Content="_Reset Templates" Command="{Binding RefreshCommand}"
+                                    CommandParameter="{Binding ElementName=selectedFilter}"
+                                    Margin="10,0,0,0"/>
+                        </WrapPanel>
+                    </GroupBox>
+
+                    <GroupBox Name="function" Header="Function">
+                        <WrapPanel>
+                            <Label Content="F(x,y,rows,cols,anchX,anchY) = " Margin="0,0,0,0" />
+                            <TextBox Name="functionTextBox" Text="{Binding Function, Mode=OneWayToSource}" Width="200" Margin="0,0,3,0"/>
+                            <Button Name="applyFunc" Content="Apply" Command="{Binding ApplyFunctionCommand}"/>
+                        </WrapPanel>
+                    </GroupBox>
+
                 </StackPanel>
             </GroupBox>
             <WrapPanel>
 
-                <ComboBox ItemsSource="{Binding FilterCollection}" SelectedItem="{Binding CurrentFilter}" Name="selectedFilter"/>
-                <Button Name="refresh" Content="_Reset Templates" Command="{Binding RefreshCommand}"
-                        CommandParameter="{Binding ElementName=selectedFilter}"
-                        Margin="10,0,0,0"/>
                 
             </WrapPanel>
         </StackPanel>
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="Azure">
 
-            <ItemsControl x:Name="lst" ItemTemplate="{DynamicResource DataTemplate_Level1}" ItemsSource="{Binding CurrentFilter.Matrix}"/>
+            <ItemsControl x:Name="lst" ItemTemplate="{DynamicResource DataTemplate_Level1}" ItemsSource="{Binding CurrentFilter.Matrix}" VerticalAlignment="Center"/>
 
         </ScrollViewer>
 
