@@ -1,6 +1,4 @@
-﻿using FilterEntity;
-
-namespace FilterEntity
+﻿namespace FilterEntity
 {
     public static class StandartFilters
     {

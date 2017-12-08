@@ -1,45 +1,21 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Drawing;
-using System.Windows;
-
-namespace FilterEntity
+﻿namespace FilterEntity
 {
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+
     public class Filter : INotifyPropertyChanged
     {
         public Filter(int rows, int cols)
         {
-            GenerateMatrix(rows,cols,new NCalc.Expression("0"));
+            GenerateMatrix(rows, cols, new NCalc.Expression("0"));
         }
 
-        public Filter(int rows, int cols, NCalc.Expression generator): this(rows,cols)
+        public Filter(int rows, int cols, NCalc.Expression generator) : this(rows, cols)
         {
             GenerateMatrix(rows, cols, generator);
-        }
-
-        public void GenerateMatrix(int rows, int cols, NCalc.Expression generator)
-        {
-            Matrix = new ObservableCollection<ObservableCollection<FilterItem>>();
-
-            if (rows > 0 && cols > 0)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    Matrix.Add(new ObservableCollection<FilterItem>());
-                    for (int j = 0; j < cols; j++)
-                    {
-                        generator.Parameters["y"] = (float)i;
-                        generator.Parameters["x"] = (float)j;
-                        Matrix[i].Add(new FilterItem((float)generator.ComputeDouble()));
-                    }
-                }
-
-                Matrix[rows / 2][cols / 2].IsAnchor = true;
-                OnPropertyChanged(nameof(Matrix));
-                OnPropertyChanged(nameof(Anchor));
-            }
         }
 
         public Filter(ObservableCollection<ObservableCollection<FilterItem>> matrix)
@@ -72,6 +48,29 @@ namespace FilterEntity
             }
         }
 
+        public void GenerateMatrix(int rows, int cols, NCalc.Expression generator)
+        {
+            Matrix = new ObservableCollection<ObservableCollection<FilterItem>>();
+
+            if (rows > 0 && cols > 0)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    Matrix.Add(new ObservableCollection<FilterItem>());
+                    for (int j = 0; j < cols; j++)
+                    {
+                        generator.Parameters["y"] = (float)i;
+                        generator.Parameters["x"] = (float)j;
+                        Matrix[i].Add(new FilterItem((float)generator.ComputeDouble()));
+                    }
+                }
+
+                Matrix[rows / 2][cols / 2].IsAnchor = true;
+                OnPropertyChanged(nameof(Matrix));
+                OnPropertyChanged(nameof(Anchor));
+            }
+        }
+
         public void SetDefaultAnchor()
         {
             foreach (var row in Matrix)
@@ -90,12 +89,8 @@ namespace FilterEntity
             }
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
-        //[NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

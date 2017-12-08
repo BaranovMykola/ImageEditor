@@ -57,7 +57,6 @@ namespace FilterEntity
 
         public override string ToString() => Coeficient.ToString(CultureInfo.InvariantCulture);
 
-      //  [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
