@@ -12,6 +12,7 @@
 #include "RotateChange.h"
 #include "ResizeChange.h"
 #include "PalletingChange.h"
+#include "FilterChange.h"
 #include "ImageProcessing.h"
 #include "FaceDetactionChange.h"
 #include "opencv2/objdetect/objdetect.hpp"
@@ -161,7 +162,15 @@ public:
 		preview = source.clone();
 		imp::palleting256(preview);
 		eraseChange();
-		changes.push_back(new PalletingChange());
+		currentChange = new PalletingChange();
+	}
+
+	void filter(cv::Mat& kern, cv::Point anchor)
+	{
+		preview = source.clone();
+		imp::filter2D(preview, kern, anchor);
+		eraseChange();
+		currentChange = new FilterChange(kern, anchor);
 	}
 
 public:

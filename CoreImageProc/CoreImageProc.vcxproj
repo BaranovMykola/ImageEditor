@@ -161,6 +161,7 @@
     <ClInclude Include="AbstractChange.h" />
     <ClInclude Include="ContrastAndBrightnessChange.h" />
     <ClInclude Include="FaceDetactionChange.h" />
+    <ClInclude Include="FilterChange.h" />
     <ClInclude Include="ImageEditor.h" />
     <ClInclude Include="ImageProcess.h" />
     <ClInclude Include="ImageProcessing.h" />
