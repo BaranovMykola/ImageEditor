@@ -149,7 +149,7 @@ void CoreWrapper::ImageProc::filter(FilterEntity::Filter^ filterInstance)
 {
 	int rows = filterInstance->Matrix->Count;
 	int cols = filterInstance->Matrix[0]->Count;
-	cv::Mat kern = cv::Mat::zeros(cv::Size(rows, cols), CV_32F);
+	cv::Mat kern = cv::Mat::zeros(cv::Size(cols, rows), CV_32F);
 	cv::Point anchor;
 	for (int i = 0; i < rows; i++)
 	{
@@ -160,9 +160,9 @@ void CoreWrapper::ImageProc::filter(FilterEntity::Filter^ filterInstance)
 			auto item = row[j];
 			if (item->IsAnchor)
 			{
-				anchor = cv::Point(i, j);
+				anchor = cv::Point(j, i);
 			}
-			kern.at<float>(cv::Point(i, j)) = item->Coeficient;
+			kern.at<float>(cv::Point(j, i)) = item->Coeficient;
 		}
 	}
 	editor->filter(kern, anchor);
