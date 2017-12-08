@@ -187,8 +187,12 @@ namespace WPF_GUI.ViewModel
 
         private void ResizeFilter()
         {
-            CurrentFilter.GenerateMatrix(rows, cols,
-                new NCalc.Expression(string.IsNullOrEmpty(Function) ? "0" : Function));
+            CurrentFilter.GenerateMatrix(rows, cols, new NCalc.Expression(string.IsNullOrEmpty(Function) ? "0" : Function));
+            var anchor = CurrentFilter.Anchor;
+            anchorX = (int) anchor.X;
+            anchorY = (int) anchor.Y;
+            OnPropertyChanged(nameof(AnchorX));
+            OnPropertyChanged(nameof(AnchorY));
         }
 
         private void RefreshAnchor()
