@@ -60,6 +60,13 @@ int main()
 		{
 			edit.palleting256();
 		}
+		else if (act == "filter")
+		{
+			Mat img = cv::imread("img.jpg");
+			Mat kern = (Mat_<float>(3, 3) << 1, 1, 1, 1, 1, 1, 1, 1, 1);
+			kern /= 9;
+			imp::filter2D(img, kern,Point(1,1));
+		}
 	}
 	while (true);
 	return 0;
