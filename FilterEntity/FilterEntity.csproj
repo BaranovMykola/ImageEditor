@@ -72,7 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionExtension.cs" />
-    <Compile Include="Filter.cs" />
+    <Compile Include="Filter.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="FilterItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandartFilters.cs" />

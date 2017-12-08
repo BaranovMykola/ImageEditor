@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace FilterEntity
+﻿namespace FilterEntity
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
@@ -68,15 +67,15 @@ namespace FilterEntity
                             Matrix[i].Add(new FilterItem((float)generator.ComputeDouble()));
                         }
                     }
+
                     Matrix[rows / 2][cols / 2].IsAnchor = true;
                     OnPropertyChanged(nameof(Matrix));
                     OnPropertyChanged(nameof(Anchor));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    GenerateMatrix(rows,cols,new NCalc.Expression("0"));
+                    GenerateMatrix(rows, cols, new NCalc.Expression("0"));
                 }
-
             }
         }
 

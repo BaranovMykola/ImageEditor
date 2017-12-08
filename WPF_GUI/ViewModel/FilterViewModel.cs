@@ -1,6 +1,4 @@
-﻿using FilterEntity;
-
-namespace WPF_GUI.ViewModel
+﻿namespace WPF_GUI.ViewModel
 {
     using System;
     using System.Windows;
@@ -67,8 +65,8 @@ namespace WPF_GUI.ViewModel
             set
             {
                 currentFilter = value;
-                anchorX = (int) (CurrentFilter?.Anchor.X ?? -1);
-                anchorY = (int) (CurrentFilter?.Anchor.Y ?? -1);
+                anchorX = (int)(CurrentFilter?.Anchor.X ?? -1);
+                anchorY = (int)(CurrentFilter?.Anchor.Y ?? -1);
                 rows = CurrentFilter?.Matrix.Count ?? 0;
                 cols = CurrentFilter?.Matrix.FirstOrDefault()?.Count ?? 0;
                 RefreshAnchor();
@@ -189,8 +187,8 @@ namespace WPF_GUI.ViewModel
         {
             CurrentFilter.GenerateMatrix(rows, cols, new NCalc.Expression(string.IsNullOrEmpty(Function) ? "0" : Function));
             var anchor = CurrentFilter.Anchor;
-            anchorX = (int) anchor.X;
-            anchorY = (int) anchor.Y;
+            anchorX = (int)anchor.X;
+            anchorY = (int)anchor.Y;
             OnPropertyChanged(nameof(AnchorX));
             OnPropertyChanged(nameof(AnchorY));
         }
@@ -202,7 +200,7 @@ namespace WPF_GUI.ViewModel
                 var anchor = CurrentFilter.Anchor;
                 if (anchor.X != -1 && anchor.Y != -1)
                 {
-                    CurrentFilter.Matrix[(int) CurrentFilter.Anchor.X][(int) CurrentFilter.Anchor.Y].IsAnchor = false;
+                    CurrentFilter.Matrix[(int)CurrentFilter.Anchor.X][(int)CurrentFilter.Anchor.Y].IsAnchor = false;
                 }
 
                 if (AnchorX >= 0 && AnchorY >= 0 && AnchorX < CurrentFilter.Matrix.Count &&
@@ -238,7 +236,7 @@ namespace WPF_GUI.ViewModel
                     {
                         func.Parameters["y"] = (float)x;
                         func.Parameters["x"] = (float)y;
-                        float digit = (float) func.ComputeDouble();
+                        float digit = (float)func.ComputeDouble();
                         CurrentFilter.Matrix[x][y].Coeficient = digit;
                     }
                 }
