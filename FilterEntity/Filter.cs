@@ -1,4 +1,6 @@
-﻿namespace FilterEntity
+﻿using System;
+
+namespace FilterEntity
 {
     using System.Collections.ObjectModel;
     using System.ComponentModel;
@@ -54,20 +56,27 @@
 
             if (rows > 0 && cols > 0)
             {
-                for (int i = 0; i < rows; i++)
+                try
                 {
-                    Matrix.Add(new ObservableCollection<FilterItem>());
-                    for (int j = 0; j < cols; j++)
+                    for (int i = 0; i < rows; i++)
                     {
-                        generator.Parameters["y"] = (float)i;
-                        generator.Parameters["x"] = (float)j;
-                        Matrix[i].Add(new FilterItem((float)generator.ComputeDouble()));
+                        Matrix.Add(new ObservableCollection<FilterItem>());
+                        for (int j = 0; j < cols; j++)
+                        {
+                            generator.Parameters["y"] = (float)i;
+                            generator.Parameters["x"] = (float)j;
+                            Matrix[i].Add(new FilterItem((float)generator.ComputeDouble()));
+                        }
                     }
+                    Matrix[rows / 2][cols / 2].IsAnchor = true;
+                    OnPropertyChanged(nameof(Matrix));
+                    OnPropertyChanged(nameof(Anchor));
+                }
+                catch (Exception e)
+                {
+                    GenerateMatrix(rows,cols,new NCalc.Expression("0"));
                 }
 
-                Matrix[rows / 2][cols / 2].IsAnchor = true;
-                OnPropertyChanged(nameof(Matrix));
-                OnPropertyChanged(nameof(Anchor));
             }
         }
 
