@@ -12,7 +12,7 @@
         <convertor:BoolToThicknessConverter x:Key="BoolToThicknessConverter"/>
 
         <DataTemplate x:Key="DataTemplate_Level2">
-            <TextBox Text="{Binding Coeficient, Mode=TwoWay, Converter={StaticResource StringDoubleConverter}, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding Coeficient, Mode=TwoWay, Converter={StaticResource StringDoubleConverter}, UpdateSourceTrigger=LostFocus}"
                      Height="20" Width="40" Margin="1,3,3,1"
                 BorderThickness="{Binding IsAnchor, Converter={StaticResource BoolToThicknessConverter}}"  
                      />
