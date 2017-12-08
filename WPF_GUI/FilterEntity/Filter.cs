@@ -11,7 +11,18 @@
     {
         public Filter(int rows, int cols)
         {
+            GenerateMatrix(rows,cols,new NCalc.Expression("0"));
+        }
+
+        public Filter(int rows, int cols, NCalc.Expression generator): this(rows,cols)
+        {
+            GenerateMatrix(rows, cols, generator);
+        }
+
+        public void GenerateMatrix(int rows, int cols, NCalc.Expression generator)
+        {
             Matrix = new ObservableCollection<ObservableCollection<FilterItem>>();
+
             if (rows > 0 && cols > 0)
             {
                 for (int i = 0; i < rows; i++)
@@ -19,11 +30,15 @@
                     Matrix.Add(new ObservableCollection<FilterItem>());
                     for (int j = 0; j < cols; j++)
                     {
-                        Matrix[i].Add(new FilterItem(j));
+                        generator.Parameters["y"] = (float)i;
+                        generator.Parameters["x"] = (float)j;
+                        Matrix[i].Add(new FilterItem((float)generator.ComputeDouble()));
                     }
                 }
 
                 Matrix[rows / 2][cols / 2].IsAnchor = true;
+                OnPropertyChanged(nameof(Matrix));
+                OnPropertyChanged(nameof(Anchor));
             }
         }
 
@@ -34,7 +49,7 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<ObservableCollection<FilterItem>> Matrix { get; }
+        public ObservableCollection<ObservableCollection<FilterItem>> Matrix { get; private set; }
 
         public string Name { get; set; }
 

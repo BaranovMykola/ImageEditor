@@ -80,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FilterEntity\ExpressionExtension.cs" />
     <Compile Include="FilterEntity\Filter.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>

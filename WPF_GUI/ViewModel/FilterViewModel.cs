@@ -185,7 +185,8 @@
 
         private void ResizeFilter()
         {
-            CurrentFilter = new Filter(rows, cols) { Name = "Custom" };
+            CurrentFilter.GenerateMatrix(rows, cols,
+                new NCalc.Expression(string.IsNullOrEmpty(Function) ? "0" : Function));
         }
 
         private void RefreshAnchor()
@@ -231,7 +232,7 @@
                     {
                         func.Parameters["y"] = (float)x;
                         func.Parameters["x"] = (float)y;
-                        float digit = EvaluateFunction(func);
+                        float digit = (float) func.ComputeDouble();
                         CurrentFilter.Matrix[x][y].Coeficient = digit;
                     }
                 }
@@ -242,26 +243,6 @@
             {
                 MessageBox.Show($"{exception.Message}", "Function Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private float EvaluateFunction(NCalc.Expression func)
-        {
-            var item = func.Evaluate();
-            float digit = 0;
-            if (item is int)
-            {
-                digit = (int)item;
-            }
-            else if (item is float)
-            {
-                digit = (float)item;
-            }
-            else if (item is double)
-            {
-                digit = (float)(double)item;
-            }
-
-            return digit;
         }
     }
 }
