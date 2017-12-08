@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI.FilterEntity
+﻿using FilterEntity;
+
+namespace FilterEntity
 {
     public static class StandartFilters
     {

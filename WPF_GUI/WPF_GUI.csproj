@@ -80,12 +80,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FilterEntity\ExpressionExtension.cs" />
-    <Compile Include="FilterEntity\Filter.cs">
-      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="FilterEntity\FilterItem.cs" />
-    <Compile Include="FilterEntity\StandartFilters.cs" />
     <Compile Include="Properties\Annotations2.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -200,6 +194,10 @@
       <Project>{a389b4c4-f723-4e1b-8fa5-c43de5d58f1e}</Project>
       <Name>CoreWrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FilterEntity\FilterEntity.csproj">
+      <Project>{b3b172b5-cc42-4601-b235-c0cc1a1bbbd8}</Project>
+      <Name>FilterEntity</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="icons\palette.ico" />
@@ -218,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="icons\grayscale_gray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FilterEntity\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

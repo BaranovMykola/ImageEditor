@@ -48,7 +48,7 @@
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
             DetectFaceCommand = new RelayCommand(DetectFace, s => !OpenedImage.IsEmpty);
             PalettingCommand = new RelayCommand(Paletting, s => !OpenedImage.IsEmpty);
-            FilterCommand = new RelayCommand(Filter, s => OpenedImage.IsEmpty);
+            FilterCommand = new RelayCommand(Filter, s => !OpenedImage.IsEmpty);
             GrayscaleCommand = new RelayCommand(Grayscale, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
@@ -501,7 +501,20 @@
 
         private void FilterClosed(object sender, EventArgs e)
         {
-            Console.WriteLine("filter closed");
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
+            editor.filter(FilterViewModel.CurrentFilter);
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
         }
 
         #endregion

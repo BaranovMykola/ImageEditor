@@ -1,9 +1,8 @@
-namespace WPF_GUI.FilterEntity
+namespace FilterEntity
 {
     using System.ComponentModel;
     using System.Globalization;
     using System.Runtime.CompilerServices;
-    using Annotations;
 
     public class FilterItem : INotifyPropertyChanged
     {
@@ -58,7 +57,7 @@ namespace WPF_GUI.FilterEntity
 
         public override string ToString() => Coeficient.ToString(CultureInfo.InvariantCulture);
 
-        [NotifyPropertyChangedInvocator]
+      //  [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

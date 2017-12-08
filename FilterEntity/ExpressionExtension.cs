@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF_GUI.FilterEntity
+namespace FilterEntity
 {
     public static class ExpressionExtension
     {

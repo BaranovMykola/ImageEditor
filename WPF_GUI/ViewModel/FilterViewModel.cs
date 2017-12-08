@@ -1,4 +1,6 @@
-﻿namespace WPF_GUI.ViewModel
+﻿using FilterEntity;
+
+namespace WPF_GUI.ViewModel
 {
     using System;
     using System.Windows;
@@ -65,8 +67,8 @@
             set
             {
                 currentFilter = value;
-                anchorX = CurrentFilter?.Anchor.X ?? -1;
-                anchorY = CurrentFilter?.Anchor.Y ?? -1;
+                anchorX = (int) (CurrentFilter?.Anchor.X ?? -1);
+                anchorY = (int) (CurrentFilter?.Anchor.Y ?? -1);
                 rows = CurrentFilter?.Matrix.Count ?? 0;
                 cols = CurrentFilter?.Matrix.FirstOrDefault()?.Count ?? 0;
                 RefreshAnchor();
@@ -196,7 +198,7 @@
                 var anchor = CurrentFilter.Anchor;
                 if (anchor.X != -1 && anchor.Y != -1)
                 {
-                    CurrentFilter.Matrix[CurrentFilter.Anchor.X][CurrentFilter.Anchor.Y].IsAnchor = false;
+                    CurrentFilter.Matrix[(int) CurrentFilter.Anchor.X][(int) CurrentFilter.Anchor.Y].IsAnchor = false;
                 }
 
                 if (AnchorX >= 0 && AnchorY >= 0 && AnchorX < CurrentFilter.Matrix.Count &&

@@ -1,12 +1,12 @@
-﻿namespace WPF_GUI.FilterEntity
-{
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Collections.ObjectModel;
-    using Annotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Drawing;
+using System.Windows;
 
+namespace FilterEntity
+{
     public class Filter : INotifyPropertyChanged
     {
         public Filter(int rows, int cols)
@@ -95,7 +95,7 @@
             return Name;
         }
 
-        [NotifyPropertyChangedInvocator]
+        //[NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
