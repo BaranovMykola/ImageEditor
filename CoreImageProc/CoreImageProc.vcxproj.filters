@@ -50,5 +50,8 @@
     <ClInclude Include="PalletingChange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FilterChange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

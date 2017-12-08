@@ -39,4 +39,11 @@ namespace imp
 			}
 		}
 	}
+
+	void filter2D(cv::Mat& source, cv::Mat& kern, cv::Point anchor)
+	{
+		Mat filtered;
+		cv::filter2D(source, filtered, source.depth(), kern, anchor);
+		source = filtered;
+	}
 }
