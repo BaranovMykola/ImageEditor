@@ -30,7 +30,7 @@
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
             RefreshCommand = new RelayCommand(RefreshFilterTemplates);
-            ApplyFunctionCommand = new RelayCommand(ApplyFunction);
+            ApplyFunctionCommand = new RelayCommand(ApplyFunction, s => !string.IsNullOrEmpty(Function));
 
             rows = 3;
             cols = 3;
@@ -240,7 +240,7 @@
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"Function Error:\n\t{exception.Message}", "Function evaluating", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{exception.Message}", "Function Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
