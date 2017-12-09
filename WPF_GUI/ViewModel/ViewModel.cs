@@ -354,16 +354,7 @@
 
         private void OpenBrightness(object parameter)
         {
-            StoreSelectedIndex();
-            if (IsView)
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                var v = CurrentView;
-                ImagesPreview.Clear();
-                AddPreviewIcon(v);
-            }
-
-            ViewModelState = ProgrammState.Edit;
+            SafeSwitchToEditMode();
             BrightnessViewModel.DialogResult = false;
             ContrastAndBrightnessWindowContrastMediator.ShowDialog(BrightnessViewModel);
         }
@@ -395,16 +386,7 @@
 
         private void OpenRotate(object parameter)
         {
-            StoreSelectedIndex();
-            if (IsView)
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                var v = CurrentView;
-                ImagesPreview.Clear();
-                AddPreviewIcon(v);
-            }
-
-            ViewModelState = ProgrammState.Edit;
+            SafeSwitchToEditMode();
             RotateViewModel.DialogResult = false;
             RotateWindowMediator.ShowDialog(RotateViewModel);
         }
@@ -417,16 +399,7 @@
 
         private void OpenResize(object parameter)
         {
-            StoreSelectedIndex();
-            if (IsView)
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                var v = CurrentView;
-                ImagesPreview.Clear();
-                AddPreviewIcon(v);
-            }
-
-            ViewModelState = ProgrammState.Edit;
+            SafeSwitchToEditMode();
 
             ResizeViewModel.Heigth = (int)CurrentView.Height;
             ResizeViewModel.Width = (int)CurrentView.Width;
@@ -456,38 +429,12 @@
 
         private void DetectFace(object parameter)
         {
-            StoreSelectedIndex();
-            if (IsView)
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                var v = CurrentView;
-                ImagesPreview.Clear();
-                AddPreviewIcon(v);
-            }
-
-            ViewModelState = ProgrammState.Edit;
-
-            editor.detectFace();
-            CurrentView = ConvertBitmapToImageSource(editor.getSource());
-            AddPreviewIcon(CurrentView);
+            SingleShangeApply(() => editor.detectFace());
         }
 
         private void Paletting(object parameter)
         {
-            StoreSelectedIndex();
-            if (IsView)
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                var v = CurrentView;
-                ImagesPreview.Clear();
-                AddPreviewIcon(v);
-            }
-
-            ViewModelState = ProgrammState.Edit;
-
-            editor.paletting();
-            CurrentView = ConvertBitmapToImageSource(editor.getSource());
-            AddPreviewIcon(CurrentView);
+            SingleShangeApply(() => editor.paletting());
         }
 
         private void Filter(object parameter)
@@ -497,23 +444,27 @@
 
         private void Grayscale(object parameter)
         {
-            StoreSelectedIndex();
-            if (IsView)
-            {
-                editor.loadImage(OpenedImage.CurrentPath);
-                var v = CurrentView;
-                ImagesPreview.Clear();
-                AddPreviewIcon(v);
-            }
-
-            ViewModelState = ProgrammState.Edit;
-
-            editor.toGrayScale();
-            CurrentView = ConvertBitmapToImageSource(editor.getSource());
-            AddPreviewIcon(CurrentView);
+            SingleShangeApply(() => editor.toGrayScale());
         }
 
         private void FilterClosed(object sender, EventArgs e)
+        {
+            SingleShangeApply(() => editor.filter(FilterViewModel.CurrentFilter));
+        }
+
+        private void SingleShangeApply(Action change)
+        {
+            SafeSwitchToEditMode();
+
+            change?.Invoke();
+
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
+
+            SetSelectedLast();
+        }
+
+        private void SafeSwitchToEditMode()
         {
             StoreSelectedIndex();
             if (IsView)
@@ -525,10 +476,6 @@
             }
 
             ViewModelState = ProgrammState.Edit;
-
-            editor.filter(FilterViewModel.CurrentFilter);
-            CurrentView = ConvertBitmapToImageSource(editor.getSource());
-            AddPreviewIcon(CurrentView);
         }
 
         #endregion
