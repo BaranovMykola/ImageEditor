@@ -177,13 +177,6 @@ void CoreWrapper::ImageProc::toGrayScale()
 
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
-	if (img.type() != CV_8UC3)
-	{
-		Mat imgColor;
-		cvtColor(img, imgColor, CV_GRAY2BGR);
-		img = imgColor;
-	}
-
 	System::Drawing::Imaging::PixelFormat fmt(System::Drawing::Imaging::PixelFormat::Format24bppRgb);
 	Bitmap ^bmpimg = gcnew Bitmap(img.cols, img.rows, fmt);
 	System::Drawing::Imaging::BitmapData ^data = bmpimg->LockBits(System::Drawing::Rectangle(0, 0, img.cols, img.rows), System::Drawing::Imaging::ImageLockMode::WriteOnly, fmt);
@@ -191,7 +184,17 @@ Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 	unsigned char *srcData = img.data;
 	for (int row = 0; row < data->Height; ++row)
 	{
-		memcpy(reinterpret_cast<void*>(&dstData[row*data->Stride]), reinterpret_cast<void*>(&srcData[row*img.step]), img.cols*img.channels());
+		if (img.type() == CV_8UC1)
+		{
+			for (int j = 0; j < img.cols*3; j++)
+			{
+				dstData[row*data->Stride + j] = srcData[row*img.step + j / 3];
+			}
+		}
+		else
+		{
+			memcpy(reinterpret_cast<void*>(&dstData[row*data->Stride]), reinterpret_cast<void*>(&srcData[row*img.step]), img.cols*img.channels());
+		}
 	}
 
 	bmpimg->UnlockBits(data);
