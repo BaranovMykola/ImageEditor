@@ -9,7 +9,7 @@ namespace imp
 	void resize(cv::Mat& source, float percentRatio)
 	{
 		cv::Size newSize(source.size().width*percentRatio, source.size().height*percentRatio);
-		cv::Mat resized = Mat::zeros(newSize, CV_8UC3);
+		cv::Mat resized = Mat::zeros(newSize, source.type());
 		cv::resize(source, source, newSize);
 	}
 
@@ -45,5 +45,10 @@ namespace imp
 		Mat filtered;
 		cv::filter2D(source, filtered, source.depth(), kern, anchor);
 		source = filtered;
+	}
+
+	void toGrayscale(Mat& source)
+	{
+		cv::cvtColor(source, source, CV_BGR2GRAY);
 	}
 }

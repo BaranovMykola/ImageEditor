@@ -68,6 +68,11 @@ int main()
 			edit.filter(kern, Point(1, 1));
 			//imp::filter2D(img, kern,Point(1,1));
 		}
+		else if (act == "gray")
+		{
+			Mat img = imread("img.jpg");
+			imp::toGrayscale(img);
+		}
 	}
 	while (true);
 	return 0;
