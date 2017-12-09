@@ -3,6 +3,8 @@
 #include <opencv2\imgproc.hpp>
 #include <opencv2\highgui.hpp>
 
+#include "opencv2/objdetect/objdetect.hpp"
+
 using namespace cv;
 namespace imp
 {
@@ -53,5 +55,43 @@ namespace imp
 		{
 			cv::cvtColor(source, source, CV_BGR2GRAY);
 		}
+	}
+
+	void printFaces(cv::Mat& source, std::vector<cv::Rect> faces)
+	{
+		for (auto i : faces)
+		{
+			cv::rectangle(source, i, cv::Scalar(0, 255, 0), 4);
+		}
+	}
+
+	std::vector<cv::Rect> detectFace(Mat& source)
+	{
+		std::vector<Rect> faces;
+		Mat frame_gray;
+
+		Mat frame = source;
+		if (frame.type() == CV_8UC1)
+		{
+			frame_gray = frame.clone();
+		}
+		else
+		{
+			cvtColor(frame, frame_gray, CV_BGR2GRAY);
+		}
+
+		equalizeHist(frame_gray, frame_gray);
+
+		CascadeClassifier face_cascade;
+		bool loaded = face_cascade.load("haarcascade_frontalface_alt2.xml");
+		cout << "Loaded " << loaded << endl;
+
+
+		//-- Detect faces
+		face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+
+		printFaces(source, faces);
+
+		return faces;
 	}
 }
