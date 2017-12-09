@@ -70,8 +70,7 @@ int main()
 		}
 		else if (act == "gray")
 		{
-			Mat img = imread("img.jpg");
-			imp::toGrayscale(img);
+			edit.toGrayscale();
 		}
 	}
 	while (true);

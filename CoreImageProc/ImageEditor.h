@@ -13,6 +13,7 @@
 #include "ResizeChange.h"
 #include "PalletingChange.h"
 #include "FilterChange.h"
+#include "GrayscaleChange.h"
 #include "ImageProcessing.h"
 #include "FaceDetactionChange.h"
 #include "opencv2/objdetect/objdetect.hpp"
@@ -135,7 +136,15 @@ public:
 		Mat frame_gray;
 
 		Mat frame = preview;
-		cvtColor(frame, frame_gray, CV_BGR2GRAY);
+		if (frame.type() == CV_8UC1)
+		{
+			frame_gray = frame.clone();
+		}
+		else
+		{
+			cvtColor(frame, frame_gray, CV_BGR2GRAY);
+		}
+
 		equalizeHist(frame_gray, frame_gray);
 
 		CascadeClassifier face_cascade;
@@ -171,6 +180,14 @@ public:
 		imp::filter2D(preview, kern, anchor);
 		eraseChange();
 		currentChange = new FilterChange(kern, anchor);
+	}
+
+	void toGrayscale()
+	{
+		preview = source.clone();
+		imp::toGrayscale(preview);
+		eraseChange();
+		currentChange = new GrayscalseChange();
 	}
 
 public:
