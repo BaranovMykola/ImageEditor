@@ -11,9 +11,9 @@
     using System.Windows.Media.Imaging;
     using CoreWrapper;
     using Microsoft.Win32;
-    using WPF_GUI.Const;
-    using WPF_GUI.ImageContainer;
-    using WPF_GUI.ViewModel.Command;
+    using Const;
+    using ImageContainer;
+    using Command;
     using Image = System.Windows.Controls.Image;
 
     /// <summary>
@@ -82,7 +82,7 @@
             set
             {
                 imagesPreview = value;
-                OnPropertyChanged("ImagesPreview");
+                OnPropertyChanged();
             }
         }
 
@@ -112,7 +112,7 @@
             set
             {
                 currentView = value;
-                OnPropertyChanged(nameof(CurrentView));
+                OnPropertyChanged();
             }
         }
 
@@ -147,7 +147,7 @@
                         currentIndex = ImagesPreview.Count - 1;
                     }
 
-                    OnPropertyChanged(nameof(CurrentIndex));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -256,7 +256,7 @@
         {
             OpenedImage.Remove();
             ImagesPreview.RemoveAt(CurrentIndex);
-            OnPropertyChanged(nameof(OpenedImage));
+            OnPropertyChanged();
             Console.WriteLine(OpenedImage.CurrentIndex);
         }
 
@@ -283,7 +283,7 @@
         private void BrigthnessChanged(object sender, EventArgs e)
         {
             editor.applyContrastAndBrightness(BrightnessViewModel.Contrast, (int)BrightnessViewModel.Birghtness);
-            this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
+            CurrentView = ConvertBitmapToImageSource(editor.getPreview());
         }
 
         private void UpdateCurrentView(object sender, EventArgs e)
@@ -315,7 +315,7 @@
             image1.StreamSource = ms;
             image1.EndInit();
 
-            ImageSource sc = (ImageSource)image1;
+            ImageSource sc = image1;
 
             return sc;
         }
@@ -394,7 +394,7 @@
         private void RotateChanged(object sender, EventArgs e)
         {
             editor.applyRotate((float)RotateViewModel.Angle);
-            this.CurrentView = ConvertBitmapToImageSource(editor.getPreview());
+            CurrentView = ConvertBitmapToImageSource(editor.getPreview());
         }
 
         private void OpenResize(object parameter)
