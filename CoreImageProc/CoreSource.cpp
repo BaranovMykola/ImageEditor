@@ -58,7 +58,15 @@ int main()
 		}
 		else if (act == "bmp")
 		{
-			edit.palleting256();
+			edit.paletting256();
+		}
+		else if (act == "filter")
+		{
+			//Mat img = cv::imread("img.jpg");
+			Mat kern = (Mat_<float>(3, 3) << 1, 1, 1, 1, 1, 1, 1, 1, 1);
+			kern /= 9;
+			edit.filter(kern, Point(1, 1));
+			//imp::filter2D(img, kern,Point(1,1));
 		}
 		else if (act == "filter")
 		{

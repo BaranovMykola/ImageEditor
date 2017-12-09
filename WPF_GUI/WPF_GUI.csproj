@@ -55,6 +55,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL">
+      <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -76,8 +80,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations2.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="ViewModel\Convertor\BoolToThicknessConverter.cs" />
+    <Compile Include="ViewModel\FilterViewModel.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="ViewModel\IImageDialog.cs" />
     <Compile Include="ViewModel\ResizeViewModel.cs" />
+    <Compile Include="View\FilterWindow.xaml.cs">
+      <DependentUpon>FilterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ResizeWindow.xaml.cs">
       <DependentUpon>ResizeWindow.xaml</DependentUpon>
     </Compile>
@@ -109,6 +123,10 @@
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelButtonsIcons.cs" />
     <Page Include="View\ContrastAndBrightness.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FilterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,6 +179,7 @@
     </EmbeddedResource>
     <None Include="icons\face.ico" />
     <None Include="icons\face_gray.ico" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -175,7 +194,30 @@
       <Project>{a389b4c4-f723-4e1b-8fa5-c43de5d58f1e}</Project>
       <Name>CoreWrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FilterEntity\FilterEntity.csproj">
+      <Project>{b3b172b5-cc42-4601-b235-c0cc1a1bbbd8}</Project>
+      <Name>FilterEntity</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\palette.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\palette_gray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\filter.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\filter_gray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\grayscale.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\grayscale_gray.ico" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

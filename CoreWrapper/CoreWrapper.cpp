@@ -139,6 +139,36 @@ void CoreWrapper::ImageProc::detectFace()
 	editor->apply();
 }
 
+void CoreWrapper::ImageProc::paletting()
+{
+	editor->paletting256();
+	editor->apply();
+}
+
+void CoreWrapper::ImageProc::filter(FilterEntity::Filter^ filterInstance)
+{
+	int rows = filterInstance->Matrix->Count;
+	int cols = filterInstance->Matrix[0]->Count;
+	cv::Mat kern = cv::Mat::zeros(cv::Size(cols, rows), CV_32F);
+	cv::Point anchor;
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			auto mat = (filterInstance->Matrix);
+			auto row = mat[i];
+			auto item = row[j];
+			if (item->IsAnchor)
+			{
+				anchor = cv::Point(j, i);
+			}
+			kern.at<float>(cv::Point(j, i)) = item->Coeficient;
+		}
+	}
+	editor->filter(kern, anchor);
+	editor->apply();
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
 	if (img.type() != CV_8UC3)

@@ -9,6 +9,7 @@
 
 using namespace System;
 using namespace System::Drawing;
+using namespace System::Collections::ObjectModel;
 
 namespace CoreWrapper {
 
@@ -30,6 +31,8 @@ namespace CoreWrapper {
 		void restore(int changeIndex);
 		void save(System::String^ fileName);
 		void detectFace();
+		void paletting();
+		void filter(FilterEntity::Filter^ filterInstance);
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

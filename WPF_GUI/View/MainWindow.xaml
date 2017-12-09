@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:WPF_GUI"
         xmlns:prop="clr-namespace:WPF_GUI.Properties"
         mc:Ignorable="d"
-        Title="Image Editor" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="800" MinHeight="450">
+        Title="Image Editor" Height="450" Width="800" Top="20" Margin="-300,0,0,0" HorizontalAlignment="Center" MinWidth="900" MinHeight="450">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="0,0,0,0">
         <WrapPanel Margin="10,27,157.6,338">
-            <ToolBar x:Name="toolBar" Height="55" Width="628" Opacity="1" Background="{x:Null}">
+            <ToolBar x:Name="toolBar" Height="55" Width="700" Opacity="1" Background="{x:Null}">
                 <Button Name ="openButton" Command="{Binding OpenImageCommand}" Width="50" Height="50">
                     <StackPanel>
                         <Image>
@@ -175,6 +175,63 @@
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
                                             <Setter Property="Source" Value="{Binding FaceIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </Button>
+
+                <Button Name ="paletteButton" Width="50" Height="50" Command="{Binding PalettingCommand}">
+                    <StackPanel>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding PaletteIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding PaletteIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </Button>
+
+                <Button Name ="filterButtom" Width="50" Height="50" Command="{Binding FilterCommand}">
+                    <StackPanel>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding FilterIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding FilterIcoGray}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </Button>
+
+                <Button Name ="grayscaleButton" Width="50" Height="50" Command="{Binding GrayscaleCommand}">
+                    <StackPanel>
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                            <Setter Property="Source" Value="{Binding GrayscaleIco}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding GrayscaleIcoGray}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

@@ -5,7 +5,7 @@
     using System.Windows.Media.Imaging;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using WPF_GUI.Properties;
+    using Properties;
 
     public class ImageStorageModel : INotifyPropertyChanged
     {

@@ -35,7 +35,7 @@
 
         #endregion
 
-        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator, WindowMediator resizeMediator)
+        public ViewModel(WindowMediator contrastMediator, WindowMediator rotateMediator, WindowMediator resizeMediator, WindowMediator filterWindowMediator)
         {
             OpenImageCommand = new RelayCommand(OpenImage, s => IsView);
             OpenedImage = new ImageStorageModel();
@@ -47,13 +47,19 @@
             ResizeCommand = new RelayCommand(OpenResize, s => !OpenedImage.IsEmpty);
             ContrastAndBrightnessCommand = new RelayCommand(OpenBrightness, s => !OpenedImage.IsEmpty);
             DetectFaceCommand = new RelayCommand(DetectFace, s => !OpenedImage.IsEmpty);
+            PalettingCommand = new RelayCommand(Paletting, s => !OpenedImage.IsEmpty);
+            FilterCommand = new RelayCommand(Filter, s => !OpenedImage.IsEmpty);
+            GrayscaleCommand = new RelayCommand(Grayscale, s => !OpenedImage.IsEmpty);
 
             ContrastAndBrightnessWindowContrastMediator = contrastMediator;
             RotateWindowMediator = rotateMediator;
             ResizeWindowMediator = resizeMediator;
+            FilterWindowMediator = filterWindowMediator;
+
             ContrastAndBrightnessWindowContrastMediator.OnClose += BrigthnessWindowClosed;
             RotateWindowMediator.OnClose += RotateClosed;
             ResizeWindowMediator.OnClose += ResizeWindowClosed;
+            FilterWindowMediator.OnClose += FilterClosed;
 
             BrightnessViewModel.PropertyChanged += BrigthnessChanged;
             RotateViewModel.PropertyChanged += RotateChanged;
@@ -86,11 +92,15 @@
 
         public WindowMediator ResizeWindowMediator { get; set; }
 
+        public WindowMediator FilterWindowMediator { get; set; }
+
         public ContrastAndBrightnessViewModel BrightnessViewModel { get; set; } = new ContrastAndBrightnessViewModel();
 
         public RotateViewModel RotateViewModel { get; set; } = new RotateViewModel();
 
         public ResizeViewModel ResizeViewModel { get; set; } = new ResizeViewModel();
+
+        public FilterViewModel FilterViewModel { get; set; } = new FilterViewModel();
 
         public ImageSource CurrentView
         {
@@ -163,6 +173,12 @@
         public RelayCommand ResizeCommand { get; set; }
 
         public RelayCommand DetectFaceCommand { get; set; }
+
+        public RelayCommand PalettingCommand { get; set; }
+
+        public RelayCommand FilterCommand { get; set; }
+
+        public RelayCommand GrayscaleCommand { get; set; }
 
         #endregion
 
@@ -452,6 +468,51 @@
             ViewModelState = ProgrammState.Edit;
 
             editor.detectFace();
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
+        }
+
+        private void Paletting(object parameter)
+        {
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
+            editor.paletting();
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
+        }
+
+        private void Filter(object parameter)
+        {
+            FilterWindowMediator.ShowDialog(FilterViewModel);
+        }
+
+        private void Grayscale(object parameter)
+        {
+        }
+
+        private void FilterClosed(object sender, EventArgs e)
+        {
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
+            editor.filter(FilterViewModel.CurrentFilter);
             CurrentView = ConvertBitmapToImageSource(editor.getSource());
             AddPreviewIcon(CurrentView);
         }
