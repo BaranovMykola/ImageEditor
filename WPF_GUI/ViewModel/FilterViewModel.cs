@@ -198,7 +198,7 @@
             if (CurrentFilter != null)
             {
                 var anchor = CurrentFilter.Anchor;
-                if (anchor.X != -1 && anchor.Y != -1)
+                if (Math.Abs(anchor.X - (-1)) > float.Epsilon && Math.Abs(anchor.Y - (-1)) > float.Epsilon)
                 {
                     CurrentFilter.Matrix[(int)CurrentFilter.Anchor.X][(int)CurrentFilter.Anchor.Y].IsAnchor = false;
                 }

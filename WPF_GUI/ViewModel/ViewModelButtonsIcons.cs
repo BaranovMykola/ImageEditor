@@ -1,7 +1,7 @@
 ﻿namespace WPF_GUI.ViewModel
 {
     using System.Windows.Media;
-    using WPF_GUI.ImageContainer;
+    using ImageContainer;
 
     /// <summary>
     /// Part of ViewModel. Provides icons for binding buttons in MainWindow

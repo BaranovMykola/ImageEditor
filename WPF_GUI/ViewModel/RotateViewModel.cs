@@ -5,8 +5,8 @@
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Input;
-    using WPF_GUI.Properties;
-    using WPF_GUI.ViewModel.Command;
+    using Properties;
+    using Command;
 
     internal class RotateViewModel : INotifyPropertyChanged, IImageDialog
     {
@@ -30,7 +30,7 @@
             set
             {
                 angle = Math.Round(value);
-                OnPropertyChanged(nameof(Angle));
+                OnPropertyChanged();
             }
         }
 

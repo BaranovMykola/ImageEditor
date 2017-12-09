@@ -49,6 +49,9 @@ namespace imp
 
 	void toGrayscale(Mat& source)
 	{
-		cv::cvtColor(source, source, CV_BGR2GRAY);
+		if (source.type() == CV_8UC3)
+		{
+			cv::cvtColor(source, source, CV_BGR2GRAY);
+		}
 	}
 }

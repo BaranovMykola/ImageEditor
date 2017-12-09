@@ -11,7 +11,7 @@
     {
         private readonly List<Uri> imageSourses = new List<Uri>();
 
-        private int currentIndex = 0;
+        private int currentIndex;
 
         public ImageStorageModel()
         {
@@ -39,8 +39,8 @@
                     currentIndex = imageSourses.Count - 1;
                 }
 
-                OnPropertyChanged(nameof(CurrentIndex));
-                OnPropertyChanged(nameof(Current));
+                OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -72,13 +72,13 @@
         public void Next()
         {
             ++CurrentIndex;
-            OnPropertyChanged(nameof(Current));
+            OnPropertyChanged();
         }
 
         public void Prev()
         {
             --CurrentIndex;
-            OnPropertyChanged(nameof(Current));
+            OnPropertyChanged();
         }
 
         public void Remove()
@@ -89,7 +89,7 @@
             }
 
             --CurrentIndex;
-            OnPropertyChanged(nameof(Current));
+            OnPropertyChanged();
         }
 
         public void LoadImages(string[] pathes)
@@ -99,7 +99,7 @@
                 imageSourses.Add(new Uri(path, UriKind.Absolute));
             }
 
-            OnPropertyChanged(nameof(Current));
+            OnPropertyChanged();
         }
 
         public string[] GetAllPathes()
