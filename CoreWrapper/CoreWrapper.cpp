@@ -141,7 +141,7 @@ void CoreWrapper::ImageProc::detectFace()
 
 void CoreWrapper::ImageProc::paletting()
 {
-	editor->paletting256();
+	editor->palleting256();
 	editor->apply();
 }
 
