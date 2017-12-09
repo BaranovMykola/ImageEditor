@@ -58,7 +58,7 @@ int main()
 		}
 		else if (act == "bmp")
 		{
-			edit.paletting256();
+			edit.palleting256();
 		}
 		else if (act == "filter")
 		{
