@@ -497,6 +497,20 @@
 
         private void Grayscale(object parameter)
         {
+            StoreSelectedIndex();
+            if (IsView)
+            {
+                editor.loadImage(OpenedImage.CurrentPath);
+                var v = CurrentView;
+                ImagesPreview.Clear();
+                AddPreviewIcon(v);
+            }
+
+            ViewModelState = ProgrammState.Edit;
+
+            editor.toGrayScale();
+            CurrentView = ConvertBitmapToImageSource(editor.getSource());
+            AddPreviewIcon(CurrentView);
         }
 
         private void FilterClosed(object sender, EventArgs e)

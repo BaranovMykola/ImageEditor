@@ -33,6 +33,7 @@ namespace CoreWrapper {
 		void detectFace();
 		void paletting();
 		void filter(FilterEntity::Filter^ filterInstance);
+		void toGrayScale();
 	private:
 		Bitmap^ ConvertMatToBitmap(cv::Mat matToConvert);
 		Bitmap ^ convertMatToImage(const cv::Mat & opencvImage);

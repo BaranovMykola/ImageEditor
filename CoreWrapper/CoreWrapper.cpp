@@ -169,11 +169,19 @@ void CoreWrapper::ImageProc::filter(FilterEntity::Filter^ filterInstance)
 	editor->apply();
 }
 
+void CoreWrapper::ImageProc::toGrayScale()
+{
+	editor->toGrayscale();
+	editor->apply();
+}
+
 Bitmap^ CoreWrapper::ImageProc::ConvertMatToBitmap(cv::Mat img)
 {
 	if (img.type() != CV_8UC3)
 	{
-		throw gcnew NotSupportedException("Only images of type CV_8UC3 are supported for conversion to Bitmap");
+		Mat imgColor;
+		cvtColor(img, imgColor, CV_GRAY2BGR);
+		img = imgColor;
 	}
 
 	System::Drawing::Imaging::PixelFormat fmt(System::Drawing::Imaging::PixelFormat::Format24bppRgb);
