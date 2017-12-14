@@ -40,6 +40,7 @@ public:
 		original = imread(file);
 		source = original.clone();
 		preview = source.clone();
+		changes.clear();
 	}
 
 	cv::Mat getSource()const
