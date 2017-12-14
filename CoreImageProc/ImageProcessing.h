@@ -78,8 +78,22 @@ namespace imp
 	{
 		if (source.type() == CV_8UC3)
 		{
-			cv::cvtColor(source, source, CV_BGR2GRAY);
-		}
+			uchar* curr_source_row;
+			uchar* curr_res_row;
+			Mat result(source.rows, source.cols, CV_8UC1);
+			for (int i = 0; i < source.rows; ++i)
+			{
+				curr_source_row = source.ptr<uchar>(i);
+				curr_res_row = result.ptr<uchar>(i);
+				int result_j = 0;
+				for (int j = 0; j < source.cols*source.channels(); j+= source.channels())
+				{
+					curr_res_row[result_j] = (curr_source_row[j] + curr_source_row[j + 1] + curr_source_row[j + 2]) / source.channels();
+					++result_j;
+				}
+			}
+			source = result.clone();
+		}		
 	}
 
 	void printFaces(cv::Mat& source, std::vector<cv::Rect> faces)
