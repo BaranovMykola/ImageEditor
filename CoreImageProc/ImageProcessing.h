@@ -9,6 +9,7 @@ using namespace cv;
 namespace imp
 {
 	uchar** _getRowsPointers(Mat& mat);
+	void clear_memory(uchar**, int);
 
 	void resize(cv::Mat& source, float percentRatio)
 	{
@@ -47,10 +48,7 @@ namespace imp
 	void filter2D(cv::Mat& source, cv::Mat& kern, cv::Point anchor)
 	{
 		Mat filtered;
-		//cv::filter2D(source, filtered, source.depth(), kern, anchor, 0.0);
 		uchar** source_rows = _getRowsPointers(source);
-
-
 		uchar* filtered_img_row;
 		filtered = source.clone();
 		for (int i = anchor.x; i < source.rows-kern.rows+ anchor.x; ++i)
@@ -73,25 +71,7 @@ namespace imp
 			}
 		}
 		source = filtered;
-		/*for (each pixel P)
-		{
-			P(x,y)
-				AncX
-				AncY
-
-				I(x,y) - image
-
-				I(x-anchX, y-anchY) - - - - - I(x-anchX+kern.width)
-				- - - - - - - - - - - - - -- - - - - - - - - - - - 
-
-
-
-				I(x-anchX,y-anchY+kern.height) - - -I(x - anchX+kern.width, y - anchY + kern.height)
-
-				I(x,y) = sum(...)
-
-
-		}*/
+		clear_memory(source_rows, source.rows);
 	}
 
 	void toGrayscale(Mat& source)
@@ -156,7 +136,7 @@ namespace imp
 		return faces;
 	}
 
-	uchar** _getRowsPointers(Mat& mat)// clear memory
+	uchar** _getRowsPointers(Mat& mat)
 	{
 		uchar** result;
 		result = new uchar*[mat.rows];
@@ -165,6 +145,11 @@ namespace imp
 			result[i] = mat.ptr<uchar>(i);
 		}
 		return result;
+	}
+
+	void clear_memory(uchar** mat_rows, int rows_quantity)
+	{
+		delete[] mat_rows;
 	}
 
 }
