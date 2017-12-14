@@ -45,8 +45,28 @@ namespace imp
 	void filter2D(cv::Mat& source, cv::Mat& kern, cv::Point anchor)
 	{
 		Mat filtered;
-		cv::filter2D(source, filtered, source.depth(), kern, anchor);
+		cv::filter2D(source, filtered, source.depth(), kern, anchor, 0.0);
 		source = filtered;
+
+		/*for (each pixel P)
+		{
+			P(x,y)
+				AncX
+				AncY
+
+				I(x,y) - image
+
+				I(x-anchX, y-anchY) - - - - - I(x-anchX+kern.width)
+				- - - - - - - - - - - - - -- - - - - - - - - - - - 
+
+
+
+				I(x-anchX,y-anchY+kern.height) - - -I(x - anchX+kern.width, y - anchY + kern.height)
+
+				I(x,y) = sum(...)
+
+
+		}*/
 	}
 
 	void toGrayscale(Mat& source)
@@ -62,6 +82,35 @@ namespace imp
 		for (auto i : faces)
 		{
 			cv::rectangle(source, i, cv::Scalar(0, 255, 0), 4);
+		}
+	}
+
+	void changeContrastAndBrightness(Mat& source, Mat& res, float _contrast, int _brightness)
+	{
+		/*
+		for( int y = 0; y < image.rows; y++ )
+    { for( int x = 0; x < image.cols; x++ )
+         { for( int c = 0; c < 3; c++ )
+              {
+      new_image.at<Vec3b>(y,x)[c] =
+         saturate_cast<uchar>( alpha*( image.at<Vec3b>(y,x)[c] ) + beta );
+
+             }
+    }
+    }*/
+		// uchar* p;
+		// p = I.ptr<uchar>(i);
+		res = source.clone();
+		uchar* curr_row_source;
+		uchar* curr_row_res;
+		for (size_t i = 0; i < source.rows; ++i)
+		{
+			curr_row_source = source.ptr<uchar>(i);
+			curr_row_res = res.ptr<uchar>(i);
+			for (size_t j = 0; j < source.cols*source.channels(); ++j)
+			{
+				curr_row_res[j] = saturate_cast<uchar> (_contrast*curr_row_source[j] + _brightness);
+			}
 		}
 	}
 
@@ -94,4 +143,5 @@ namespace imp
 
 		return faces;
 	}
+
 }

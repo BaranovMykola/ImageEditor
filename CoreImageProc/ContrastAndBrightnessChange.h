@@ -1,5 +1,7 @@
 #pragma once
 #include "AbstractChange.h"
+#include "ImageProcessing.h"
+
 class ContrastAndBrightnessChange : public AbstractChange
 {
 public:
@@ -10,7 +12,8 @@ public:
 	}
 	void apply(cv::Mat& source)
 	{
-		source.convertTo(source, source.type(), contrast, brightness);
+		//source.convertTo(source, source.type(), contrast, brightness);
+		imp::changeContrastAndBrightness(source, source, contrast, brightness);
 	}
 private:
 	float contrast;

@@ -50,7 +50,14 @@ public:
 
 	void changeContrastAndBrightness(float _contrast, int _brightness)
 	{
-		source.convertTo(preview, source.type(), _contrast, _brightness);
+		imp::changeContrastAndBrightness(source, preview, _contrast, _brightness);
+		//source.convertTo(preview, source.type(), _contrast, _brightness); // this is library func. you should replace it by your func
+		/*
+		             ^  :) ok?
+		//instead of |
+		preview = source.clone();
+		imp::yourfunc(preview, _contrast,_brightness);
+		*/
 		eraseChange();
 		currentChange = new ContrastAndBrightnessChange(_contrast, _brightness);
 	}
