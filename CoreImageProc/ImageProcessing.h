@@ -275,10 +275,10 @@ void filter2D_cuda(Mat& source, Mat& kern, Point anchor)
 
 			Mat c = source.clone();
 			cl::Buffer Src(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-						 source.rows*source.cols*sizeof(uchar), source.data);
+						 source.rows*source.cols*source.channels() *sizeof(uchar), source.data);
 
 			cl::Buffer Dst(context, CL_MEM_WRITE_ONLY | CL_MEM_COPY_HOST_PTR,
-						   source.rows*source.cols * sizeof(uchar), c.data);
+						   source.rows*source.cols *source.channels() * sizeof(uchar), source.data);
 
 			//cl::Buffer B(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
 			//			 b.size() * sizeof(double), b.data());
@@ -292,12 +292,12 @@ void filter2D_cuda(Mat& source, Mat& kern, Point anchor)
 			Floyd.setArg(2, static_cast<float>(2));
 			Floyd.setArg(3, static_cast<int>(-60));
 
-			size_t N = source.rows*source.cols;
+			size_t N = source.rows*source.cols*source.channels();
 			// Launch kernel on the compute device.
 			queue.enqueueNDRangeKernel(Floyd, cl::NullRange, N, cl::NullRange);
 
 			// Get result back to host.
-			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols * sizeof(uchar), c.data);
+			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels()* sizeof(uchar), source.data);
 
 
 			//W_ = Wk_1;
