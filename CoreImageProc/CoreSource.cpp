@@ -4,6 +4,7 @@
 #include "opencv2/objdetect/objdetect.hpp"
 #include "ImageProcess.h"
 #include "ImageEditor.h"
+#include <ctime>
 
 int main()
 {
@@ -62,11 +63,15 @@ int main()
 		}
 		else if (act == "filter")
 		{
-			//Mat img = cv::imread("img.jpg");
-			Mat kern = Mat::ones(Size(4, 3), CV_32F);
-			kern /= 4*3;
-			edit.filter(kern, Point(1, 1));
-			//imp::filter2D(img, kern,Point(1,1));
+			Mat img = cv::imread("img.jpg");
+			Mat kern = Mat::ones(Size(6, 7), CV_32F);
+			kern /= 6*7;
+			//edit.filter(kern, Point(3, 3));
+			//imp::filter2D(img, kern,Point(3,3));
+			auto s = clock();
+			filter2D_cuda(img, kern, Point(3, 3));
+			auto e = clock();
+			cout << "Time: " << (e - s) / 1000.0 << endl;
 		}
 		else if (act == "gray")
 		{

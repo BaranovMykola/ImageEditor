@@ -53,8 +53,5 @@
     <ClInclude Include="FilterChange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GrayscaleChange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

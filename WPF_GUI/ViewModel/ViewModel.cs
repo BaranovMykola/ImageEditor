@@ -255,7 +255,10 @@
         private void RemoveImageFromView()
         {
             OpenedImage.Remove();
-            ImagesPreview.RemoveAt(CurrentIndex);
+            if (CurrentIndex != -1)
+            {
+                ImagesPreview.RemoveAt(CurrentIndex);
+            }
             OnPropertyChanged();
             Console.WriteLine(OpenedImage.CurrentIndex);
         }
