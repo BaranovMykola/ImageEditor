@@ -53,5 +53,8 @@
     <ClInclude Include="FilterChange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CudaProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
