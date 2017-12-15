@@ -14,8 +14,9 @@
 #include "PalletingChange.h"
 #include "FilterChange.h"
 #include "GrayscaleChange.h"
-#include "ImageProcessing.h"
 #include "FaceDetactionChange.h"
+#include "ImageProcessing.h"
+#include "CudaProcessing.h"
 
 #include "opencv2/objdetect/objdetect.hpp"
 
@@ -27,12 +28,14 @@ public:
 	ImageEditor()
 	{
 		currentChange = nullptr;
+		searchGPUDevice();
 	}
 	
 	ImageEditor(std::string file)
 	{
 		currentChange = nullptr;
 		loadImage(file);
+		searchGPUDevice();
 	}
 
 	void loadImage(std::string file)
@@ -50,17 +53,26 @@ public:
 
 	void changeContrastAndBrightness(float _contrast, int _brightness)
 	{
-		imp::changeContrastAndBrightness(source, preview, _contrast, _brightness);
-		//preview = source.clone();
-
-		//contratAndBirghtness_cuda(preview, _contrast, _brightness);
-		//source.convertTo(preview, source.type(), _contrast, _brightness); // this is library func. you should replace it by your func
-		/*
-		             ^  :) ok?
-		//instead of |
 		preview = source.clone();
-		imp::yourfunc(preview, _contrast,_brightness);
-		*/
+		if (preview.cols*preview.rows*preview.channels() < 1000000)
+		{
+			cout << "CPU used" << endl;
+			imp::changeContrastAndBrightness(preview, _contrast, _brightness);
+		}
+		else
+		{
+			try
+			{
+				cout << "GPU used" << endl;
+				gpu::contratAndBirghtness_cuda(preview, _contrast, _brightness, GPUDevice);
+			}
+			catch (...)
+			{
+				cout << "GPU error. CPU used" << endl;
+				imp::changeContrastAndBrightness(preview, _contrast, _brightness);
+			}
+		}
+
 		eraseChange();
 		currentChange = new ContrastAndBrightnessChange(_contrast, _brightness);
 	}
@@ -172,6 +184,52 @@ public:
 		currentChange = new GrayscalseChange();
 	}
 
+	void searchGPUDevice()
+	{
+		std::vector<cl::Platform> platform;
+		cl::Platform::get(&platform);
+
+		if (platform.empty())
+		{
+			throw;
+		}
+
+		cl::Context context;
+		std::vector<cl::Device> devices;
+		for (auto p = platform.begin(); devices.empty() && p != platform.end(); p++)
+		{
+			std::vector<cl::Device> pldev;
+
+			try
+			{
+				p->getDevices(CL_DEVICE_TYPE_GPU, &pldev);
+
+				for (auto d = pldev.begin(); devices.empty() && d != pldev.end(); d++)
+				{
+					if (!d->getInfo<CL_DEVICE_AVAILABLE>()) continue;
+
+					std::string ext = d->getInfo<CL_DEVICE_EXTENSIONS>();
+
+					if (
+						ext.find("cl_khr_fp64") == std::string::npos &&
+						ext.find("cl_amd_fp64") == std::string::npos
+						) continue;
+
+					devices.push_back(*d);
+					context = cl::Context(devices);
+				}
+			}
+			catch (...)
+			{
+				devices.clear();
+			}
+			if (!devices.empty())
+			{
+				GPUDevice = devices[0];
+			}
+		}
+	}
+
 public:
 
 	void eraseChange()
@@ -186,4 +244,5 @@ public:
 	Mat original;
 	std::vector<AbstractChange*> changes;
 	AbstractChange* currentChange;
+	cl::Device GPUDevice;
 };

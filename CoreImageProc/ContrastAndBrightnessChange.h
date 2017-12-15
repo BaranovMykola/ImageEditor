@@ -13,7 +13,7 @@ public:
 	void apply(cv::Mat& source)
 	{
 		//source.convertTo(source, source.type(), contrast, brightness);
-		imp::changeContrastAndBrightness(source, source, contrast, brightness);
+		imp::changeContrastAndBrightness(source, contrast, brightness);
 	}
 private:
 	float contrast;

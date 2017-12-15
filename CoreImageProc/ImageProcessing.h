@@ -104,18 +104,18 @@ namespace imp
 		}
 	}
 
-	void changeContrastAndBrightness(Mat& source, Mat& res, float _contrast, int _brightness)
+	void changeContrastAndBrightness(Mat& source, float _contrast, int _brightness)
 	{
-		res = source.clone();
+		//res = source.clone();
 		uchar* curr_row_source;
 		uchar* curr_row_res;
 		for (size_t i = 0; i < source.rows; ++i)
 		{
 			curr_row_source = source.ptr<uchar>(i);
-			curr_row_res = res.ptr<uchar>(i);
+			//curr_row_res = res.ptr<uchar>(i);
 			for (size_t j = 0; j < source.cols*source.channels(); ++j)
 			{
-				curr_row_res[j] = saturate_cast<uchar> (_contrast*curr_row_source[j] + _brightness);
+				curr_row_source[j] = saturate_cast<uchar> (_contrast*curr_row_source[j] + _brightness);
 			}
 		}
 	}

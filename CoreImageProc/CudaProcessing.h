@@ -11,7 +11,7 @@ using namespace std;
 #include <CL/cl.hpp>
 namespace gpu
 {
-	void contratAndBirghtness_cuda(Mat& source, float alpha, int beta)
+	void contratAndBirghtness_cuda(Mat& source, float alpha, int beta, cl::Device device)
 	{
 		static const char contrastAndBrightnessSource[] =
 			"#if defined(cl_khr_fp64)\n"
@@ -38,7 +38,7 @@ namespace gpu
 			"}\n";
 
 		try
-		{
+		{/*
 			std::vector<cl::Platform> platform;
 			cl::Platform::get(&platform);
 
@@ -81,9 +81,10 @@ namespace gpu
 			if (device.empty())
 			{
 				throw;
-			}
-
-			cl::CommandQueue queue(context, device[0]);
+			}*/
+			cout << "Device: " << device.getInfo<CL_DEVICE_NAME>() << endl;
+			cl::Context context(device);
+			cl::CommandQueue queue(context, device);
 
 			cl::Program program(context, cl::Program::Sources(
 				1, std::make_pair(contrastAndBrightnessSource, strlen(contrastAndBrightnessSource))
@@ -91,13 +92,13 @@ namespace gpu
 
 			try
 			{
-				program.build(device);
+				program.build(std::vector<cl::Device>{device});
 			}
 			catch (const cl::Error&)
 			{
 				std::cerr
 					<< "OpenCL compilation error" << std::endl
-					<< program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device[0])
+					<< program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device)
 					<< std::endl;
 				throw;
 			}
