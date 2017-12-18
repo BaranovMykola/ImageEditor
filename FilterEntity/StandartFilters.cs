@@ -59,9 +59,9 @@
         {
             get
             {
-                Filter dev = new Filter(3,1) {Name = "Upper Y Derivative"};
+                Filter dev = new Filter(3, 1) { Name = "Upper Y Derivative" };
                 dev.Matrix[0][0] = new FilterItem(1);
-                dev.Matrix[1][0] = new FilterItem(0) {IsAnchor = true};
+                dev.Matrix[1][0] = new FilterItem(0) { IsAnchor = true };
                 dev.Matrix[2][0] = new FilterItem(-1);
                 return dev;
             }
@@ -99,7 +99,7 @@
                 sharpen.Matrix[1][0] = new FilterItem(-1);
                 sharpen.Matrix[1][2] = new FilterItem(-1);
 
-                sharpen.Matrix[1][1] = new FilterItem(5) {IsAnchor = true};
+                sharpen.Matrix[1][1] = new FilterItem(5) { IsAnchor = true };
 
                 return sharpen;
             }
