@@ -64,8 +64,6 @@ int main()
 		}
 		else if (act == "filter")
 		{
-			/*Mat img = imread("img.jpg");
-			Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);*/
 			for (int i = 100; i < 10000; i += 100)
 			{
 				Mat kern = Mat::ones(Size(60, 60), CV_32F);

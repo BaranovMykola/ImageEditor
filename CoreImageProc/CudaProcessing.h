@@ -110,12 +110,12 @@ namespace gpu
 
 			// Allocate device buffers and transfer input data to device.
 
-			Mat c = source.clone();
+			Mat filtered = source.clone();
 			cl::Buffer Src(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
 						   source.rows*source.cols*source.channels() * sizeof(uchar), source.data);
 
 			cl::Buffer Dst(context, CL_MEM_WRITE_ONLY | CL_MEM_COPY_HOST_PTR,
-						   source.rows*source.cols *source.channels() * sizeof(uchar), c.data);
+						   source.rows*source.cols *source.channels() * sizeof(uchar), filtered.data);
 
 			cl::Buffer Kern(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
 						   kern.rows*kern.cols * sizeof(float), kern.data);
@@ -137,12 +137,9 @@ namespace gpu
 			queue.enqueueNDRangeKernel(FilterKernel, cl::NullRange, N, cl::NullRange);
 
 			// Get result back to host.
-			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), c.data);
+			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), filtered.data);
 
-			Mat f;
-			cv::filter2D(source, f, source.depth(), kern, anchor);
-			source = c;
-
+			source = filtered;
 		}
 		catch (const cl::Error &err)
 		{

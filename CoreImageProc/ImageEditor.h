@@ -171,7 +171,24 @@ public:
 	void filter(cv::Mat& kern, cv::Point anchor)
 	{
 		preview = source.clone();
-		gpu::filter2D(preview, kern, anchor,GPUDevice);
+		try
+		{
+			if (preview.cols*preview.rows > 250000 || kern.rows*kern.cols > 50)
+			{
+				cout << "GPU used" << endl;
+				gpu::filter2D(preview, kern, anchor,GPUDevice);
+			}
+			else
+			{
+				cout << "CPU used" << endl;
+				imp::filter2D(preview, kern, anchor);
+			}
+		}
+		catch (...)
+		{
+			cout << "GPU error. CPU used" << endl;
+			imp::filter2D(preview, kern, anchor);
+		}
 		eraseChange();
 		currentChange = new FilterChange(kern, anchor);
 	}
