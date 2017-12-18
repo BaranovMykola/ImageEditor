@@ -171,7 +171,7 @@ public:
 	void filter(cv::Mat& kern, cv::Point anchor)
 	{
 		preview = source.clone();
-		imp::filter2D(preview, kern, anchor);
+		gpu::filter2D(preview, kern, anchor,GPUDevice);
 		eraseChange();
 		currentChange = new FilterChange(kern, anchor);
 	}

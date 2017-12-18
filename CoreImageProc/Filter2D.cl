@@ -38,7 +38,7 @@ kernel void AddWeighted(
 			{
 				//result += (kern.at<float>(k, l)* source_rows[i + k - anchor.x][j + (l - anchor.y)*source.channels()]);
 				int disoff = ((x + l - anchX)*channels) % channels;
-				result += Kern[k*kernCols + l] * Dst[(y + k - anchY)*cols*channels + (x+l- anchX)*channels+offset];
+				result += Kern[k*kernCols + l] * Src[(y + k - anchY)*cols*channels + (x+l- anchX)*channels+offset];
 				//result += Kern[k*kernCols + l] * 
 			}
 		}

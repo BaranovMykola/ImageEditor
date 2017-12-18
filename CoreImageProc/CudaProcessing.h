@@ -170,6 +170,7 @@ namespace gpu
 
 			Mat f;
 			cv::filter2D(source, f, source.depth(), kern, anchor);
+			source = c;
 
 		}
 		catch (const cl::Error &err)

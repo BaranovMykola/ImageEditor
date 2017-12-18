@@ -66,10 +66,10 @@ int main()
 		{
 			Mat img = imread("img.jpg");
 			//Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);
-			Mat kern = Mat::ones(Size(3, 3), CV_32F);
-			kern /= 3*3;
+			Mat kern = Mat::ones(Size(60, 60), CV_32F);
+			kern /= 60*60;
 			auto s = clock();
-			gpu::filter2D(img, kern,Point(0,0),edit.GPUDevice);
+			gpu::filter2D(img, kern,Point(54,23),edit.GPUDevice);
 			auto e = clock();
 			cout << "CPU: " << (e - s) / 1000.0 << endl;
 		}
