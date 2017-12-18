@@ -67,7 +67,7 @@ int main()
 			Mat img = imread("img.jpg");
 			//Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);
 			Mat kern = Mat::ones(Size(60, 60), CV_32F);
-			kern /= 60*60;
+			kern *= -1;
 			auto s = clock();
 			gpu::filter2D(img, kern,Point(54,23),edit.GPUDevice);
 			auto e = clock();
