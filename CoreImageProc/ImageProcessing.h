@@ -51,12 +51,12 @@ namespace imp
 		uchar** source_rows = _getRowsPointers(source);
 		uchar* filtered_img_row;
 		filtered = source.clone();
-		for (int i = anchor.x; i < source.rows - kern.rows + anchor.x; ++i)
+		for (int i = anchor.y; i < source.rows - kern.rows + anchor.y; ++i)
 		{
 			filtered_img_row = filtered.ptr<uchar>(i);
 			for (int channel_num = 0; channel_num < source.channels(); ++channel_num)
 			{
-				for (int j = anchor.y + channel_num; j < (source.cols - kern.cols + anchor.y)*source.channels(); j += source.channels())
+				for (int j = anchor.x + channel_num; j < (source.cols - kern.cols + anchor.x)*source.channels(); j += source.channels())
 				{
 					double result = 0;
 					for (int k = 0; k < kern.rows; ++k)

@@ -5,7 +5,7 @@
 #else
 #  error double precision is not supported
 #endif
-kernel void AddWeighted(
+kernel void Filter2D(
 	global const unsigned char *Src,
 	global const float *Kern,
 	global unsigned char *Dst,

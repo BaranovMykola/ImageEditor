@@ -21,7 +21,6 @@ namespace gpu
 
 		try
 		{
-			cout << "Device: " << device.getInfo<CL_DEVICE_NAME>() << endl;
 			cl::Context context(device);
 			cl::CommandQueue queue(context, device);
 
@@ -42,7 +41,7 @@ namespace gpu
 				throw;
 			}
 
-			cl::Kernel Floyd(program, "AddWeighted");
+			cl::Kernel ContrastKernel(program, "AddWeighted");
 
 			// Allocate device buffers and transfer input data to device.
 
@@ -54,14 +53,14 @@ namespace gpu
 						   source.rows*source.cols *source.channels() * sizeof(uchar), source.data);
 
 			// Set kernel parameters.
-			Floyd.setArg(0, Src);
-			Floyd.setArg(1, Dst);
-			Floyd.setArg(2, static_cast<float>(alpha));
-			Floyd.setArg(3, static_cast<int>(beta));
+			ContrastKernel.setArg(0, Src);
+			ContrastKernel.setArg(1, Dst);
+			ContrastKernel.setArg(2, static_cast<float>(alpha));
+			ContrastKernel.setArg(3, static_cast<int>(beta));
 
 			size_t N = source.rows*source.cols*source.channels();
 			// Launch kernel on the compute device.
-			queue.enqueueNDRangeKernel(Floyd, cl::NullRange, N, cl::NullRange);
+			queue.enqueueNDRangeKernel(ContrastKernel, cl::NullRange, N, cl::NullRange);
 
 			// Get result back to host.
 			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), source.data);
@@ -80,33 +79,6 @@ namespace gpu
 
 	void filter2D(Mat& source, Mat& kern, Point anchor, cl::Device device)
 	{
-
-		/*Mat filtered;
-		uchar** source_rows = _getRowsPointers(source);
-		uchar* filtered_img_row;
-		filtered = source.clone();
-		for (int i = anchor.x; i < source.rows - kern.rows + anchor.x; ++i) // x->y
-		{
-			filtered_img_row = filtered.ptr<uchar>(i);
-			for (int channel_num = 0; channel_num < source.channels(); ++channel_num)
-			{
-				for (int j = anchor.y + channel_num; j < (source.cols - kern.cols + anchor.y)*source.channels(); j += source.channels()) // y->x
-				{
-					double result = 0;
-					for (int k = 0; k < kern.rows; ++k)
-					{
-						for (int l = 0; l < kern.cols; ++l)
-						{
-							result += (kern.at<float>(k, l)* source_rows[i + k - anchor.x][j + (l - anchor.y)*source.channels()]);
-						}
-					}
-					filtered_img_row[j] = saturate_cast<uchar>(result);
-				}
-			}
-		}
-		source = filtered;
-		clear_memory(source_rows, source.rows);*/
-
 		ifstream f("Filter2D.cl");
 		string str((std::istreambuf_iterator<char>(f)),
 				   std::istreambuf_iterator<char>());
@@ -114,7 +86,6 @@ namespace gpu
 
 		try
 		{
-			cout << "Device: " << device.getInfo<CL_DEVICE_NAME>() << endl;
 			cl::Context context(device);
 			cl::CommandQueue queue(context, device);
 
@@ -135,7 +106,7 @@ namespace gpu
 				throw;
 			}
 
-			cl::Kernel Floyd(program, "AddWeighted");
+			cl::Kernel FilterKernel(program, "Filter2D");
 
 			// Allocate device buffers and transfer input data to device.
 
@@ -150,20 +121,20 @@ namespace gpu
 						   kern.rows*kern.cols * sizeof(float), kern.data);
 
 			// Set kernel parameters.
-			Floyd.setArg(0, Src);
-			Floyd.setArg(1, Kern);
-			Floyd.setArg(2, Dst);
-			Floyd.setArg(3, source.rows);
-			Floyd.setArg(4, source.cols);
-			Floyd.setArg(5, anchor.x);
-			Floyd.setArg(6, anchor.y);
-			Floyd.setArg(7, kern.rows);
-			Floyd.setArg(8, kern.cols);
-			Floyd.setArg(9, source.channels());
+			FilterKernel.setArg(0, Src);
+			FilterKernel.setArg(1, Kern);
+			FilterKernel.setArg(2, Dst);
+			FilterKernel.setArg(3, source.rows);
+			FilterKernel.setArg(4, source.cols);
+			FilterKernel.setArg(5, anchor.x);
+			FilterKernel.setArg(6, anchor.y);
+			FilterKernel.setArg(7, kern.rows);
+			FilterKernel.setArg(8, kern.cols);
+			FilterKernel.setArg(9, source.channels());
 
 			size_t N = source.rows*source.cols*source.channels();
 			// Launch kernel on the compute device.
-			queue.enqueueNDRangeKernel(Floyd, cl::NullRange, N, cl::NullRange);
+			queue.enqueueNDRangeKernel(FilterKernel, cl::NullRange, N, cl::NullRange);
 
 			// Get result back to host.
 			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), c.data);

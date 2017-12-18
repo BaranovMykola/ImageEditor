@@ -64,14 +64,38 @@ int main()
 		}
 		else if (act == "filter")
 		{
-			Mat img = imread("img.jpg");
-			//Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);
-			Mat kern = Mat::ones(Size(60, 60), CV_32F);
-			kern *= -1;
-			auto s = clock();
-			gpu::filter2D(img, kern,Point(54,23),edit.GPUDevice);
-			auto e = clock();
-			cout << "CPU: " << (e - s) / 1000.0 << endl;
+			/*Mat img = imread("img.jpg");
+			Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);*/
+			for (int i = 100; i < 10000; i += 100)
+			{
+				Mat kern = Mat::ones(Size(60, 60), CV_32F);
+				Mat img = Mat::zeros(Size(i, i), CV_8UC3);
+
+				cout << "Mat(" << i << "," << i << ")" << endl;
+				{
+					auto s = clock();
+					Mat f;
+					cv::filter2D(img, f, img.depth(), kern, Point(20,30));
+					auto e = clock();
+					cout << "CV CPU: " << (e - s) / 1000.0 << endl;
+				}
+				{
+					auto s = clock();
+					Mat img = Mat::zeros(Size(i, i), CV_8UC1);
+					gpu::filter2D(img, kern, Point(20,30), edit.GPUDevice);
+					auto e = clock();
+					cout << "GPU: " << (e - s) / 1000.0 << endl;
+				}
+				{
+					auto s = clock();
+					Mat img = Mat::zeros(Size(i, i), CV_8UC1);
+					imp::filter2D(img, kern, Point(20,30));
+					auto e = clock();
+					cout << "CPU: " << (e - s) / 1000.0 << endl;
+					cout << endl;
+				}
+
+			}
 		}
 		else if (act == "gray")
 		{
