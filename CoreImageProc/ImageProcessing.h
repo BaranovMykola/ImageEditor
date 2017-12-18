@@ -63,7 +63,7 @@ namespace imp
 					{
 						for (int l = 0; l < kern.cols; ++l)
 						{
-							result += (kern.at<float>(k, l)* source_rows[i + k - anchor.x][j + (l - anchor.y)*source.channels()]);
+							result += (kern.at<float>(k, l)* source_rows[i + k - anchor.y][j + (l - anchor.x)*source.channels()]);
 						}
 					}
 					filtered_img_row[j] = saturate_cast<uchar>(result);

@@ -37,10 +37,20 @@ kernel void AddWeighted(
 			for (int l = 0; l < kernCols; ++l)
 			{
 				//result += (kern.at<float>(k, l)* source_rows[i + k - anchor.x][j + (l - anchor.y)*source.channels()]);
-				result += Kern[k*kernCols + l] * Dst[(y + k- anchX)*cols*channels + x*channels+ (l*channels - anchY)*channels];
+				result += Kern[k*kernCols + l] * Dst[(y + k - anchY)*cols*channels + (x+l- anchX)*channels];
+				//result += Kern[k*kernCols + l] * 
 			}
 		}
 
-		Dst[id] = result;
+		int r;
+		if (result - (int)result > 0.5)
+		{
+			r = result + 1;
+		}
+		else
+		{
+			r = result;
+		}
+		Dst[id] = r;
 	}
 }
