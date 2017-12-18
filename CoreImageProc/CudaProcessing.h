@@ -85,12 +85,12 @@ namespace gpu
 		uchar** source_rows = _getRowsPointers(source);
 		uchar* filtered_img_row;
 		filtered = source.clone();
-		for (int i = anchor.x; i < source.rows - kern.rows + anchor.x; ++i)
+		for (int i = anchor.x; i < source.rows - kern.rows + anchor.x; ++i) // x->y
 		{
 			filtered_img_row = filtered.ptr<uchar>(i);
 			for (int channel_num = 0; channel_num < source.channels(); ++channel_num)
 			{
-				for (int j = anchor.y + channel_num; j < (source.cols - kern.cols + anchor.y)*source.channels(); j += source.channels())
+				for (int j = anchor.y + channel_num; j < (source.cols - kern.cols + anchor.y)*source.channels(); j += source.channels()) // y->x
 				{
 					double result = 0;
 					for (int k = 0; k < kern.rows; ++k)
@@ -144,7 +144,7 @@ namespace gpu
 						   source.rows*source.cols*source.channels() * sizeof(uchar), source.data);
 
 			cl::Buffer Dst(context, CL_MEM_WRITE_ONLY | CL_MEM_COPY_HOST_PTR,
-						   source.rows*source.cols *source.channels() * sizeof(uchar), source.data);
+						   source.rows*source.cols *source.channels() * sizeof(uchar), c.data);
 
 			cl::Buffer Kern(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
 						   kern.rows*kern.cols * sizeof(float), kern.data);
@@ -166,8 +166,9 @@ namespace gpu
 			queue.enqueueNDRangeKernel(Floyd, cl::NullRange, N, cl::NullRange);
 
 			// Get result back to host.
-			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), source.data);
+			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), c.data);
 
+			//imp::filter2D(c, kern, anchor);
 
 		}
 		catch (const cl::Error &err)

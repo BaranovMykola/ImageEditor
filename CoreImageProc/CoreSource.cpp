@@ -64,10 +64,10 @@ int main()
 		}
 		else if (act == "filter")
 		{
-			Mat img = imread("big.jpg");
+			Mat img = imread("img.jpg", CV_LOAD_IMAGE_GRAYSCALE);
 			//Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);
-			Mat kern = Mat::ones(Size(6, 7), CV_32F);
-			kern /= 6*7;
+			Mat kern = Mat::ones(Size(7, 7), CV_32F);
+			kern /= 7*7;
 			auto s = clock();
 			gpu::filter2D(img, kern,Point(3,3),edit.GPUDevice);
 			auto e = clock();
