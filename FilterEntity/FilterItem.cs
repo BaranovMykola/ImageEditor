@@ -37,7 +37,7 @@ namespace FilterEntity
             set
             {
                 coeficient = value;
-                OnPropertyChanged(nameof(Coeficient));
+                OnPropertyChanged();
             }
         }
 
@@ -51,7 +51,7 @@ namespace FilterEntity
             set
             {
                 isAnchor = value;
-                OnPropertyChanged(nameof(IsAnchor));
+                OnPropertyChanged();
             }
         }
 

@@ -104,5 +104,17 @@
                 return sharpen;
             }
         }
+
+        public static Filter EdgeFilter
+        {
+            get
+            {
+                Filter sharpen = new Filter(3, 3, new NCalc.Expression("-1")) { Name = "Edge filter" };
+
+                sharpen.Matrix[1][1] = new FilterItem(8) { IsAnchor = true };
+
+                return sharpen;
+            }
+        }
     }
 }
