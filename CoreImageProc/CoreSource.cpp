@@ -64,14 +64,41 @@ int main()
 		}
 		else if (act == "filter")
 		{
+			Mat img = imread("big.jpg");
+			//Mat img = Mat::zeros(Size(3000, 3000), CV_8UC3);
 			Mat kern = Mat::ones(Size(6, 7), CV_32F);
 			kern /= 6*7;
-			//edit.filter(kern, Point(3, 3));
-			//imp::filter2D(img, kern,Point(3,3));
+			auto s = clock();
+			gpu::filter2D(img, kern,Point(3,3),edit.GPUDevice);
+			auto e = clock();
+			cout << "CPU: " << (e - s) / 1000.0 << endl;
 		}
 		else if (act == "gray")
 		{
 			edit.toGrayscale();
+		}
+		else if (act == "cuda_change")
+		{
+			for (int i = 5000; i < 5005; i+=1)
+			{
+				cout << "Mat(" << i << "," << i << ")" << endl;
+				{
+					auto s = clock();
+					Mat img = Mat::zeros(Size(i, i), CV_8UC3);
+					//imp::changeContrastAndBrightness(img, 1, 0);
+					auto e = clock();
+					cout << "CPU: " << (e - s) / 1000.0 << endl;
+				}
+				{
+					auto s = clock();
+					Mat img = Mat::zeros(Size(i, i), CV_8UC1);
+					gpu::contratAndBirghtness_cuda(img, 1, 0, edit.GPUDevice);
+					auto e = clock();
+					cout << "GPU: " << (e - s) / 1000.0 << endl;
+				}
+				cout << endl;
+
+			}
 		}
 	}
 	while (true);
