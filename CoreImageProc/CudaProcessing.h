@@ -168,7 +168,6 @@ namespace gpu
 			// Get result back to host.
 			queue.enqueueReadBuffer(Dst, CL_TRUE, 0, source.rows*source.cols *source.channels() * sizeof(uchar), c.data);
 
-			//imp::filter2D(source, kern, anchor);
 			Mat f;
 			cv::filter2D(source, f, source.depth(), kern, anchor);
 
